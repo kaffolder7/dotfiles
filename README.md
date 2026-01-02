@@ -6,7 +6,7 @@ Personal macOS dotfiles with a focus on:
 - reproducible installs via [Homebrew](https://brew.sh/)
 - minimal magic, explicit behavior
 
-✅ Tested on macOS (Apple Silicon).
+✅ Tested on macOS (Apple Silicon). 
 <!-- Tested on [macOS (Apple Silicon)](https://support.apple.com/en-us/116943). -->
 
 ---
@@ -45,12 +45,12 @@ To overwrite existing files without backups:
 - Copy `git/.gitconfig.local.example` to `~/.gitconfig.local` and edit. -->
 
 Features:
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) _(instant prompt enabled)_<!-- - [Starship](https://starship.rs/) prompt -->
+- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) _([instant prompt](https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#instant-prompt) enabled)_<!-- - [Starship](https://starship.rs/) prompt -->
 - Cached completions
-- Autosuggestions + autocomplete
-- Syntax highlighting (loaded last)
+- [Autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) + [autocomplete](https://github.com/marlonrichert/zsh-autocomplete)
+- [Syntax highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/) (loaded last)
 - History + cache under XDG paths
-- `fastfetch` runs once per session (after prompt)
+- [`fastfetch`](https://github.com/fastfetch-cli/fastfetch) runs once per session (after prompt)
 
 ### Git
 - `~/.gitconfig` → `git/.gitconfig`
@@ -61,9 +61,9 @@ Create it with:
 cp git/.gitconfig.local.example ~/.gitconfig.local
 ```
 
-### [Ghostty](https://ghostty.org/)
+### Ghostty
 
-Ghostty is a fast, feature-rich, and cross-platform terminal emulator that uses platform-native UI and GPU acceleration.
+[Ghostty](https://ghostty.org/) is a fast, feature-rich, and cross-platform terminal emulator that uses platform-native UI and GPU acceleration.
 - `~/.config/ghostty/config` → `ghostty/config`
 
 Includes:
@@ -79,7 +79,7 @@ Includes:
 
 ## Homebrew
 
-The Missing Package Manager for macOS (or Linux).
+[Homebrew](https://brew.sh/) is _the_ missing package manager for macOS (or Linux).
 
 All packages are managed via `Brewfile`.
 - Safe by default: installs missing packages only
