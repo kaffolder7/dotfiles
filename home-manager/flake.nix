@@ -1,6 +1,6 @@
 # Run with `home-manager switch --flake .#default --impure`
 {
-  description = "Kyle's Home Manager configuration";
+  description = "My Home Manager configuration";
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
@@ -16,7 +16,6 @@
     let
       system = "aarch64-darwin";
       pkgs = nixpkgs.legacyPackages.${system};
-      # username = "kyleaffolder";
 
       # Pull from the environment so you don't hardcode it.
       # NOTE: requires `--impure` when evaluating the flake.

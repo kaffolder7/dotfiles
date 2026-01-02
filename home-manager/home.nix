@@ -4,9 +4,7 @@
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  # home.username = "kyleaffolder";
   home.username = username;
-  # home.homeDirectory = "/Users/kyleaffolder";
   home.homeDirectory =
     if pkgs.stdenv.isDarwin
     then "/Users/${username}"
