@@ -1,0 +1,3 @@
+# Example local-only settings (copy to ~/.zshrc.local)
+# export WORK_ENV="acme"
+# alias k=kubectl

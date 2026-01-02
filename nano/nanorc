@@ -1,0 +1,8 @@
+## Nice defaults
+set linenumbers
+set mouse
+set tabsize 2
+set tabstospaces
+set softwrap
+set indicator
+# set constantshow

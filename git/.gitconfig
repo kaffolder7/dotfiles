@@ -1,0 +1,7 @@
+init.defaultBranch = main
+# pull.rebase = false|true (your preference)
+core.editor = nvim
+push.autoSetupRemote = true
+
+[include]
+        path = ~/.gitconfig.local
