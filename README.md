@@ -1,17 +1,17 @@
 # dotfiles
 
 Personal macOS dotfiles with a focus on:
-- fast Zsh startup
+- fast [Zsh](https://www.zsh.org/) startup
 - XDG-friendly config layout
 - reproducible installs via [Homebrew](https://brew.sh/)
 - minimal magic, explicit behavior
 
-Tested on macOS (Apple Silicon).
+✅ Tested on macOS (Apple Silicon).
 <!-- Tested on [macOS (Apple Silicon)](https://support.apple.com/en-us/116943). -->
 
 ---
 
-## Quick start
+## ⏱️ Quick start
 
 ```bash
 git clone https://github.com/kaffolder7/dotfiles ~/src/dotfiles
@@ -45,7 +45,7 @@ To overwrite existing files without backups:
 - Copy `git/.gitconfig.local.example` to `~/.gitconfig.local` and edit. -->
 
 Features:
-- Powerlevel10k _(instant prompt enabled)_
+- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) _(instant prompt enabled)_<!-- - [Starship](https://starship.rs/) prompt -->
 - Cached completions
 - Autosuggestions + autocomplete
 - Syntax highlighting (loaded last)
@@ -129,7 +129,7 @@ dotfiles/
 ---
 
 ## Notes
-- This repo intentionally avoids [Oh My Zsh](https://ohmyz.sh/) _(...[Powerlevel10k](https://github.com/romkatv/powerlevel10k) is Zsh-native/faster)_
+- This repo intentionally avoids [Oh My Zsh](https://ohmyz.sh/) _(...Powerlevel10k is Zsh-native / faster)_
   - _Another option might be to utilize [Oh My Posh](https://ohmypo.sh/)_
 - No output is produced before Powerlevel10k instant prompt
 - Designed to be safe to re-run multiple times
