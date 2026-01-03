@@ -47,7 +47,6 @@
 
     # LLM
     # Access large language models from the command-line
-    # pkgs.(llm.withPlugins [ ])
     pkgs.llm
     # pkgs.llm.withPlugins [ ... ]
     # (pkgs.llm.withPlugins [ /* plugin derivations here */ ])
@@ -123,7 +122,6 @@
         zstyle ':completion:*' rehash true  # Reduce completion chattiness/overhead a bit
 
         # Helps with menu selection / nicer completion lists
-        # zmodload zsh/complist 2>/dev/null
         zmodload zsh/complist 2>/dev/null || true
       '')
 

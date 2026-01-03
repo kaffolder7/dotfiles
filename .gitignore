@@ -8,4 +8,6 @@ config/secrets/*
 **/secrets/*
 *.key
 # !.config/secrets/openai_api_key.example
-!config/secrets/openai_api_key.example
+# !config/secrets/openai_api_key.example
+!config/secrets/openai_api_key_codex.example
+!config/secrets/openai_api_key_llm.example

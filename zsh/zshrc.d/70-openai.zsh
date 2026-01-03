@@ -52,20 +52,61 @@ ensure_secret() {
 }
 
 # Load OpenAI key for both llm and codex (common convention).
-ensure_openai_key() {
-  ensure_secret "openai_api_key" "OPENAI_API_KEY"
+# ensure_openai_key() {
+#   ensure_secret "openai_api_key" "OPENAI_API_KEY"
+# }
+
+# Load separate keys
+ensure_openai_key_codex() {
+  ensure_secret "openai_api_key_codex" "OPENAI_API_KEY_CODEX"
+}
+
+ensure_openai_key_llm() {
+  ensure_secret "openai_api_key_llm" "OPENAI_API_KEY_LLM"
+}
+
+# Run a command with a specific OpenAI key (without permanently changing OPENAI_API_KEY)
+with_openai_key() {
+  local which="$1"; shift
+  local key=""
+
+  case "$which" in
+    codex)
+      ensure_openai_key_codex >/dev/null 2>&1
+      key="${OPENAI_API_KEY_CODEX:-}"
+      ;;
+    llm)
+      ensure_openai_key_llm >/dev/null 2>&1
+      key="${OPENAI_API_KEY_LLM:-}"
+      ;;
+    *)
+      print -P "%F{214}✗ with_openai_key: unknown key type%f ($which)"
+      return 2
+      ;;
+  esac
+
+  if [[ -z "$key" ]]; then
+    print -P "%F{214}✗ Missing OpenAI key for%f $which"
+    return 1
+  fi
+
+  OPENAI_API_KEY="$key" "$@"
 }
 
 # "ai doctor" sanity check: key + codex provider/model + llm availability
 ai() {
   local cmd="${1:-}"
   if [[ "$cmd" == "doctor" ]]; then
-    ensure_openai_key >/dev/null 2>&1
-    if [[ -z "${OPENAI_API_KEY:-}" ]]; then
-      print -P "%F{214}✗ OPENAI_API_KEY not set%f (expected ~/.config/secrets/openai_api_key)"
-    else
-      print -P "%F{82}✓ OPENAI_API_KEY is set%f"
-    fi
+    # ensure_openai_key >/dev/null 2>&1
+    ensure_openai_key_codex >/dev/null 2>&1
+    ensure_openai_key_llm   >/dev/null 2>&1
+    # if [[ -z "${OPENAI_API_KEY:-}" ]]; then
+    #   print -P "%F{214}✗ OPENAI_API_KEY not set%f (expected ~/.config/secrets/openai_api_key)"
+    # else
+    #   print -P "%F{82}✓ OPENAI_API_KEY is set%f"
+    # fi
+    [[ -n "${OPENAI_API_KEY_CODEX:-}" ]] && print -P "%F{82}✓ OPENAI_API_KEY_CODEX is set%f" || print -P "%F{214}✗ OPENAI_API_KEY_CODEX not set%f"
+    [[ -n "${OPENAI_API_KEY_LLM:-}"   ]] && print -P "%F{82}✓ OPENAI_API_KEY_LLM is set%f"   || print -P "%F{214}✗ OPENAI_API_KEY_LLM not set%f"
 
     if command -v llm >/dev/null 2>&1; then
       print -P "%F{82}✓ llm found:%f $(command -v llm)"
@@ -99,5 +140,10 @@ ai() {
 }
 
 # Optional convenience wrappers (so they always have the key in scope)
-llm-openai() { ensure_openai_key >/dev/null 2>&1; command llm "$@"; }
-codex-openai() { ensure_openai_key >/dev/null 2>&1; command codex "$@"; }
+# llm-openai() { ensure_openai_key >/dev/null 2>&1; command llm "$@"; }
+# codex-openai() { ensure_openai_key >/dev/null 2>&1; command codex "$@"; }
+
+# Override the commands so they always pick the right key automatically.
+# `command codex` / `command llm` ensures we call the real binary.
+codex() { with_openai_key codex command codex "$@"; }
+llm()   { with_openai_key llm   command llm   "$@"; }
