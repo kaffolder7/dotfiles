@@ -31,6 +31,12 @@ brew "container-compose"
 # Terminal UI for Apple Containers
 brew "lazycontainer"
 
+# Access large language models from the command-line
+brew "llm"
+
+# OpenAI's coding agent that runs in your terminal
+brew "codex"
+
 # Zsh configuration
 brew "zsh-autosuggestions"
 brew "zsh-autocomplete"

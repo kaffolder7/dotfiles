@@ -30,6 +30,10 @@
     # Get syntax highlighting, line numbers, and Git integration.
     pkgs.bat
 
+    # Codex CLI
+    # Lightweight coding agent that runs in your terminal
+    pkgs.codex
+
     # Eza is a better `ls`.
     # Get colors, icons, tree views, Git status.
     pkgs.eza
@@ -41,10 +45,19 @@
     # Provides `telnet`
     # pkgs.inetutils
 
+    # LLM
+    # Access large language models from the command-line
+    # pkgs.(llm.withPlugins [ ])
+    pkgs.llm
+    # pkgs.llm.withPlugins [ ... ]
+    # (pkgs.llm.withPlugins [ /* plugin derivations here */ ])
+
     # Neovim
     # Vim-fork focused on extensibility and usability
     pkgs.neovim
 
+    pkgs.curl
+    pkgs.jq
     pkgs.nano
     pkgs.repomix
     pkgs.zsh-powerlevel10k
@@ -56,10 +69,10 @@
   programs.zsh = {
     enable = true;
 
-    autocd = true;
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    autocd = true;
 
     # Keep this minimal for speed
     history = {
@@ -70,20 +83,21 @@
     };
 
     initContent = lib.mkMerge [
-      (lib.mkBefore ''
+      # 500: very early (instant prompt must be above any output)
+      (lib.mkOrder 500 ''
         # ---- Output-producing stuff MUST be above instant prompt ----
 
         # (Optional) If you were forcing TERM later, do NOT do that.
         # Let your terminal set TERM. If you need truecolor hints:
         # export COLORTERM="''${COLORTERM:-truecolor}"
 
-        # Run fastfetch once, only in interactive shells
-        if [[ -o interactive ]] && command -v fastfetch >/dev/null; then
-          if [[ -z "''${__FASTFETCH_RAN-}" ]]; then
-            __FASTFETCH_RAN=1
-            fastfetch
-          fi
-        fi
+        # # Run fastfetch once, only in interactive shells
+        # if [[ -o interactive ]] && command -v fastfetch >/dev/null; then
+        #   if [[ -z "''${__FASTFETCH_RAN-}" ]]; then
+        #     __FASTFETCH_RAN=1
+        #     fastfetch
+        #   fi
+        # fi
 
         # Powerlevel10k instant prompt (must be near the top)
         if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
@@ -92,13 +106,16 @@
 
         # Interactive-only from here down
         [[ -o interactive ]] || return
+
+        export XDG_CACHE_HOME="''${XDG_CACHE_HOME:-$HOME/.cache}"
+        export XDG_CONFIG_HOME="''${XDG_CONFIG_HOME:-$HOME/.config}"
       '')
 
-      (lib.mkAfter ''
+      # 550: before completion init (HM will run compinit; you can set styles here)
+      (lib.mkOrder 550 ''
         # ---- Performance knobs ----
-        export XDG_CACHE_HOME="''${XDG_CACHE_HOME:-$HOME/.cache}"
-        export ZSH_COMPDUMP="$XDG_CACHE_HOME/zcompdump-$ZSH_VERSION"
         mkdir -p "$XDG_CACHE_HOME/zsh"
+        export ZSH_COMPDUMP="$XDG_CACHE_HOME/zcompdump-$ZSH_VERSION"
 
         # Completion caching helps a lot (set styles before compinit)
         zstyle ':completion:*' use-cache on
@@ -106,11 +123,31 @@
         zstyle ':completion:*' rehash true  # Reduce completion chattiness/overhead a bit
 
         # Helps with menu selection / nicer completion lists
-        zmodload zsh/complist 2>/dev/null
+        # zmodload zsh/complist 2>/dev/null
+        zmodload zsh/complist 2>/dev/null || true
+      '')
 
+      # 950: add a “mode” flag in HM and gate Brew modules
+      (lib.mkOrder 950 ''
+        export DOTFILES_ROUTE="hm"
+      '')
+
+      # 1000: general init — source your modular files (this is the missing piece)
+      (lib.mkOrder 1000 ''
+        local ZSHRC_DIR="$XDG_CONFIG_HOME/zsh/zshrc.d"
+        if [[ -d "$ZSHRC_DIR" ]]; then
+          for f in "$ZSHRC_DIR"/*.zsh(N); do
+            source "$f"
+          done
+        fi
+        unset f
+      '')
+
+      # 1500: last — hooks, one-time fastfetch, etc.
+      (lib.mkOrder 1500 ''
         # Fast completion init: compile once, reuse cache
-        autoload -Uz compinit
-        compinit -C -d "$ZSH_COMPDUMP"
+        # autoload -Uz compinit
+        # compinit -C -d "$ZSH_COMPDUMP"
 
         # alias -- code=code-insiders
         # alias -- gs='git status'
@@ -120,22 +157,17 @@
         # alias ll='ls -lah'
         # alias g='git'
 
-        # Prefer eza aliases (keep only one set)
-        # alias ls='eza -lao --git-repos --header --icons'
-        # alias ll='eza -lah --git-repos --header --icons'
-        # alias g='git'
-
         # ---- Prompt (P10k) ----
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
         [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
-        # # ---- Run fastfetch once, after prompt is ready ----
-        # autoload -Uz add-zsh-hook
-        # _run_fastfetch_once() {
-        #   add-zsh-hook -d precmd _run_fastfetch_once
-        #   command -v fastfetch >/dev/null && command fastfetch --pipe false
-        # }
-        # add-zsh-hook precmd _run_fastfetch_once
+        # ---- Run fastfetch once, after prompt is ready ----
+        autoload -Uz add-zsh-hook
+        _run_fastfetch_once() {
+          add-zsh-hook -d precmd _run_fastfetch_once
+          command -v fastfetch >/dev/null && command fastfetch --pipe false
+        }
+        add-zsh-hook precmd _run_fastfetch_once
 
         # ---- Ghostty nicety (optional) ----
         # IMPORTANT: avoid forcing TERM here (it can break color detection/themes)
@@ -198,4 +230,10 @@
     set indicator
     # set constantshow
   '';
+
+  xdg.configFile."zsh/zshrc.d/70-openai.zsh".source = ../zsh/zshrc.d/70-openai.zsh;
+  xdg.configFile."zsh/zshrc.d/90-local.zsh".source = ../zsh/zshrc.d/90-local.zsh;
+  # xdg.configFile."zsh/zshrc.d/90-local.zsh".source =
+  # config.lib.file.mkOutOfStoreSymlink
+  #   "${config.home.homeDirectory}/path/to/90-local.zsh";
 }

@@ -1,3 +1,11 @@
 .DS_Store
 *backup*
 *repomix*
+
+# Secrets
+# .config/secrets/*
+config/secrets/*
+**/secrets/*
+*.key
+# !.config/secrets/openai_api_key.example
+!config/secrets/openai_api_key.example

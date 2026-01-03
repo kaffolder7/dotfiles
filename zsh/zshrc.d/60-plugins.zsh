@@ -1,3 +1,4 @@
+[[ "${DOTFILES_ROUTE-}" == "hm" ]] && return
 [[ -n "${HOMEBREW_PREFIX-}" ]] || return
 
 # zsh-autocomplete (if installed)

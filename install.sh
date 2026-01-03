@@ -127,6 +127,34 @@ ensure_curl() {
   fi
 }
 
+ensure_secret_reminder() {
+  local name="$1"                 # e.g. openai_api_key
+  local example_rel="${2:-}"      # e.g. config/secrets/openai_api_key.example
+  local label="${3:-$name}"       # e.g. "OpenAI API key"
+  
+  local secrets_dir="$HOME/.config/secrets"
+  local key_file="$secrets_dir/$name"
+
+  mkdir -p "$secrets_dir"
+  chmod 700 "$secrets_dir" || true
+
+  if [[ ! -f "$key_file" ]]; then
+    warn "$label not found."
+    warn "Create it at: $key_file"
+    if [[ -n "$example_rel" ]]; then
+      warn "Example in repo: $DOTFILES_DIR/$example_rel"
+    fi
+  else
+    # Best-effort perms check (macOS + Linux)
+    local perms=""
+    perms="$(stat -f %Lp "$key_file" 2>/dev/null || stat -c %a "$key_file" 2>/dev/null || true)"
+    if [[ -n "$perms" && "$perms" != "600" ]]; then
+      warn "$label file permissions should be 600 (currently $perms): $key_file"
+      warn "Fix with: chmod 600 \"$key_file\""
+    fi
+  fi
+}
+
 # ----------------------------
 # Installers
 # ----------------------------
@@ -166,8 +194,6 @@ install_determinate_nix_macos() {
 
   ensure_curl
   log "Installing Determinate Nix (macOS)..."
-  # curl -fsSL https://install.determinate.systems/nix | sh -s -- install
-  # curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
   curl --proto '=https' --tlsv1.2 -fsSf -L https://install.determinate.systems/nix | sh -s -- install
 
   # Try to load nix into this shell session (best-effort)
@@ -379,6 +405,9 @@ symlink_dotfiles() {
   link "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
   link "$DOTFILES_DIR/ghostty/config" "$HOME/.config/ghostty/config"
   link "$DOTFILES_DIR/nano/nanorc" "$HOME/.config/nano/nanorc"
+
+  # Codex config (Codex reads ~/.codex/config.toml)
+  link "$DOTFILES_DIR/codex/config.toml" "$HOME/.codex/config.toml"
 }
 
 # ----------------------------
@@ -421,11 +450,7 @@ setup_via_nix_home_manager() {
   log "Activating Home Manager flake: .#default (impure)"
   (
     cd "$DOTFILES_DIR"
-    # home-manager switch --flake .#default --impure
-    # Some setups still require passing experimental features explicitly.
-    # We do it to be robust.
-    # home-manager --extra-experimental-features "nix-command flakes" \
-    #   switch --flake ".#default" --impure
+
     if command_exists home-manager; then
       home-manager --extra-experimental-features "nix-command flakes" \
         switch --flake ".#default" --impure
@@ -451,6 +476,9 @@ main() {
       exit 0
     fi
   fi
+
+  # Check secrets early (works for both brew + nix routes)
+  ensure_secret_reminder "openai_api_key" "config/secrets/openai_api_key.example" "OpenAI API key"
 
   # Always symlink dotfiles (same as your current script’s default behavior)
   # symlink_dotfiles

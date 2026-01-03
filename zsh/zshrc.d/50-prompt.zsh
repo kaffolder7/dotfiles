@@ -1,3 +1,4 @@
+[[ "${DOTFILES_ROUTE-}" == "hm" ]] && return
 [[ -n "${HOMEBREW_PREFIX-}" ]] || return
 
 [[ -r "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme" ]] &&

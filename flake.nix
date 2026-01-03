@@ -7,15 +7,17 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
+      # url = "github:NixOS/nixpkgs/nixos-unstable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
   outputs =
-    { nixpkgs, home-manager, ... }:
+    { self, nixpkgs, home-manager, ... }:
     let
-      system = "aarch64-darwin";
+      system = "aarch64-darwin";  # Apple Silicon; change if needed
       pkgs = nixpkgs.legacyPackages.${system};
+      # pkgs = import nixpkgs { inherit system; };
 
       # Pull from the environment so you don't hardcode it.
       # NOTE: requires `--impure` when evaluating the flake.
@@ -30,7 +32,8 @@
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ ./home.nix ];
+        # modules = [ ./home.nix ];
+        modules = [ ./home-manager/home.nix ];
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
