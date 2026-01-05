@@ -196,6 +196,9 @@ dotfiles/
 ├── nix/
     └── home.nix
 ├── secrets/
+    ├── openai_api_key.example
+    ├── openai_api_key_codex.example
+    └── openai_api_key_llm.example
 ├── xdg/
     ├── ghostty/
         └── config
