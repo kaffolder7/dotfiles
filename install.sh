@@ -478,10 +478,15 @@ main() {
   fi
 
   # Check secrets early (works for both brew + nix routes)
-  ensure_secret_reminder "openai_api_key" "secrets/openai_api_key.example" "OpenAI API key"
-
-  # Always symlink dotfiles (same as your current script’s default behavior)
-  # symlink_dotfiles
+  # Accept either:
+  # - a single shared key (openai_api_key), OR
+  # - per-tool keys (openai_api_key_llm + openai_api_key_codex)
+  if [[ -f "$DOTFILES_DIR/secrets/openai_api_key.example" ]]; then
+    ensure_secret_reminder "openai_api_key" "secrets/openai_api_key.example" "OpenAI API key"
+  else
+    ensure_secret_reminder "openai_api_key_llm"   "secrets/openai_api_key_llm.example"   "OpenAI API key (llm)"
+    ensure_secret_reminder "openai_api_key_codex" "secrets/openai_api_key_codex.example" "OpenAI API key (codex)"
+  fi
 
   if is_macos; then
     # Decide method: CLI flag wins, otherwise prompt (default homebrew)

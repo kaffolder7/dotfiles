@@ -1,7 +1,10 @@
 # ------------------------------------------------------------------------------
 # OpenAI / AI tooling bootstrap (LLM + Codex)
 # Secrets are file-based and intentionally NOT in git.
-# Expected secret file: ~/.config/secrets/openai_api_key
+# Expected secret file(s):
+#   ~/.config/secrets/openai_api_key            (shared; optional)
+#   ~/.config/secrets/openai_api_key_llm        (preferred)
+#   ~/.config/secrets/openai_api_key_codex      (preferred)
 # ------------------------------------------------------------------------------
 
 # Generic helper: read a secret from ~/.config/secrets/<file_name>
@@ -51,11 +54,6 @@ ensure_secret() {
   return 0
 }
 
-# Load OpenAI key for both llm and codex (common convention).
-# ensure_openai_key() {
-#   ensure_secret "openai_api_key" "OPENAI_API_KEY"
-# }
-
 # Load separate keys
 ensure_openai_key_codex() {
   ensure_secret "openai_api_key_codex" "OPENAI_API_KEY_CODEX"
@@ -100,7 +98,6 @@ ai() {
     # ensure_openai_key >/dev/null 2>&1
     ensure_openai_key_codex >/dev/null 2>&1
     ensure_openai_key_llm   >/dev/null 2>&1
-    # [[ -n "${OPENAI_API_KEY:-}" ]] && print -P "%F{82}✓ OPENAI_API_KEY is set%f" || print -P "%F{214}✗ OPENAI_API_KEY not set%f (expected ~/.config/secrets/openai_api_key)"
     [[ -n "${OPENAI_API_KEY_CODEX:-}" ]] && print -P "%F{82}✓ OPENAI_API_KEY_CODEX is set%f" || print -P "%F{214}✗ OPENAI_API_KEY_CODEX not set%f"
     [[ -n "${OPENAI_API_KEY_LLM:-}"   ]] && print -P "%F{82}✓ OPENAI_API_KEY_LLM is set%f"   || print -P "%F{214}✗ OPENAI_API_KEY_LLM not set%f"
 

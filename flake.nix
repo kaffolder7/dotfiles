@@ -14,7 +14,8 @@
   outputs =
     { self, nixpkgs, home-manager, ... }:
     let
-      system = "aarch64-darwin";  # Apple Silicon; change if needed
+      # Use the host system automatically (e.g. aarch64-darwin, x86_64-darwin, x86_64-linux, aarch64-linux)
+      system = builtins.currentSystem;
       pkgs = nixpkgs.legacyPackages.${system};
 
       # Pull from the environment so we don't hardcode it.

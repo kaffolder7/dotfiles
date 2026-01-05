@@ -113,8 +113,10 @@
       # 550: before completion init (HM will run compinit; you can set styles here)
       (lib.mkOrder 550 ''
         # ---- Performance knobs ----
-        mkdir -p "$XDG_CACHE_HOME/zsh"
-        export ZSH_COMPDUMP="$XDG_CACHE_HOME/zcompdump-$ZSH_VERSION"
+        # mkdir -p "$XDG_CACHE_HOME/zsh"
+        # export ZSH_COMPDUMP="$XDG_CACHE_HOME/zcompdump-$ZSH_VERSION"
+        mkdir -p "$XDG_CACHE_HOME/zsh" "$XDG_CACHE_HOME/zsh/zcompcache"
+        export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 
         # Completion caching helps a lot (set styles before compinit)
         zstyle ':completion:*' use-cache on

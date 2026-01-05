@@ -6,8 +6,7 @@ Personal macOS dotfiles with a focus on:
 - reproducible installs via [Homebrew](https://brew.sh/)
 - minimal magic, explicit behavior
 
-✅ Tested on macOS (Apple Silicon). 
-<!-- Tested on [macOS (Apple Silicon)](https://support.apple.com/en-us/116943). -->
+✅ Tested on [macOS (Apple Silicon)](https://support.apple.com/en-us/116943).
 
 ---
 

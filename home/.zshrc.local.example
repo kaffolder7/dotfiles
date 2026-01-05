@@ -3,4 +3,10 @@
 # alias k=kubectl
 
 # For LLM CLI module
-export OPENAI_API_KEY="YOUR_KEY_HERE"
+# NOTE:
+# OpenAI keys are expected to live in file-based secrets:
+#   ~/.config/secrets/openai_api_key
+#   ~/.config/secrets/openai_api_key_llm
+#   ~/.config/secrets/openai_api_key_codex
+# and are injected per-command by zsh helpers (see zshrc.d/70-openai.zsh).
+# Avoid exporting OPENAI_API_KEY globally unless you know you want that.
