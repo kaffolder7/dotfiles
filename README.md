@@ -220,10 +220,10 @@ dotfiles/
 │           ├── 70-openai.zsh       # OpenAI / LLM / Codex helpers + file-based secrets
 │           ├── 80-hooks.zsh        # Hooks (e.g. fastfetch once per session)
 │           └── 90-local.zsh        # Local Zsh overrides (~/.zshrc.local)
-├── .gitignore                # Ignore secrets, backups, and generated files
+├── .gitignore
 ├── flake.lock                # Nix flake lockfile (pins dependencies)
 ├── flake.nix                 # Nix flake entrypoint for Home Manager
-└── README.md                 # Project documentation
+└── README.md
 ```
 
 ---
