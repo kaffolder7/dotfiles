@@ -53,6 +53,36 @@ command_exists() { command -v "$1" >/dev/null 2>&1; }
 is_macos() { [[ "$(uname -s)" == "Darwin" ]]; }
 is_linux() { [[ "$(uname -s)" == "Linux" ]]; }
 
+user_bin_dir() {
+  # Prefer XDG-ish user bin if present; otherwise fall back.
+  # (We intentionally avoid /usr/local/bin to keep this non-root and non-destructive.)
+  echo "${XDG_BIN_HOME:-$HOME/.local/bin}"
+}
+
+ensure_user_bin_on_path_hint() {
+  local bindir
+  bindir="$(user_bin_dir)"
+  if [[ ":$PATH:" != *":$bindir:"* ]]; then
+    warn "Your PATH does not include: $bindir"
+    warn "Add this to your shell (e.g. ~/.zshrc.local):"
+    warn "  export PATH=\"$bindir:\$PATH\""
+  fi
+}
+
+install_dot_cli() {
+  local bindir
+  bindir="$(user_bin_dir)"
+  mkdir -p "$bindir"
+
+  # Ensure scripts are executable in the repo (best-effort; ok if git already preserves this)
+  chmod +x "$DOTFILES_DIR/bin/dot" "$DOTFILES_DIR/bin/dot-doctor" 2>/dev/null || true
+
+  link "$DOTFILES_DIR/bin/dot"        "$bindir/dot"
+  link "$DOTFILES_DIR/bin/dot-doctor" "$bindir/dot-doctor"
+
+  ensure_user_bin_on_path_hint
+}
+
 # Prompt for yes/no with default (Y or n)
 # Usage: confirm "Question?" "Y"  -> returns 0 if yes, 1 if no
 confirm() {
@@ -408,6 +438,9 @@ symlink_dotfiles() {
 
   # Codex config (Codex reads ~/.codex/config.toml)
   link "$DOTFILES_DIR/codex/config.toml" "$HOME/.codex/config.toml"
+
+  # Dotfiles helper CLI
+  install_dot_cli
 }
 
 # ----------------------------
