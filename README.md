@@ -17,6 +17,7 @@ git clone https://github.com/kaffolder7/dotfiles ~/src/dotfiles
 cd ~/src/dotfiles
 ./install.sh --brew
 ```
+_The installer also symlinks the `dot` helper command into `~/.local/bin`._
 
 This will:
 - Install [Homebrew](https://brew.sh/) (if missing)
@@ -182,44 +183,47 @@ Edit `~/.gitconfig.local` for name, email, signing keys, etc.
 ---
 
 ## 🗺️ Repo layout
-```text
+```shell
 dotfiles/
-├── Brewfile
-├── install.sh
+├── Brewfile                        # Homebrew bundle: packages, casks, VS Code extensions
+├── install.sh                      # Main installer (Homebrew or Nix/Home Manager routes)
+├── bin/
+│   ├── dot                         # Lightweight helper CLI entrypoint
+│   └── dot-doctor                  # Sanity-check tool for paths, secrets, and install state
 ├── codex/
-    └── config.toml
+│   └── config.toml                 # Codex CLI provider/model configuration
 ├── home/
-    ├── .gitconfig
-    ├── .gitconfig.local.example
-    ├── .zshrc
-    └── .zshrc.local.example
+│   ├── .gitconfig                  # Base Git config (includes local overrides)
+│   ├── .gitconfig.local.example    # Example for user-specific Git identity (not committed)
+│   ├── .zshrc                      # Minimal Zsh entrypoint (loads modular config)
+│   └── .zshrc.local.example        # Local-only Zsh overrides (ignored by git)
 ├── nix/
-    └── home.nix
+│   └── home.nix                    # Home Manager configuration (optional / advanced)
 ├── secrets/
-    ├── openai_api_key.example
-    ├── openai_api_key_codex.example
-    └── openai_api_key_llm.example
+│   ├── openai_api_key.example        # (Optional) single shared OpenAI key
+│   ├── openai_api_key_codex.example  # Example Codex-specific OpenAI key
+│   └── openai_api_key_llm.example    # Example LLM-specific OpenAI key  # Real secrets live in ~/.config/secrets (not committed)
 ├── xdg/
-    ├── ghostty/
-        └── config
-    ├── nano/
-        └── nanorc
-    └── zsh/
-        └── zshrc.d/
-            ├── 00-env.zsh
-            ├── 10-homebrew.zsh
-            ├── 20-completion.zsh
-            ├── 30-history.zsh
-            ├── 40-aliases.zsh
-            ├── 50-prompt.zsh
-            ├── 60-plugins.zsh
-            ├── 70-openai.zsh
-            ├── 80-hooks.zsh
-            └── 90-local.zsh
-├── .gitignore
-├── flake.lock
-├── flake.nix
-└── README.md
+│   ├── ghostty/
+│   │   └── config             # Ghostty terminal configuration
+│   ├── nano/
+│   │   └── nanorc             # Nano editor config (XDG-compliant)
+│   └── zsh/
+│       └── zshrc.d/
+│           ├── 00-env.zsh          # Core environment setup (XDG, PATH, cache dirs)
+│           ├── 10-homebrew.zsh     # Homebrew shell environment (brew shellenv)
+│           ├── 20-completion.zsh   # Zsh completion + caching (non-HM route)
+│           ├── 30-history.zsh      # History behavior + XDG_STATE_HOME storage
+│           ├── 40-aliases.zsh      # Shell aliases (non-HM route)
+│           ├── 50-prompt.zsh       # Powerlevel10k prompt setup
+│           ├── 60-plugins.zsh      # Zsh plugins (autosuggest, autocomplete, highlighting)
+│           ├── 70-openai.zsh       # OpenAI / LLM / Codex helpers + file-based secrets
+│           ├── 80-hooks.zsh        # Hooks (e.g. fastfetch once per session)
+│           └── 90-local.zsh        # Local Zsh overrides (~/.zshrc.local)
+├── .gitignore                # Ignore secrets, backups, and generated files
+├── flake.lock                # Nix flake lockfile (pins dependencies)
+├── flake.nix                 # Nix flake entrypoint for Home Manager
+└── README.md                 # Project documentation
 ```
 
 ---
