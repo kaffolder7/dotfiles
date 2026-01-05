@@ -1,3 +1,5 @@
+[[ "${DOTFILES_ROUTE-}" == "hm" ]] && return
+
 # Completion caching helps a lot (set styles before compinit)
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"

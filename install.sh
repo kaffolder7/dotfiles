@@ -129,7 +129,7 @@ ensure_curl() {
 
 ensure_secret_reminder() {
   local name="$1"                 # e.g. openai_api_key
-  local example_rel="${2:-}"      # e.g. config/secrets/openai_api_key.example
+  local example_rel="${2:-}"      # e.g. secrets/openai_api_key.example
   local label="${3:-$name}"       # e.g. "OpenAI API key"
   
   local secrets_dir="$HOME/.config/secrets"
@@ -400,11 +400,11 @@ link() {
 
 symlink_dotfiles() {
   # Zsh modules live under XDG config (matches zsh/.zshrc)
-  link "$DOTFILES_DIR/zsh/zshrc.d" "$HOME/.config/zsh/zshrc.d"
-  link "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
-  link "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
-  link "$DOTFILES_DIR/ghostty/config" "$HOME/.config/ghostty/config"
-  link "$DOTFILES_DIR/nano/nanorc" "$HOME/.config/nano/nanorc"
+  link "$DOTFILES_DIR/xdg/zsh/zshrc.d" "$HOME/.config/zsh/zshrc.d"
+  link "$DOTFILES_DIR/home/.zshrc" "$HOME/.zshrc"
+  link "$DOTFILES_DIR/home/.gitconfig" "$HOME/.gitconfig"
+  link "$DOTFILES_DIR/xdg/ghostty/config" "$HOME/.config/ghostty/config"
+  [[ "${DOTFILES_ROUTE-}" != "hm" ]] && link "$DOTFILES_DIR/xdg/nano/nanorc" "$HOME/.config/nano/nanorc"
 
   # Codex config (Codex reads ~/.codex/config.toml)
   link "$DOTFILES_DIR/codex/config.toml" "$HOME/.codex/config.toml"
@@ -478,7 +478,7 @@ main() {
   fi
 
   # Check secrets early (works for both brew + nix routes)
-  ensure_secret_reminder "openai_api_key" "config/secrets/openai_api_key.example" "OpenAI API key"
+  ensure_secret_reminder "openai_api_key" "secrets/openai_api_key.example" "OpenAI API key"
 
   # Always symlink dotfiles (same as your current script’s default behavior)
   # symlink_dotfiles

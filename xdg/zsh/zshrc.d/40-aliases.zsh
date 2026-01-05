@@ -1,3 +1,5 @@
+[[ "${DOTFILES_ROUTE-}" == "hm" ]] && return
+
 alias -- code=code-insiders
 alias -- gs='git status'
 alias -- vim=nvim

@@ -176,6 +176,7 @@
     shellAliases = {
       g = "git";
       gs = "git status";
+      # l = "eza -lah --git-repos --header --icons";
       ll = "eza -lao --git-repos --header --icons";
       ls = "eza -lao --git-repos --header --icons";
       vim = "nvim";
@@ -229,9 +230,6 @@
     # set constantshow
   '';
 
-  xdg.configFile."zsh/zshrc.d/70-openai.zsh".source = ../zsh/zshrc.d/70-openai.zsh;
-  xdg.configFile."zsh/zshrc.d/90-local.zsh".source = ../zsh/zshrc.d/90-local.zsh;
-  # xdg.configFile."zsh/zshrc.d/90-local.zsh".source =
-  # config.lib.file.mkOutOfStoreSymlink
-  #   "${config.home.homeDirectory}/path/to/90-local.zsh";
+  xdg.configFile."zsh/zshrc.d/70-openai.zsh".source = ../xdg/zsh/zshrc.d/70-openai.zsh;
+  xdg.configFile."zsh/zshrc.d/90-local.zsh".source = ../xdg/zsh/zshrc.d/90-local.zsh;
 }

@@ -3,11 +3,8 @@
 *repomix*
 
 # Secrets
-# .config/secrets/*
-config/secrets/*
-**/secrets/*
+secrets/*
 *.key
-# !.config/secrets/openai_api_key.example
-# !config/secrets/openai_api_key.example
-!config/secrets/openai_api_key_codex.example
-!config/secrets/openai_api_key_llm.example
+!secrets/openai_api_key.example
+!secrets/openai_api_key_codex.example
+!secrets/openai_api_key_llm.example

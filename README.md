@@ -35,7 +35,7 @@ To overwrite existing files without backups:
 ## What gets installed / linked
 
 ### Zsh
-- `~/.zshrc` → `zsh/.zshrc`
+- `~/.zshrc` → `home/.zshrc`
 - Modular config loaded from:
   ```
   ~/.config/zsh/zshrc.d/
@@ -53,18 +53,18 @@ Features:
 - [`fastfetch`](https://github.com/fastfetch-cli/fastfetch) runs once per session (after prompt)
 
 ### Git
-- `~/.gitconfig` → `git/.gitconfig`
+- `~/.gitconfig` → `home/.gitconfig`
 - Personal settings live in `~/.gitconfig.local` (not committed)
 
 Create it with:
 ```
-cp git/.gitconfig.local.example ~/.gitconfig.local
+cp home/.gitconfig.local.example ~/.gitconfig.local
 ```
 
 ### Ghostty
 
 [Ghostty](https://ghostty.org/) is a fast, feature-rich, and cross-platform terminal emulator that uses platform-native UI and GPU acceleration.
-- `~/.config/ghostty/config` → `ghostty/config`
+- `~/.config/ghostty/config` → `xdg/ghostty/config`
 
 Includes:
 - [JetBrains Mono Nerd Font](https://www.jetbrains.com/lp/mono/)
@@ -73,7 +73,7 @@ Includes:
 - Sensible padding and defaults
 
 ### Nano
-- `~/.config/nano/nanorc` → `nano/nanorc`
+- `~/.config/nano/nanorc` → `xdg/nano/nanorc`
 
 ---
 
@@ -101,7 +101,7 @@ brew bundle dump --force
 
 Create a local-only file:
 ```
-cp zsh/.zshrc.local.example ~/.zshrc.local
+cp home/.zshrc.local.example ~/.zshrc.local
 ```
 
 Anything in `~/.zshrc.local` is sourced last and ignored by git.
@@ -117,13 +117,37 @@ Edit `~/.gitconfig.local` for name, email, signing keys, etc.
 dotfiles/
 ├── Brewfile
 ├── install.sh
-├── git/
-├── ghostty/
-├── nano/
-└── zsh/
+├── codex/
+    └── config.toml
+├── home/
+    ├── .gitconfig
+    ├── .gitconfig.local.example
     ├── .zshrc
-    ├── .zshrc.local.example
-    └── zshrc.d/
+    └── .zshrc.local.example
+├── nix/
+    └── home.nix
+├── secrets/
+├── xdg/
+    ├── ghostty/
+        └── config
+    ├── nano/
+        └── nanorc
+    └── zsh/
+        └── zshrc.d/
+            ├── 00-env.zsh
+            ├── 10-homebrew.zsh
+            ├── 20-completion.zsh
+            ├── 30-history.zsh
+            ├── 40-aliases.zsh
+            ├── 50-prompt.zsh
+            ├── 60-plugins.zsh
+            ├── 70-openai.zsh
+            ├── 80-hooks.zsh
+            └── 90-local.zsh
+├── .gitignore
+├── flake.lock
+├── flake.nix
+└── README.md
 ```
 
 ---

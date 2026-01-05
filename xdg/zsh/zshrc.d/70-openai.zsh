@@ -100,11 +100,7 @@ ai() {
     # ensure_openai_key >/dev/null 2>&1
     ensure_openai_key_codex >/dev/null 2>&1
     ensure_openai_key_llm   >/dev/null 2>&1
-    # if [[ -z "${OPENAI_API_KEY:-}" ]]; then
-    #   print -P "%F{214}✗ OPENAI_API_KEY not set%f (expected ~/.config/secrets/openai_api_key)"
-    # else
-    #   print -P "%F{82}✓ OPENAI_API_KEY is set%f"
-    # fi
+    # [[ -n "${OPENAI_API_KEY:-}" ]] && print -P "%F{82}✓ OPENAI_API_KEY is set%f" || print -P "%F{214}✗ OPENAI_API_KEY not set%f (expected ~/.config/secrets/openai_api_key)"
     [[ -n "${OPENAI_API_KEY_CODEX:-}" ]] && print -P "%F{82}✓ OPENAI_API_KEY_CODEX is set%f" || print -P "%F{214}✗ OPENAI_API_KEY_CODEX not set%f"
     [[ -n "${OPENAI_API_KEY_LLM:-}"   ]] && print -P "%F{82}✓ OPENAI_API_KEY_LLM is set%f"   || print -P "%F{214}✗ OPENAI_API_KEY_LLM not set%f"
 
@@ -147,3 +143,20 @@ ai() {
 # `command codex` / `command llm` ensures we call the real binary.
 codex() { with_openai_key codex command codex "$@"; }
 llm()   { with_openai_key llm   command llm   "$@"; }
+
+# Optional: ZLE widget to rewrite the current command line using LLM
+# Hit ^X^A to transform your current buffer into a command.
+autoload -Uz add-zle-hook-widget 2>/dev/null || true
+
+_ai_rewrite_buffer() {
+  local prompt="Rewrite this into a correct, safe shell command. Output ONLY the command, no backticks:\n\n$BUFFER"
+  local out
+  out="$(printf "%s" "$prompt" | llm --no-stream --stdin 2>/dev/null)"
+  if [[ -n "$out" ]]; then
+    BUFFER="$out"
+    CURSOR=${#BUFFER}
+  fi
+  zle redisplay
+}
+zle -N _ai_rewrite_buffer
+bindkey '^X^A' _ai_rewrite_buffer

@@ -1,3 +1,5 @@
+[[ "${DOTFILES_ROUTE-}" == "hm" ]] && return
+
 # Run fastfetch once per interactive session (and not before instant prompt)
 autoload -Uz add-zsh-hook
 

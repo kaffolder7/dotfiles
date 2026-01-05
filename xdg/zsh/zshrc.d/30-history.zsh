@@ -1,7 +1,8 @@
 HISTSIZE=10000
 SAVEHIST=10000
 
-HISTFILE="$XDG_CONFIG_HOME/zsh/.zsh_history"
+# HISTFILE="$XDG_CONFIG_HOME/zsh/.zsh_history"
+HISTFILE="$XDG_STATE_HOME/zsh/history"
 mkdir -p "${HISTFILE:h}"
 
 setopt HIST_FCNTL_LOCK
