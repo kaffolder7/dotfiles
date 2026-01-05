@@ -48,7 +48,7 @@ cask "font-meslo-for-powerlevel10k"
 cask "font-meslo-for-powerline"
 cask "font-meslo-lg-nerd-font"
 
-# Themes for VS Code
+# Themes/Extensions for VS Code
 # vscode "aaron-bond.better-comments"
 # vscode "akamud.vscode-theme-onedark"
 # vscode "akamud.vscode-theme-onelight"

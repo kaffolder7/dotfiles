@@ -65,7 +65,6 @@ theme = Ayu
 # font-family = MesloLGS Nerd Font
 # font-family = JetBrainsMono Nerd Font
 font-family = JetBrainsMono NFM Regular
-# font-family = FiraCode Nerd Font
 font-size = 14
 
 window-padding-x = 10
