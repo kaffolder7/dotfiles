@@ -44,7 +44,7 @@ To overwrite existing files without backups:
 - Copy `git/.gitconfig.local.example` to `~/.gitconfig.local` and edit. -->
 
 Features:
-- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) _([instant prompt](https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#instant-prompt) enabled)_<!-- - [Starship](https://starship.rs/) prompt -->
+- [Powerlevel10k](https://github.com/romkatv/powerlevel10k) _([instant prompt](https://github.com/romkatv/powerlevel10k?tab=readme-ov-file#instant-prompt) enabled)_ 🚀<!-- - [Starship](https://starship.rs/) prompt -->
 - Cached completions
 - [Autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) + [autocomplete](https://github.com/marlonrichert/zsh-autocomplete)
 - [Syntax highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/) (loaded last)
