@@ -1,0 +1,46 @@
+#!/usr/bin/env sh
+set -e
+
+ok()   { printf "✔ %s\n" "$1"; }
+warn() { printf "⚠ %s\n" "$1"; }
+info() { printf "ℹ %s\n" "$1"; }
+
+echo "Dotfiles doctor"
+echo "----------------"
+
+# Route
+if [ "$DOTFILES_ROUTE" = "hm" ]; then
+  ok "DOTFILES_ROUTE=hm"
+  command -v home-manager >/dev/null \
+    && ok "Home Manager available" \
+    || warn "DOTFILES_ROUTE=hm but home-manager not found"
+else
+  ok "DOTFILES_ROUTE=standalone"
+fi
+
+# XDG
+: "${XDG_CONFIG_HOME:=$HOME/.config}"
+: "${XDG_CACHE_HOME:=$HOME/.cache}"
+: "${XDG_STATE_HOME:=$HOME/.local/state}"
+
+[ -d "$XDG_CONFIG_HOME" ] && ok "XDG_CONFIG_HOME exists"
+[ -d "$XDG_CACHE_HOME/zsh" ] && ok "zsh cache dir exists" || warn "zsh cache dir missing"
+[ -w "$XDG_STATE_HOME" ] && ok "XDG_STATE_HOME writable" || warn "XDG_STATE_HOME not writable"
+
+# Secrets
+SECRETS="$XDG_CONFIG_HOME/secrets"
+if [ -d "$SECRETS" ]; then
+  ok "Secrets directory exists"
+  for f in openai_api_key_llm openai_api_key_codex openai_api_key; do
+    [ -f "$SECRETS/$f" ] && ok "$f present"
+  done
+else
+  warn "Secrets directory missing"
+fi
+
+# Tools
+command -v llm   >/dev/null && ok "llm available"   || warn "llm missing"
+command -v codex >/dev/null && ok "codex available" || warn "codex missing"
+
+echo
+echo "Doctor finished."
