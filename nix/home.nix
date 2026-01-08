@@ -208,6 +208,7 @@
 
   # Aliases
   home.shellAliases = {
+    b2 = "backblaze-b2";
     code = "code-insiders";
   };
 
