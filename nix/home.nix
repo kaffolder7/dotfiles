@@ -127,6 +127,18 @@
     # Vim-fork focused on extensibility and usability
     pkgs.neovim
 
+    # nodejs_24
+    # Event-driven I/O framework for the V8 JavaScript engine
+    # pkgs.nodejs_24
+
+    # nodenv
+    # Manage multiple NodeJS versions
+    # pkgs.nodenv
+
+    # nodeenv
+    # Node.js virtual environment builder
+    # pkgs.nodeenv
+
     # pandoc
     # Conversion between documentation formats
     # pkgs.pandoc
@@ -162,6 +174,10 @@
     # tmux
     # Terminal multiplexer
     # pkgs.tmux
+
+    # uv
+    # Extremely fast Python package installer and resolver, written in Rust
+    # pkgs.uv
 
     # wget
     # Tool for retrieving files using HTTP, HTTPS, and FTP

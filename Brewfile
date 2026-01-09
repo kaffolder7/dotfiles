@@ -106,6 +106,16 @@ brew "nano"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 
+# Open-source, cross-platform JavaScript runtime environment
+# brew "node"  # or brew "node@25"
+# brew "node@24"
+
+# Node.js version manager
+# brew "nodenv"
+
+# Node.js virtual environment builder
+# brew "nodeenv"
+
 # Swiss-army knife of markup format conversion
 # brew "pandoc"
 
@@ -116,6 +126,7 @@ brew "neovim"
 # brew "pyenv"
 
 # Interpreted, interactive, object-oriented programming language
+# brew "python"
 # brew "python@3.14"
 
 # Pack repository contents into a single AI-friendly file
@@ -135,6 +146,9 @@ brew "sevenzip"
 
 # Terminal multiplexer
 # brew "tmux"
+
+# Extremely fast Python package installer and resolver, written in Rust
+# brew "uv"
 
 # Internet file retriever
 # brew "wget"
