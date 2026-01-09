@@ -59,8 +59,8 @@
 # theme = TokyoNight Night
 # theme = "light:Monokai Pro Light,dark:Monokai Pro"
 # theme = "light:Horizon Bright,dark:Broadcast"
-theme = "light:Ayu Light,dark:Ayu"
-# theme = Ayu
+# theme = "light:Ayu Light,dark:Ayu"
+theme = Ayu
 
 # font-family = MesloLGS Nerd Font
 # font-family = JetBrainsMono Nerd Font
