@@ -6,6 +6,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
+  # id-token: write  # if I want FlakeHub Cache, add this permission
   contents: write
   pull-requests: write
 
@@ -33,11 +34,11 @@ jobs:
         run: nix develop -c ./scripts/update-bbrew.sh
 
       # - name: Build bbrew
-      #   run: nix build .#bbrew -L
+      #   run: nix build .#bbrew -L --no-link
 
       # Build what I actually care about (activation package), not just .#bbrew
       # - name: Build Home Manager activation package
-      #   run: nix build .#homeConfigurations.default.activationPackage -L
+      #   run: nix build .#homeConfigurations.default.activationPackage -L --no-link
 
       # Replace build step (above) with the following, since I run flake checks
       # This will build both `checks.${system}.bbrew` and `checks.${system}.home`

@@ -1,3 +1,7 @@
+# Ignore nix convenience symlinks
+/result
+result
+
 .DS_Store
 *backup*
 *repomix*

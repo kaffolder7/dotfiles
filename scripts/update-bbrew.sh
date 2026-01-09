@@ -77,7 +77,7 @@ fi
 
 # 4) Compute vendorHash by triggering buildGoModule hash failure and reading the "got:" line
 set +e
-build_out="$(cd "$REPO_ROOT" && nix build .#bbrew -L 2>&1)"
+build_out="$(cd "$REPO_ROOT" && nix build .#bbrew -L --no-link 2>&1)"
 status=$?
 set -e
 

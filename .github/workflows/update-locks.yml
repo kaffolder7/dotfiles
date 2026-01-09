@@ -6,6 +6,7 @@ on:
   workflow_dispatch: {}
 
 permissions:
+  # id-token: write  # if I want FlakeHub Cache, add this permission
   contents: write
   pull-requests: write
 
@@ -31,7 +32,7 @@ jobs:
         run: nix flake lock --update-input nixpkgs
 
       - name: Build home configuration
-        run: nix build .#homeConfigurations.default.activationPackage -L
+        run: nix build .#homeConfigurations.default.activationPackage -L --no-link
 
       - name: Create PR
         uses: peter-evans/create-pull-request@v6
