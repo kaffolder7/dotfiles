@@ -11,15 +11,13 @@ buildGoModule rec {
     owner = "Valkyrie00";
     repo  = "bold-brew";
     rev   = "v${version}";
-    # Fill this in after the first build attempt (see step 3)
-    hash  = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    hash  = "sha256-wcyaUu1OMh5O0haZd7QAAoDydnkzGPIUCohz6zcLT+M=";
   };
 
   # The Go main package lives here:
   subPackages = [ "cmd/bbrew" ];
 
-  # Fill this in after the first build attempt (see step 3)
-  vendorHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+  vendorHash = "sha256-5gFyfyerRKfq0uGkyIJ1W4XLhyRR5qPyhc/f2Y2skrI=";
 
   # Optional: helps keep outputs small
   ldflags = [
