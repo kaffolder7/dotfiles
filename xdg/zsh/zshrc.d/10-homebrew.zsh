@@ -1,4 +1,4 @@
-# Homebrew: initialize PATH/env once, even if brew isn't on PATH yet.
+# Homebrew: fast init using a cached shellenv, with fallback when brew isn't on PATH yet.
 brew_bin=""
 
 if (( $+commands[brew] )); then
@@ -10,8 +10,14 @@ elif [[ -x /usr/local/bin/brew ]]; then
 fi
 
 if [[ -n "$brew_bin" ]]; then
-  # Only run shellenv if Homebrew env vars aren't already present.
-  if [[ -z "${HOMEBREW_PREFIX-}" || -z "${HOMEBREW_CELLAR-}" || -z "${HOMEBREW_REPOSITORY-}" ]]; then
-    eval "$("$brew_bin" shellenv)"
+  cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/zsh"
+  cache_file="$cache_dir/brew-shellenv.zsh"
+  mkdir -p "$cache_dir"
+
+  # Only (re)generate cache when needed
+  if [[ ! -f "$cache_file" || "$brew_bin" -nt "$cache_file" ]]; then
+    "$brew_bin" shellenv >| "$cache_file" 2>/dev/null
   fi
+
+  source "$cache_file"
 fi
