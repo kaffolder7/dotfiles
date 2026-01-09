@@ -15,7 +15,11 @@
     { self, nixpkgs, home-manager, ... }:
     let
       # Use the host system automatically (e.g. aarch64-darwin, x86_64-darwin, x86_64-linux, aarch64-linux)
-      system = builtins.currentSystem;
+      # system = builtins.currentSystem;
+      # system = if builtins.elem (builtins.getEnv "NIX_SYSTEM") [ "aarch64-darwin" "x86_64-darwin" ]
+      #   then builtins.getEnv "NIX_SYSTEM"
+      #   else "aarch64-darwin";
+      system = "aarch64-darwin";
 
       # pkgs = nixpkgs.legacyPackages.${system};
       pkgs = import nixpkgs {
@@ -25,7 +29,10 @@
 
       # Pull from the environment so we don't hardcode it.
       # NOTE: requires `--impure` when evaluating the flake.
-      username = builtins.getEnv "USER";
+      # username = builtins.getEnv "USER";
+      username =
+        let u = builtins.getEnv "USER";
+        in if u != "" then u else "kyleaffolder";
     in
     {
       overlays.default = import ./nix/overlays/default.nix;
@@ -35,6 +42,26 @@
       #   let pkgs = import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
       #   in pkgs.bbrew;
       packages.${system}.bbrew = pkgs.bbrew;
+
+      # Nix flake checks (so CI can just run `nix flake check`)
+      checks.${system} = {
+        # Ensure the custom package builds
+        bbrew = self.packages.${system}.bbrew;
+
+        # Ensure the full Home Manager activation package builds
+        home = self.homeConfigurations.default.activationPackage;
+      };
+
+      # devShell is cleaner for “update scripts + maintenance tooling” (and makes CI/local runs more consistent).
+      # can be ran with `nix develop -c ./scripts/update-bbrew.sh`
+      devShells.${system}.default = pkgs.mkShell {
+        packages = with pkgs; [
+          curl
+          jq
+          nix-prefetch-github
+          git
+        ];
+      };
 
       # Use a stable output name (so it doesn't depend on username.)
       homeConfigurations.default = home-manager.lib.homeManagerConfiguration {

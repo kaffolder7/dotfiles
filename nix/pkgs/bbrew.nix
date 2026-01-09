@@ -10,6 +10,7 @@ buildGoModule rec {
   src = fetchFromGitHub {
     owner = "Valkyrie00";
     repo  = "bold-brew";
+    # rev   = "v2.2.1";
     rev   = "v${version}";
     hash  = "sha256-wcyaUu1OMh5O0haZd7QAAoDydnkzGPIUCohz6zcLT+M=";
   };

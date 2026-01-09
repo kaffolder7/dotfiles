@@ -1,0 +1,39 @@
+name: Update bbrew
+
+on:
+  schedule:
+    - cron: "0 14 * * 1"   # Mondays
+  workflow_dispatch: {}
+
+jobs:
+  update:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeterminateSystems/nix-installer-action@v12
+      - uses: DeterminateSystems/magic-nix-cache-action@v7
+
+      # - name: Update bbrew
+      #   run: ./scripts/update-bbrew.sh
+      - name: Update bbrew (inside devShell)
+        run: nix develop -c ./scripts/update-bbrew.sh
+
+      # - name: Build bbrew
+      #   run: nix build .#bbrew -L
+
+      # Build what I actually care about (activation package), not just .#bbrew
+      # - name: Build Home Manager activation package
+      #   run: nix build .#homeConfigurations.default.activationPackage -L
+
+      # Replace build step (above) with the following, since I run flake checks
+      # This will build both `checks.${system}.bbrew` and `checks.${system}.home`
+      - name: Flake checks
+        run: nix flake check -L
+
+      - name: Create PR
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "chore: update bbrew"
+          title: "Update bbrew"
+          branch: "bot/update-bbrew"
+          delete-branch: true

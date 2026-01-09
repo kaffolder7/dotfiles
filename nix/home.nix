@@ -5,6 +5,7 @@
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = username;
+  # home.username = "kyleaffolder";
   home.homeDirectory =
     if pkgs.stdenv.isDarwin
     then "/Users/${username}"
@@ -112,7 +113,7 @@
 
     # jq
     # Lightweight and flexible command-line JSON processor
-    # pkgs.jq
+    pkgs.jq
 
     # LLM
     # Access large language models from the command-line
@@ -131,6 +132,10 @@
     # Neovim
     # Vim-fork focused on extensibility and usability
     pkgs.neovim
+
+    # nix-prefetch-github
+    # Prefetch sources from github
+    pkgs.nix-prefetch-github
 
     # nodejs_24
     # Event-driven I/O framework for the V8 JavaScript engine
