@@ -16,11 +16,17 @@
 # -	Run brew bundle
 # -	Works well for a “main laptop → secondary laptop” setup
 
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+
+# B2 Cloud Storage Command-Line Tools
+brew "b2-tools"
+
+# OpenAI's coding agent that runs in your terminal
+brew "codex"
+
 # Container runtimes on MacOS (and Linux) with minimal setup
 brew "colima"
-
-# Pack, ship and run any application as a lightweight container
-brew "docker"
 
 # Create and run Linux containers using lightweight virtual machines
 brew "container"
@@ -28,14 +34,68 @@ brew "container"
 # Manage Apple Container with Docker Compose files
 brew "container-compose"
 
+# Get a file from an HTTP, HTTPS or FTP server
+brew "curl"
+
+# Pack, ship and run any application as a lightweight container
+brew "docker"
+
+# CLI for interacting with Doppler secrets and configuration
+# brew "doppler"
+
+# Modern, maintained replacement for ls
+brew "eza"
+
+# Like neofetch, but much faster because written mostly in C
+brew "fastfetch"
+
+# Simple, fast and user-friendly alternative to find
+brew "fd"
+
+# Command-line fuzzy finder written in Go
+# brew "fzf"
+
+# GitHub command-line tool
+brew "gh"
+
+# GNU utilities for networking
+# brew "inetutils"
+
+# Lightweight and flexible command-line JSON processor
+brew "jq"
+
 # Terminal UI for Apple Containers
 brew "lazycontainer"
 
 # Access large language models from the command-line
 brew "llm"
 
-# OpenAI's coding agent that runs in your terminal
-brew "codex"
+# Free (GNU) replacement for the Pico text editor
+brew "nano"
+
+# Improved Nano Syntax Highlighting Files
+# brew "nanorc"
+
+# Ambitious Vim-fork focused on extensibility and agility
+brew "neovim"
+
+# Password manager
+# brew "pass"
+
+# Pack repository contents into a single AI-friendly file
+brew "repomix"
+
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+
+# Organize software neatly under a single directory tree (e.g. /usr/local)
+# brew "stow"
+
+# Terminal multiplexer
+# brew "tmux"
+
+# Shell extension to navigate your filesystem faster
+# brew "zoxide"
 
 # Zsh configuration
 brew "zsh-autosuggestions"

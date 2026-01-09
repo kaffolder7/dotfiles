@@ -30,9 +30,17 @@
     # Get syntax highlighting, line numbers, and Git integration.
     pkgs.bat
 
-    # Codex CLI
+    # (OpenAI) Codex CLI
     # Lightweight coding agent that runs in your terminal
     pkgs.codex
+
+    # curl
+    # Command line tool for transferring files with URL syntax
+    pkgs.curl
+
+    # doppler
+    # Official CLI for interacting with your Doppler Enclave secrets and configuration
+    # pkgs.doppler
 
     # Eza is a better `ls`.
     # Get colors, icons, tree views, Git status.
@@ -42,8 +50,24 @@
     # Fetches system information and displays it in a visually appealing way.
     pkgs.fastfetch
 
+    # fd
+    # Simple, fast and user-friendly alternative to find
+    pkgs.fd
+
+    # fzf
+    # Command-line fuzzy finder written in Go
+    # pkgs.fzf
+
+    # gh
+    # GitHub CLI tool
+    pkgs.gh
+
     # Provides `telnet`
     # pkgs.inetutils
+
+    # jq
+    # Lightweight and flexible command-line JSON processor
+    pkgs.jq
 
     # LLM
     # Access large language models from the command-line
@@ -51,14 +75,44 @@
     # pkgs.llm.withPlugins [ ... ]
     # (pkgs.llm.withPlugins [ /* plugin derivations here */ ])
 
+    # nano
+    # Small, user-friendly console text editor
+    pkgs.nano
+
+    # nanorc
+    # Improved Nano Syntax Highlighting Files
+    # pkgs.nanorc
+
     # Neovim
     # Vim-fork focused on extensibility and usability
     pkgs.neovim
 
-    pkgs.curl
-    pkgs.jq
-    pkgs.nano
+    # pass
+    # Stores, retrieves, generates, and synchronizes passwords securely
+    # pkgs.pass
+
+    # repomix
+    # Tool to pack repository contents to single file for AI consumption
     pkgs.repomix
+
+    # ripgrep
+    # Utility that combines the usability of The Silver Searcher with the raw speed of grep
+    pkgs.ripgrep
+
+    # stow
+    # Tool for managing the installation of multiple software packages in the same run-time directory tree
+    # pkgs.stow
+
+    # tmux
+    # Terminal multiplexer
+    # pkgs.tmux
+
+    # Zoxide
+    # Fast cd command that learns your habits
+    # pkgs.zoxide
+
+    # zsh-powerlevel10k
+    # Fast reimplementation of Powerlevel9k ZSH theme
     pkgs.zsh-powerlevel10k
   ];
 
@@ -176,12 +230,14 @@
     ];
 
     shellAliases = {
+      # cat = "bat";
       g = "git";
       gs = "git status";
       # l = "eza -lah --git-repos --header --icons";
       ll = "eza -lao --git-repos --header --icons";
       ls = "eza -lao --git-repos --header --icons";
       vim = "nvim";
+      # z = "zoxide";
     };
   };
 
