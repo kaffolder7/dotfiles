@@ -22,6 +22,18 @@
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = [
+    # atuin
+    # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
+    # pkgs.atuin
+
+    # atuin-desktop
+    # Local-first, executable runbook editor
+    # pkgs.atuin-desktop
+
+    # axel
+    # Console downloading program with some features for parallel connections for faster downloading
+    # pkgs.axel
+
     # Backblaze B2
     # Command-line tool for accessing the Backblaze B2 storage service
     pkgs.backblaze-b2
@@ -30,6 +42,10 @@
     # Get syntax highlighting, line numbers, and Git integration.
     pkgs.bat
 
+    # broot
+    # Interactive tree view, a fuzzy search, a balanced BFS descent and customizable commands
+    # pkgs.broot
+
     # (OpenAI) Codex CLI
     # Lightweight coding agent that runs in your terminal
     pkgs.codex
@@ -37,6 +53,10 @@
     # curl
     # Command line tool for transferring files with URL syntax
     pkgs.curl
+
+    # direnv
+    # Shell extension that manages your environment
+    pkgs.direnv
 
     # doppler
     # Official CLI for interacting with your Doppler Enclave secrets and configuration
@@ -54,6 +74,10 @@
     # Simple, fast and user-friendly alternative to find
     pkgs.fd
 
+    # ffmpeg
+    # Complete, cross-platform solution to record, convert and stream audio and video
+    # pkgs.ffmpeg
+
     # fzf
     # Command-line fuzzy finder written in Go
     # pkgs.fzf
@@ -62,12 +86,28 @@
     # GitHub CLI tool
     pkgs.gh
 
+    # git
+    # Distributed version control system
+    pkgs.git
+
+    # git-lfs
+    # Git extension for versioning large files
+    pkgs.git-lfs
+
+    # gnupg
+    # Modern release of the GNU Privacy Guard, a GPL OpenPGP implementation
+    # pkgs.gnupg
+
+    # helix
+    # Post-modern modal text editor
+    # pkgs.helix
+
     # Provides `telnet`
     # pkgs.inetutils
 
     # jq
     # Lightweight and flexible command-line JSON processor
-    pkgs.jq
+    # pkgs.jq
 
     # LLM
     # Access large language models from the command-line
@@ -87,9 +127,21 @@
     # Vim-fork focused on extensibility and usability
     pkgs.neovim
 
+    # pandoc
+    # Conversion between documentation formats
+    # pkgs.pandoc
+
     # pass
     # Stores, retrieves, generates, and synchronizes passwords securely
     # pkgs.pass
+
+    # pyenv
+    # Simple Python version management
+    # pkgs.pyenv
+
+    # python314
+    # High-level dynamically-typed programming language
+    # pkgs.python314
 
     # repomix
     # Tool to pack repository contents to single file for AI consumption
@@ -99,6 +151,10 @@
     # Utility that combines the usability of The Silver Searcher with the raw speed of grep
     pkgs.ripgrep
 
+    # speedtest-cli
+    # Command line interface for testing internet bandwidth using speedtest.net
+    # pkgs.speedtest-cli
+
     # stow
     # Tool for managing the installation of multiple software packages in the same run-time directory tree
     # pkgs.stow
@@ -106,6 +162,14 @@
     # tmux
     # Terminal multiplexer
     # pkgs.tmux
+
+    # wget
+    # Tool for retrieving files using HTTP, HTTPS, and FTP
+    # pkgs.wget
+
+    # yt-dlp
+    # Feature-rich command-line audio/video downloader
+    pkgs.yt-dlp
 
     # Zoxide
     # Fast cd command that learns your habits

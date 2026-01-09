@@ -16,11 +16,20 @@
 # -	Run brew bundle
 # -	Works well for a “main laptop → secondary laptop” setup
 
-# Clone of cat(1) with syntax highlighting and Git integration
-brew "bat"
+# Improved shell history for zsh, bash, fish and nushell
+# brew "atuin"
+
+# Light UNIX download accelerator
+# brew "axel"
 
 # B2 Cloud Storage Command-Line Tools
 brew "b2-tools"
+
+# Clone of cat(1) with syntax highlighting and Git integration
+brew "bat"
+
+# New way to see and navigate directory trees
+# brew "broot"
 
 # OpenAI's coding agent that runs in your terminal
 brew "codex"
@@ -37,6 +46,9 @@ brew "container-compose"
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
 
+# Load/unload environment variables based on $PWD
+brew "direnv"
+
 # Pack, ship and run any application as a lightweight container
 brew "docker"
 
@@ -52,17 +64,32 @@ brew "fastfetch"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
 
+# Play, record, convert, and stream audio and video
+# brew "ffmpeg"
+
 # Command-line fuzzy finder written in Go
 # brew "fzf"
 
 # GitHub command-line tool
 brew "gh"
 
+# Distributed revision control system
+brew "git"
+
+# Git extension for versioning large files
+brew "git-lfs"
+
+# GNU Privacy Guard (OpenPGP
+# brew "gnupg"
+
+# Post-modern modal text editor
+# brew "helix"
+
 # GNU utilities for networking
 # brew "inetutils"
 
 # Lightweight and flexible command-line JSON processor
-brew "jq"
+# brew "jq"
 
 # Terminal UI for Apple Containers
 brew "lazycontainer"
@@ -79,8 +106,17 @@ brew "nano"
 # Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
 
+# Swiss-army knife of markup format conversion
+# brew "pandoc"
+
 # Password manager
 # brew "pass"
+
+# Python version management
+# brew "pyenv"
+
+# Interpreted, interactive, object-oriented programming language
+# brew "python@3.14"
 
 # Pack repository contents into a single AI-friendly file
 brew "repomix"
@@ -88,11 +124,23 @@ brew "repomix"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 
+# 7-Zip is a file archiver with a high compression ratio
+brew "sevenzip"
+
+# Command-line interface for https://speedtest.net bandwidth tests
+# brew "speedtest-cli"
+
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 # brew "stow"
 
 # Terminal multiplexer
 # brew "tmux"
+
+# Internet file retriever
+# brew "wget"
+
+# Feature-rich command-line audio/video downloader
+brew "yt-dlp"
 
 # Shell extension to navigate your filesystem faster
 # brew "zoxide"
@@ -107,6 +155,188 @@ cask "font-jetbrains-mono-nerd-font"
 cask "font-meslo-for-powerlevel10k"
 cask "font-meslo-for-powerline"
 cask "font-meslo-lg-nerd-font"
+
+# macOS apps
+
+# Password manager that keeps all passwords secure behind one password
+# cask "1password"
+
+# Collection of apps and services for photography, design, video, web, and UX
+# cask "adobe-creative-cloud"
+
+# Enable Windows-like alt-tab
+# cask "alt-tab"
+
+# Application uninstaller
+# cask "appcleaner"
+
+# Multi-cloud backup application
+# cask "arq"
+
+# Runbook editor for terminal workflows
+# cask "atuin-desktop"
+
+# Tool to flash OS images to SD cards & USB drives
+# cask "balenaetcher"
+
+# Menu bar icon organiser
+# cask "bartender"
+
+# Desktop password and login vault
+# cask "bitwarden"
+
+# Send any size file between devices
+# cask "blip"
+
+# Utility to disconnect all drives connected to a Caldigit dock
+# cask "caldigit-docking-utility"
+
+# Hard disk backup and cloning utility
+# cask "carbon-copy-cloner"
+
+# Desktop app for GPT-4 / GPT-3.5 (OpenAI API)
+# cask "chatbox"
+
+# OpenAI's official ChatGPT desktop app
+# cask "chatgpt"
+
+# OpenAI's official browser with ChatGPT built in
+# cask "chatgpt-atlas"
+
+# Tool to remove unnecessary files and folders from disk
+# cask "cleanmymac"
+
+# Screen capturing tool
+# cask "cleanshot"
+
+# Application window manager focusing on simplicity
+# cask "divvy"
+
+# Window peeking utility app
+# cask "dockdoor"
+
+# File sharing solution
+# cask "dropshare"
+
+# Cross-platform Text Expander written in Rust
+# cask "espanso"
+
+# Web browser
+# cask "firefox"
+
+# GIT client
+# cask "fork"
+
+# Terminal emulator that uses platform-native UI and GPU acceleration
+# cask "ghostty"
+
+# Desktop client for GitHub repositories
+# cask "github"
+
+# Web browser
+# cask "google-chrome"
+
+# Companion app for Home Assistant home automation software
+# cask "home-assistant"
+
+# Tool to optimise images to a smaller size
+# cask "imageoptim"
+
+# Menu bar calendar
+# cask "itsycal"
+
+# Remote desktop application
+# cask "jump-desktop"
+
+# Remote desktop app
+# cask "jump-desktop-connect"
+
+# Spot and merge differences in text and image files or folders
+# cask "kaleidoscope"
+
+# File archiver
+# cask "keka"
+
+# Host-based application firewall
+# cask "little-snitch"
+
+# Display technical and tag data for video and audio files
+# cask "mediainfo"
+
+# Multi-platform web browser
+# cask "microsoft-edge"
+
+# Window dimming utility
+# cask "monocle-app"
+
+# Rename a list of files quickly
+# cask "namechanger"
+
+# Handy utility to manage and customize the notch area
+# cask "notchnook"
+
+# Collaboration platform for API development
+# cask "postman"
+
+# All-in-one bookmark manager
+# cask "raindropio"
+
+# Imaging utility to install operating systems to a microSD card
+# cask "raspberry-pi-imager"
+
+# Move and resize windows using keyboard shortcuts or snap areas
+# cask "rectangle"
+
+# Music streaming service
+# cask "spotify"
+
+# System monitor for the menu bar
+# cask "stats"
+
+# Window manager
+# cask "swift-shift"
+
+# Easiest, most secure way to use WireGuard and 2FA
+# cask "tailscale"
+
+# Messaging app with a focus on speed and security
+# cask "telegram"
+
+# Unpacks archive files
+# cask "the-unarchiver"
+
+# Time tracking aided by a physical device
+# cask "timeular"
+
+# To-do list
+# cask "todoist-app"
+
+# Open-source BitTorrent client
+# cask "transmission"
+
+# File transfer application
+# cask "transmit"
+
+# Configurable document editor that supports Markdown
+# cask "typora"
+
+# Turn websites into apps
+# cask "unite"
+
+# Tool to hide menu bar icons
+# cask "vanilla"
+
+# Disk encryption software focusing on security based on TrueCrypt
+# cask "veracrypt"
+
+# Open-source code editor
+# cask "visual-studio-code"
+
+# Open-source code editor
+# cask "visual-studio-code@insiders"
+
+# visual-studio-code@insiders
+# cask "vlc"
 
 # Themes/Extensions for VS Code
 # vscode "aaron-bond.better-comments"
