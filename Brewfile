@@ -28,6 +28,9 @@ brew "b2-tools"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 
+# The modern Terminal UI for managing Homebrew packages and casks on macOS and Linux.
+# brew "Valkyrie00/homebrew-bbrew/bbrew"
+
 # New way to see and navigate directory trees
 # brew "broot"
 
