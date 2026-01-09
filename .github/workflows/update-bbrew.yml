@@ -17,7 +17,15 @@ jobs:
         with:
           fetch-depth: 0
       - uses: DeterminateSystems/nix-installer-action@v12
+      # - uses: DeterminateSystems/magic-nix-cache-action@v7
+
+      # Turn off FlakeHub usage and keep using GitHub cache only
       - uses: DeterminateSystems/magic-nix-cache-action@v7
+        with:
+          use-flakehub: false
+          # use-gha-cache: false  # if cache upload is slow, can also disable GitHub caching
+          # optional: disables telemetry/diagnostics
+          diagnostic-endpoint: ""
 
       # - name: Update bbrew
       #   run: ./scripts/update-bbrew.sh
