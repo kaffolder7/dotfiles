@@ -11,7 +11,7 @@ buildGoModule rec {
     owner = "Valkyrie00";
     repo  = "bold-brew";
     # rev   = "v2.2.1";
-    rev   = "v${version}";
+    rev   = "v2.2.1";
     hash  = "sha256-wcyaUu1OMh5O0haZd7QAAoDydnkzGPIUCohz6zcLT+M=";
   };
 
