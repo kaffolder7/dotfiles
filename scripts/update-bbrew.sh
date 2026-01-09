@@ -54,13 +54,23 @@ echo "src.hash: $src_hash"
 
 # 3) Patch version + rev + src hash
 tmp="$(mktemp)"
+# awk -v version="$version" -v tag="$latest_release" -v src_hash="$src_hash" '
+#   { line=$0 }
+#   $0 ~ /version = "/ {
+#     sub(/version = "[^"]+"/, "version = \""version"\"", line)
+#   }
+#   $0 ~ /rev[[:space:]]*=[[:space:]]*"/ {
+#     sub(/rev[[:space:]]*=[[:space:]]*"[^"]+"/, "rev   = \""tag"\"", line)
+#   }
+#   $0 ~ /hash[[:space:]]*=[[:space:]]*"/ {
+#     sub(/hash[[:space:]]*=[[:space:]]*"[^"]+"/, "hash  = \""src_hash"\"", line)
+#   }
+#   { print line }
+# ' "$PKG_FILE" > "$tmp"
 awk -v version="$version" -v tag="$latest_release" -v src_hash="$src_hash" '
   { line=$0 }
   $0 ~ /version = "/ {
     sub(/version = "[^"]+"/, "version = \""version"\"", line)
-  }
-  $0 ~ /rev[[:space:]]*=[[:space:]]*"/ {
-    sub(/rev[[:space:]]*=[[:space:]]*"[^"]+"/, "rev   = \""tag"\"", line)
   }
   $0 ~ /hash[[:space:]]*=[[:space:]]*"/ {
     sub(/hash[[:space:]]*=[[:space:]]*"[^"]+"/, "hash  = \""src_hash"\"", line)
