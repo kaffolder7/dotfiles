@@ -16,13 +16,26 @@
     let
       # Use the host system automatically (e.g. aarch64-darwin, x86_64-darwin, x86_64-linux, aarch64-linux)
       system = builtins.currentSystem;
-      pkgs = nixpkgs.legacyPackages.${system};
+
+      # pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        overlays = [ self.overlays.default ];
+      };
 
       # Pull from the environment so we don't hardcode it.
       # NOTE: requires `--impure` when evaluating the flake.
       username = builtins.getEnv "USER";
     in
     {
+      overlays.default = import ./nix/overlays/default.nix;
+
+      # Optional: also expose the package directly from the flake
+      # packages.${system}.bbrew =
+      #   let pkgs = import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
+      #   in pkgs.bbrew;
+      packages.${system}.bbrew = pkgs.bbrew;
+
       # Use a stable output name (so it doesn't depend on username.)
       homeConfigurations.default = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;

@@ -44,7 +44,8 @@
 
     # bbrew
     # The modern Terminal UI for managing Homebrew packages and casks on macOS and Linux.
-    (pkgs.callPackage ./pkgs/bbrew.nix { })
+    # (pkgs.callPackage ./pkgs/bbrew.nix { })
+    pkgs.bbrew
 
     # broot
     # Interactive tree view, a fuzzy search, a balanced BFS descent and customizable commands
