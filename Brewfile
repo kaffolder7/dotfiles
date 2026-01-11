@@ -160,7 +160,7 @@ brew "sevenzip"
 brew "yt-dlp"
 
 # Shell extension to navigate your filesystem faster
-# brew "zoxide"
+brew "zoxide"
 
 # Zsh configuration
 brew "zsh-autosuggestions"

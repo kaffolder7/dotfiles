@@ -199,7 +199,7 @@
 
     # Zoxide
     # Fast cd command that learns your habits
-    # pkgs.zoxide
+    pkgs.zoxide
 
     # zsh-powerlevel10k
     # Fast reimplementation of Powerlevel9k ZSH theme
@@ -323,11 +323,11 @@
       # cat = "bat";
       g = "git";
       gs = "git status";
-      # l = "eza -lah --git-repos --header --icons";
+      l = "eza -lah --git-repos --header --icons";
       ll = "eza -lao --git-repos --header --icons";
       ls = "eza -lao --git-repos --header --icons";
       vim = "nvim";
-      # z = "zoxide";
+      z = "zoxide";
     };
   };
 
