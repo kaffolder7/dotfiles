@@ -25,6 +25,13 @@
       pkgs = import nixpkgs {
         inherit system;
         overlays = [ self.overlays.default ];
+
+        config = {
+          allowUnfreePredicate = pkg:
+            builtins.elem (nixpkgs.lib.getName pkg) [
+              "orbstack"
+            ];
+        };
       };
 
       # Pull from the environment so we don't hardcode it.

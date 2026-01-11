@@ -38,7 +38,15 @@ brew "bat"
 brew "codex"
 
 # Container runtimes on MacOS (and Linux) with minimal setup
-brew "colima"
+# brew "colima"
+# 
+# To run/create a virtual machine (for development), run:
+# ```
+# colima start --cpu 4 --memory 6 --disk 100 --vm-type=vz --mount-type=virtiofs --dns=1.1.1.1
+# ```
+
+# Dependency Manager for PHP
+brew "composer"
 
 # Create and run Linux containers using lightweight virtual machines
 brew "container"
@@ -54,6 +62,9 @@ brew "direnv"
 
 # Pack, ship and run any application as a lightweight container
 brew "docker"
+
+# Bash, Zsh and Fish completion for Docker
+# brew "docker-completion"
 
 # CLI for interacting with Doppler secrets and configuration
 # brew "doppler"
@@ -97,8 +108,21 @@ brew "git-lfs"
 # Terminal UI for Apple Containers
 brew "lazycontainer"
 
+# Linux virtual machines
+# brew "lima"
+# 
+# To run/create a virtual machine (for development), run:
+# ```
+# limactl create --name=default --vm-type=vz --mount-type=virtiofs --mount-writable --memory=6 --cpus=4 --disk=100 template://docker
+# docker context create lima-default --docker "host=unix://$HOME/.lima/default/sock/docker.sock"
+# docker context use lima-default
+# ```
+
 # Access large language models from the command-line
 brew "llm"
+
+# Simple tool to make locally trusted development certificates
+brew "mkcert"
 
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
@@ -291,6 +315,9 @@ cask "font-meslo-lg-nerd-font"
 
 # Handy utility to manage and customize the notch area
 # cask "notchnook"
+
+# Replacement for Docker Desktop
+cask "orbstack"
 
 # Collaboration platform for API development
 # cask "postman"

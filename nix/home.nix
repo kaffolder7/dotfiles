@@ -56,9 +56,21 @@
     # Lightweight coding agent that runs in your terminal
     pkgs.codex
 
+    # colima
+    # Container runtimes with minimal setup
+    # pkgs.colima
+
     # curl
     # Command line tool for transferring files with URL syntax
     pkgs.curl
+
+    # docker
+    # Open source project to pack, ship and run any application as a lightweight container
+    pkgs.docker
+
+    # ddev
+    # Docker-based local PHP+Node.js web development environments
+    pkgs.ddev
 
     # direnv
     # Shell extension that manages your environment
@@ -121,6 +133,10 @@
     # pkgs.llm.withPlugins [ ... ]
     # (pkgs.llm.withPlugins [ /* plugin derivations here */ ])
 
+    # mkcert
+    # Simple tool for making locally-trusted development certificates
+    pkgs.mkcert
+
     # nano
     # Small, user-friendly console text editor
     pkgs.nano
@@ -148,6 +164,10 @@
     # nodeenv
     # Node.js virtual environment builder
     # pkgs.nodeenv
+
+    # orbstack
+    # Fast, light, and easy way to run Docker containers and Linux machines
+    pkgs.orbstack
 
     # pandoc
     # Conversion between documentation formats
