@@ -17,7 +17,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "26.05";  # Please read the comment before changing.
+  home.stateVersion = "25.11";  # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -388,7 +388,8 @@
   #  – `/etc/profiles/per-user/<username>/etc/profile.d/hm-session-vars.sh`
   home.sessionVariables = {
     # COLORTERM = "truecolor";
-    EDITOR = "neovim";
+    EDITOR = "vim";
+    # EDITOR = "neovim";
     # INSTALL_OLLAMA_MODELS = 1;
     # OLLAMA_MODELS = "deepseek-r1:14b devstral-2 devstral-small-2 gpt-oss llama3.1:8b qwen3-coder:30b qwen2.5-coder:7b nishtahir/zeta lennyerik/zeta";
     # -- Best for refactors + codegen: qwen2.5-coder:latest/qwen2.5-coder:7b
