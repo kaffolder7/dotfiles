@@ -1,13 +1,14 @@
-# First run: `nix run github:nix-community/home-manager -- switch --flake .#default --impure`
-# Subsequent runs: `home-manager switch --flake .#default --impure`
+# Run:
+#  - `nix run github:nix-community/home-manager -- switch --flake .#macmini` ...once `home-manager` is on `PATH`, then run `home-manager switch --flake .#macmini`
+#  - `nix run github:nix-community/home-manager -- switch --flake .#mbp` ...once `home-manager` is on `PATH`, then run `home-manager switch --flake .#mbp`
 {
   description = "My Home Manager configuration";
 
   inputs = {
     # Specify the source of Home Manager and Nixpkgs.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -18,13 +19,16 @@
     };
   };
 
-  outputs =
-    { self, nixpkgs, home-manager, ghosttyOneDark, ... }:
+  outputs = { self, nixpkgs, home-manager, ghosttyOneDark, ... }:
     let
-      # Use the host system automatically (e.g. aarch64-darwin, x86_64-darwin, x86_64-linux, aarch64-linux)
-      system = "aarch64-darwin";
+      lib = nixpkgs.lib;
 
-      pkgs = import nixpkgs {
+      # Use the host system automatically (e.g. aarch64-darwin, x86_64-darwin, x86_64-linux, aarch64-linux)
+      supportedSystems = [ "aarch64-darwin" ];
+
+      forAllSystems = f: lib.genAttrs supportedSystems (system: f system);
+
+      mkPkgs = system: import nixpkgs {
         inherit system;
         overlays = [ self.overlays.default ];
 
@@ -37,49 +41,73 @@
         };
       };
 
-      # Pull from the environment so we don't hardcode it.
-      # NOTE: requires `--impure` when evaluating the flake.
-      username =
-        let u = builtins.getEnv "USER";
-        in if u != "" then u else "kyleaffolder";
+      # Helper to build a Home Manager config per host.
+      mkHome = {
+        system,
+        username,
+        hostName,
+        hostModules ? [ ],
+      }:
+        home-manager.lib.homeManagerConfiguration {
+          pkgs = mkPkgs system;
+
+          # Specify your home configuration modules here, for example, the path to your home.nix.
+          modules =
+            [
+              ./nix/home.nix
+            ]
+            ++ hostModules;
+
+          # Extra args your home.nix already expects (and a hostName you can use in modules)
+          extraSpecialArgs = {
+            inherit username ghosttyOneDark hostName;
+          };
+        };
     in
     {
       overlays.default = import ./nix/overlays/default.nix;
 
-      # Optional: also expose the package directly from the flake
-      packages.${system}.bbrew = pkgs.bbrew;
-
-      # Nix flake checks (so CI can just run `nix flake check`)
-      checks.${system} = {
-        # Ensure the custom package builds
-        bbrew = self.packages.${system}.bbrew;
-
-        # Ensure the full Home Manager activation package builds
-        home = self.homeConfigurations.default.activationPackage;
-      };
+      # Expose your custom package(s) for each supported system
+      packages = forAllSystems (system: let pkgs = mkPkgs system; in {
+        bbrew = pkgs.bbrew;
+      });
 
       # devShell is cleaner for “update scripts + maintenance tooling” (and makes CI/local runs more consistent).
       # can be ran with `nix develop -c ./scripts/update-bbrew.sh`
-      devShells.${system}.default = pkgs.mkShell {
-        packages = with pkgs; [
-          curl
-          jq
-          nix-prefetch-github
-          git
-        ];
+      devShells = forAllSystems (system: let pkgs = mkPkgs system; in {
+        default = pkgs.mkShell {
+          packages = with pkgs; [ curl jq nix-prefetch-github git ];
+        };
+      });
+
+      # Host-specific Home Manager outputs (pure; no --impure)
+      homeConfigurations = {
+        macmini = mkHome {
+          system = "aarch64-darwin";
+          username = "kyleaffolder";
+          hostName = "macmini";
+          hostModules = [ ./nix/hosts/macmini.nix ];
+        };
+
+        mbp = mkHome {
+          system = "aarch64-darwin";
+          username = "kyleaffolder";
+          hostName = "mbp";
+          hostModules = [ ./nix/hosts/mbp.nix ];
+        };
+
+        # Optional convenience target
+        default = self.homeConfigurations.macmini;
       };
 
-      # Use a stable output name (so it doesn't depend on username.)
-      homeConfigurations.default = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
+      # Nix flake checks (CI-friendly, so CI can just run `nix flake check`)
+      checks = forAllSystems (system: {
+        # Build custom packages
+        bbrew = self.packages.${system}.bbrew;
 
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./nix/home.nix ];
-
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
-        extraSpecialArgs = { inherit username ghosttyOneDark; };
-      };
+        # Build activation packages for your darwin hosts
+        home-macmini = self.homeConfigurations.macmini.activationPackage;
+        home-mbp = self.homeConfigurations.mbp.activationPackage;
+      });
     };
 }
