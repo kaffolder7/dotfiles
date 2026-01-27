@@ -59,12 +59,15 @@
 # theme = TokyoNight Night
 # theme = "light:Monokai Pro Light,dark:Monokai Pro"
 # theme = "light:Horizon Bright,dark:Broadcast"
+# theme = "light:Horizon Bright,dark:Ayu"
 # theme = "light:Ayu Light,dark:Ayu"
-theme = Ayu
+# theme = Ayu
+theme = "One Dark"
 
 # font-family = MesloLGS Nerd Font
 # font-family = JetBrainsMono Nerd Font
 font-family = JetBrainsMono NFM Regular
+# font-family = FiraCode Nerd Font
 font-size = 14
 
 window-padding-x = 10
@@ -89,3 +92,10 @@ background-blur = 90  # disable if big/4k displays feel sluggish on scrolling/an
 # background-blur-radius = 20
 # background-blur-radius = 30
 # unfocused-split-opacity = 0.96
+
+# keybind = cmd+left=ctrl+a
+# keybind = cmd+right=ctrl+e
+# keybind = cmd+left=unbind
+# keybind = cmd+right=unbind
+# keybind = cmd+left=text:\x01
+# keybind = cmd+right=text:\x05
