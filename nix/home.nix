@@ -410,7 +410,7 @@
   xdg.enable = true;
 
   # Manage Ghostty config
-  # xdg.configFile."ghostty/config".source = ../xdg/ghostty/config;
+  xdg.configFile."ghostty/config".source = ../xdg/ghostty/config;
 
   # Manage nano config (prefer XDG path on macOS/Linux)
   xdg.configFile."nano/nanorc".text = ''

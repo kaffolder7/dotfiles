@@ -1,4 +1,9 @@
-# This is a configuration file for Ghostty.
+# This is the configuration file for Ghostty.
+#
+# This template file has been automatically created at the following
+# path since Ghostty couldn't find any existing config files on your system:
+#
+#   /Users/{USERNAME}/Library/Application Support/com.mitchellh.ghostty/config
 #
 # The template does not set any default options, since Ghostty ships
 # with sensible defaults for all options. Users should only need to set
@@ -43,6 +48,12 @@
 # # Just for example:
 # resize-overlay-duration = 4s 200ms
 
+######################
+### GLOBAL OPTIONS ###
+######################
+
+# Theme settings
+# ------------------------------------------------------
 # theme = 0x96f
 # theme = Atom One Dark
 # theme = Catppuccin Mocha
@@ -64,12 +75,16 @@
 # theme = Ayu
 theme = "One Dark"
 
+# Font settings
+# ------------------------------------------------------
 # font-family = MesloLGS Nerd Font
 # font-family = JetBrainsMono Nerd Font
 font-family = JetBrainsMono NFM Regular
 # font-family = FiraCode Nerd Font
 font-size = 14
 
+# Window settings
+# ------------------------------------------------------
 window-padding-x = 10
 window-padding-y = 10
 window-decoration = true
@@ -87,15 +102,26 @@ window-save-state = always
 # background-opacity = 0.7
 # background-opacity = 0.9
 # background-opacity = 0.92
-background-opacity = 0.8  # disable if big/4k displays feel sluggish on scrolling/animation
-background-blur = 90  # disable if big/4k displays feel sluggish on scrolling/animation
+
+# disable if big/4k displays feel sluggish on scrolling/animation
+background-opacity = 0.8
+
+# disable if big/4k displays feel sluggish on scrolling/animation
+background-blur = 90
+
 # background-blur-radius = 20
 # background-blur-radius = 30
 # unfocused-split-opacity = 0.96
 
+# Keybindings
+# ------------------------------------------------------
 # keybind = cmd+left=ctrl+a
 # keybind = cmd+right=ctrl+e
 # keybind = cmd+left=unbind
 # keybind = cmd+right=unbind
 # keybind = cmd+left=text:\x01
 # keybind = cmd+right=text:\x05
+
+# Additional configuration
+# ------------------------------------------------------
+config-file = ?config.local
