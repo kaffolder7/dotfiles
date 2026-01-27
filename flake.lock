@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "ghosttyOneDark": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1739566954,
+        "narHash": "sha256-G6Vz4VMKikNjoPh4MWWs9qfk0kWksJqq3oGrL2Da718=",
+        "owner": "avesst",
+        "repo": "ghostty-onedark",
+        "rev": "e20415a18bf8927eba8d35e96f2f2af44e66ae52",
+        "type": "github"
+      },
+      "original": {
+        "owner": "avesst",
+        "repo": "ghostty-onedark",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -38,6 +54,7 @@
     },
     "root": {
       "inputs": {
+        "ghosttyOneDark": "ghosttyOneDark",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs"
       }

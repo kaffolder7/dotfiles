@@ -1,11 +1,10 @@
 # Run with `home-manager switch --flake .#default --impure`
-{ config, pkgs, lib, username, ... }:
+{ config, pkgs, lib, username, ghosttyOneDark, ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = username;
-  # home.username = "kyleaffolder";
   home.homeDirectory =
     if pkgs.stdenv.isDarwin
     then "/Users/${username}"
@@ -18,7 +17,7 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "26.05"; # Please read the comment before changing.
+  home.stateVersion = "26.05";  # Please read the comment before changing.
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -52,6 +51,14 @@
     # Interactive tree view, a fuzzy search, a balanced BFS descent and customizable commands
     # pkgs.broot
 
+    # claude-code
+    # Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster
+    pkgs.claude-code
+
+    # claude-monitor
+    # Real-time Claude Code usage monitor
+    # pkgs.claude-monitor
+
     # (OpenAI) Codex CLI
     # Lightweight coding agent that runs in your terminal
     pkgs.codex
@@ -64,10 +71,6 @@
     # Command line tool for transferring files with URL syntax
     pkgs.curl
 
-    # docker
-    # Open source project to pack, ship and run any application as a lightweight container
-    pkgs.docker
-
     # ddev
     # Docker-based local PHP+Node.js web development environments
     pkgs.ddev
@@ -75,6 +78,10 @@
     # direnv
     # Shell extension that manages your environment
     pkgs.direnv
+
+    # docker
+    # Open source project to pack, ship and run any application as a lightweight container
+    pkgs.docker
 
     # doppler
     # Official CLI for interacting with your Doppler Enclave secrets and configuration
@@ -129,7 +136,7 @@
 
     # LLM
     # Access large language models from the command-line
-    pkgs.llm
+    # pkgs.llm
     # pkgs.llm.withPlugins [ ... ]
     # (pkgs.llm.withPlugins [ /* plugin derivations here */ ])
 
@@ -165,9 +172,25 @@
     # Node.js virtual environment builder
     # pkgs.nodeenv
 
+    # nss
+    # Set of libraries for development of security-enabled client and server applications (necessary for `mkcert`)
+    pkgs.nss
+
+    # ollama
+    # Get up and running with large language models locally
+    # pkgs.ollama
+
+    # opencode
+    # AI coding agent built for the terminal
+    # pkgs.opencode
+
+    # openllm
+    # Run any open-source LLMs, such as Llama 3.1, Gemma, as OpenAI compatible API endpoint in the cloud
+    # pkgs.openllm
+
     # orbstack
     # Fast, light, and easy way to run Docker containers and Linux machines
-    pkgs.orbstack
+    # pkgs.orbstack
 
     # pandoc
     # Conversion between documentation formats
@@ -201,6 +224,14 @@
     # Tool for managing the installation of multiple software packages in the same run-time directory tree
     # pkgs.stow
 
+    # syncthing
+    # Open Source Continuous File Synchronization
+    # pkgs.syncthing
+
+    # syncthing-macos
+    # Official frugal and native macOS Syncthing application bundle
+    # pkgs.syncthing-macos
+
     # tmux
     # Terminal multiplexer
     # pkgs.tmux
@@ -209,13 +240,37 @@
     # Extremely fast Python package installer and resolver, written in Rust
     # pkgs.uv
 
+    # High-throughput and memory-efficient inference and serving engine for LLMs
+    # pkgs.vllm
+
+    # VS Code extensions
+    # pkgs.vscode-extensions.alefragnani.bookmarks
+    # pkgs.vscode-extensions.anthropic.claude-code
+    # pkgs.vscode-extensions.bbenoist.nix
+    # pkgs.vscode-extensions.dbaeumer.vscode-eslint
+    # pkgs.vscode-extensions.editorconfig.editorconfig
+    # pkgs.vscode-extensions.esbenp.prettier-vscode
+    # pkgs.vscode-extensions.github.vscode-github-actions
+    # pkgs.vscode-extensions.jgclark.vscode-todo-highlight
+    # pkgs.vscode-extensions.mechatroner.rainbow-csv
+    # pkgs.vscode-extensions.mikestead.dotenv
+    # pkgs.vscode-extensions.ms-python.debugpy
+    # pkgs.vscode-extensions.ms-python.python
+    # pkgs.vscode-extensions.ms-python.vscode-pylance
+    # pkgs.vscode-extensions.ms-vscode-remote.vscode-remote-extensionpack
+    # pkgs.vscode-extensions.teabyii.ayu
+
     # wget
     # Tool for retrieving files using HTTP, HTTPS, and FTP
     # pkgs.wget
 
     # yt-dlp
     # Feature-rich command-line audio/video downloader
-    pkgs.yt-dlp
+    # pkgs.yt-dlp
+
+    # zed-editor
+    # High-performance, multiplayer code editor from the creators of Atom and Tree-sitter
+    # pkgs.zed-editor
 
     # Zoxide
     # Fast cd command that learns your habits
@@ -248,20 +303,6 @@
     initContent = lib.mkMerge [
       # 500: very early (instant prompt must be above any output)
       (lib.mkOrder 500 ''
-        # ---- Output-producing stuff MUST be above instant prompt ----
-
-        # (Optional) If you were forcing TERM later, do NOT do that.
-        # Let your terminal set TERM. If you need truecolor hints:
-        # export COLORTERM="''${COLORTERM:-truecolor}"
-
-        # # Run fastfetch once, only in interactive shells
-        # if [[ -o interactive ]] && command -v fastfetch >/dev/null; then
-        #   if [[ -z "''${__FASTFETCH_RAN-}" ]]; then
-        #     __FASTFETCH_RAN=1
-        #     fastfetch
-        #   fi
-        # fi
-
         # Powerlevel10k instant prompt (must be near the top)
         if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
           source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
@@ -277,8 +318,6 @@
       # 550: before completion init (HM will run compinit; you can set styles here)
       (lib.mkOrder 550 ''
         # ---- Performance knobs ----
-        # mkdir -p "$XDG_CACHE_HOME/zsh"
-        # export ZSH_COMPDUMP="$XDG_CACHE_HOME/zcompdump-$ZSH_VERSION"
         mkdir -p "$XDG_CACHE_HOME/zsh" "$XDG_CACHE_HOME/zsh/zcompcache"
         export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
 
@@ -309,21 +348,13 @@
 
       # 1500: last — hooks, one-time fastfetch, etc.
       (lib.mkOrder 1500 ''
-        # Fast completion init: compile once, reuse cache
-        # autoload -Uz compinit
-        # compinit -C -d "$ZSH_COMPDUMP"
-
-        # alias -- code=code-insiders
-        # alias -- gs='git status'
-        # alias -- vim=nvim
-
-        # ---- Minimal, fast aliases (optional) ----
-        # alias ll='ls -lah'
-        # alias g='git'
+        # Disable the p10k wizard entirely – even with the file managed (`../xdg/zsh/.p10k.zsh`), this prevents surprises on new machines
+        typeset -g POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
 
         # ---- Prompt (P10k) ----
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-        [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+        # [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+        [[ -r "${ZDOTDIR:-$HOME}/.p10k.zsh" ]] && source "${ZDOTDIR:-$HOME}/.p10k.zsh"
 
         # ---- Run fastfetch once, after prompt is ready ----
         autoload -Uz add-zsh-hook
@@ -332,10 +363,6 @@
           command -v fastfetch >/dev/null && command fastfetch --pipe false
         }
         add-zsh-hook precmd _run_fastfetch_once
-
-        # ---- Ghostty nicety (optional) ----
-        # IMPORTANT: avoid forcing TERM here (it can break color detection/themes)
-        # export TERM=xterm-256color
       '')
     ];
 
@@ -355,27 +382,25 @@
   # 'home.sessionVariables'. These will be explicitly sourced when using a
   # shell provided by Home Manager. If you don't want to manage your shell
   # through Home Manager then you have to manually source 'hm-session-vars.sh'
-  # located at either
-  #
-  #  ~/.nix-profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  ~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh
-  #
-  # or
-  #
-  #  /etc/profiles/per-user/<username>/etc/profile.d/hm-session-vars.sh
-  #
+  # located at either:
+  #  – `~/.nix-profile/etc/profile.d/hm-session-vars.sh`
+  #  – `~/.local/state/nix/profiles/profile/etc/profile.d/hm-session-vars.sh`
+  #  – `/etc/profiles/per-user/<username>/etc/profile.d/hm-session-vars.sh`
   home.sessionVariables = {
     # COLORTERM = "truecolor";
     EDITOR = "neovim";
+    # INSTALL_OLLAMA_MODELS = 1;
+    # OLLAMA_MODELS = "deepseek-r1:14b devstral-2 devstral-small-2 gpt-oss llama3.1:8b qwen3-coder:30b qwen2.5-coder:7b nishtahir/zeta lennyerik/zeta";
+    # -- Best for refactors + codegen: qwen2.5-coder:latest/qwen2.5-coder:7b
+    # -- Fast “autocomplete-like” coding helper: starcoder2:3b (or :7b)
+    # -- General chat / planning / explaining code: llama3.1:latest/llama3.1:8b
   };
 
   # Aliases
   home.shellAliases = {
     b2 = "backblaze-b2";
-    code = "code-insiders";
+    # code = "code-insiders";
+    code = "zed";
   };
 
   # Let Home Manager install and manage itself.
@@ -384,11 +409,14 @@
   # Provide p10k instant prompt cache location
   xdg.enable = true;
 
+  # Manage Ghostty config
+  # xdg.configFile."ghostty/config".source = ../xdg/ghostty/config;
+
   # Manage nano config (prefer XDG path on macOS/Linux)
   xdg.configFile."nano/nanorc".text = ''
     ## Load all syntax definitions that come with nano in nixpkgs
     include ${pkgs.nano}/share/nano/*.nanorc
-    
+
     ## Nice defaults
     set linenumbers
     set mouse
@@ -399,6 +427,39 @@
     # set constantshow
   '';
 
-  xdg.configFile."zsh/zshrc.d/70-openai.zsh".source = ../xdg/zsh/zshrc.d/70-openai.zsh;
+  # xdg.configFile."ghostty/themes/One Dark".text = ''
+  #   # One Dark theme for Ghostty
+  #   palette = 0=#1e2127
+  #   palette = 1=#e06c75
+  #   palette = 2=#98c379
+  #   palette = 3=#d19a66
+  #   palette = 4=#61afef
+  #   palette = 5=#c678dd
+  #   palette = 6=#56b6c2
+  #   palette = 7=#abb2bf
+  #   palette = 8=#5c6370
+  #   palette = 9=#e06c75
+  #   palette = 10=#98c379
+  #   palette = 11=#d19a66
+  #   palette = 12=#61afef
+  #   palette = 13=#c678dd
+  #   palette = 14=#56b6c2
+  #   palette = 15=#ffffff
+  #   background = #1e2127
+  #   foreground = #abb2bf
+  # '';
+
+  # Ghostty: install One Dark theme into the custom themes dir
+  xdg.configFile."ghostty/themes/One Dark".source = "${ghosttyOneDark}/One Dark";
+
+  # Optional: manage Ghostty config too (only do this if you want HM owning the whole file)
+  # xdg.configFile."ghostty/config".text = ''
+  #   theme = "One Dark"
+  # '';
+
+  # Make p10k fully declarative under Home-Manager
+  xdg.configFile."zsh/.p10k.zsh".source = ../xdg/zsh/.p10k.zsh;
+
+  # xdg.configFile."zsh/zshrc.d/70-openai.zsh".source = ../xdg/zsh/zshrc.d/70-openai.zsh;
   xdg.configFile."zsh/zshrc.d/90-local.zsh".source = ../xdg/zsh/zshrc.d/90-local.zsh;
 }

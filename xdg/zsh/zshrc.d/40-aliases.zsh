@@ -1,7 +1,8 @@
 [[ "${DOTFILES_ROUTE-}" == "hm" ]] && return
 
 alias -- b2=backblaze-b2
-alias -- code=code-insiders
+# alias -- code=code-insiders
+alias -- code=zed
 alias -- gs='git status'
 alias -- vim=nvim
 alias -- z=zoxide

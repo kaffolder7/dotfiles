@@ -1,4 +1,5 @@
-# Run with `home-manager switch --flake .#default --impure`
+# First run: `nix run github:nix-community/home-manager -- switch --flake .#default --impure`
+# Subsequent runs: `home-manager switch --flake .#default --impure`
 {
   description = "My Home Manager configuration";
 
@@ -9,19 +10,20 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    # Ghossty "One Dark" theme repo
+    ghosttyOneDark = {
+      url = "github:avesst/ghostty-onedark";
+      flake = false;
+    };
   };
 
   outputs =
-    { self, nixpkgs, home-manager, ... }:
+    { self, nixpkgs, home-manager, ghosttyOneDark, ... }:
     let
       # Use the host system automatically (e.g. aarch64-darwin, x86_64-darwin, x86_64-linux, aarch64-linux)
-      # system = builtins.currentSystem;
-      # system = if builtins.elem (builtins.getEnv "NIX_SYSTEM") [ "aarch64-darwin" "x86_64-darwin" ]
-      #   then builtins.getEnv "NIX_SYSTEM"
-      #   else "aarch64-darwin";
       system = "aarch64-darwin";
 
-      # pkgs = nixpkgs.legacyPackages.${system};
       pkgs = import nixpkgs {
         inherit system;
         overlays = [ self.overlays.default ];
@@ -29,14 +31,14 @@
         config = {
           allowUnfreePredicate = pkg:
             builtins.elem (nixpkgs.lib.getName pkg) [
-              "orbstack"
+              "claude-code"
+              # "orbstack"
             ];
         };
       };
 
       # Pull from the environment so we don't hardcode it.
       # NOTE: requires `--impure` when evaluating the flake.
-      # username = builtins.getEnv "USER";
       username =
         let u = builtins.getEnv "USER";
         in if u != "" then u else "kyleaffolder";
@@ -45,9 +47,6 @@
       overlays.default = import ./nix/overlays/default.nix;
 
       # Optional: also expose the package directly from the flake
-      # packages.${system}.bbrew =
-      #   let pkgs = import nixpkgs { inherit system; overlays = [ self.overlays.default ]; };
-      #   in pkgs.bbrew;
       packages.${system}.bbrew = pkgs.bbrew;
 
       # Nix flake checks (so CI can just run `nix flake check`)
@@ -80,7 +79,7 @@
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
-        extraSpecialArgs = { inherit username; };
+        extraSpecialArgs = { inherit username ghosttyOneDark; };
       };
     };
 }
