@@ -1,6 +1,6 @@
-# Run:
-#  - `nix run github:nix-community/home-manager -- switch --flake .#macmini` ...once `home-manager` is on `PATH`, then run `home-manager switch --flake .#macmini`
-#  - `nix run github:nix-community/home-manager -- switch --flake .#mbp` ...once `home-manager` is on `PATH`, then run `home-manager switch --flake .#mbp`
+# Initial run:
+#  - `nix run github:nix-community/home-manager -- switch --flake .#macmini`, or...
+#  - `nix run github:nix-community/home-manager -- switch --flake .#mbp`
 {
   description = "My Home Manager configuration";
 

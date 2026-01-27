@@ -1,4 +1,6 @@
-# Run with `home-manager switch --flake .#default --impure`
+# Run (if `home-manager` is on `PATH`):
+#  - `home-manager switch --flake .#macmini`, or...
+#  - `home-manager switch --flake .#mbp`
 { config, pkgs, lib, username, ghosttyOneDark, ... }:
 
 {
@@ -388,8 +390,7 @@
   #  – `/etc/profiles/per-user/<username>/etc/profile.d/hm-session-vars.sh`
   home.sessionVariables = {
     # COLORTERM = "truecolor";
-    EDITOR = "vim";
-    # EDITOR = "neovim";
+    EDITOR = "nvim";
     # INSTALL_OLLAMA_MODELS = 1;
     # OLLAMA_MODELS = "deepseek-r1:14b devstral-2 devstral-small-2 gpt-oss llama3.1:8b qwen3-coder:30b qwen2.5-coder:7b nishtahir/zeta lennyerik/zeta";
     # -- Best for refactors + codegen: qwen2.5-coder:latest/qwen2.5-coder:7b
