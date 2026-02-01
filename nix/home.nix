@@ -158,6 +158,14 @@
     # Vim-fork focused on extensibility and usability
     pkgs.neovim
 
+    # nil
+    # Yet another language server for Nix (necessary for Zed editor?)
+    pkgs.nil
+
+    # nixd
+    # Feature-rich Nix language server interoperating with C++ nix (necessary for Zed editor?)
+    pkgs.nixd
+
     # nix-prefetch-github
     # Prefetch sources from github
     pkgs.nix-prefetch-github
