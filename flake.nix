@@ -19,7 +19,14 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ghosttyOneDark, ... }:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ghosttyOneDark,
+      ...
+    }:
     let
       lib = nixpkgs.lib;
 
@@ -28,35 +35,38 @@
 
       forAllSystems = f: lib.genAttrs supportedSystems (system: f system);
 
-      mkPkgs = system: import nixpkgs {
-        inherit system;
-        overlays = [ self.overlays.default ];
+      mkPkgs =
+        system:
+        import nixpkgs {
+          inherit system;
+          overlays = [ self.overlays.default ];
 
-        config = {
-          allowUnfreePredicate = pkg:
-            builtins.elem (nixpkgs.lib.getName pkg) [
-              "claude-code"
-              # "orbstack"
-            ];
+          config = {
+            allowUnfreePredicate =
+              pkg:
+              builtins.elem (nixpkgs.lib.getName pkg) [
+                "claude-code"
+                # "orbstack"
+              ];
+          };
         };
-      };
 
       # Helper to build a Home Manager config per host.
-      mkHome = {
-        system,
-        username,
-        hostName,
-        hostModules ? [ ],
-      }:
+      mkHome =
+        {
+          system,
+          username,
+          hostName,
+          hostModules ? [ ],
+        }:
         home-manager.lib.homeManagerConfiguration {
           pkgs = mkPkgs system;
 
           # Specify your home configuration modules here, for example, the path to your home.nix.
-          modules =
-            [
-              ./nix/home.nix
-            ]
-            ++ hostModules;
+          modules = [
+            ./nix/home.nix
+          ]
+          ++ hostModules;
 
           # Extra args your home.nix already expects (and a hostName you can use in modules)
           extraSpecialArgs = {
@@ -68,17 +78,34 @@
       overlays.default = import ./nix/overlays/default.nix;
 
       # Expose your custom package(s) for each supported system
-      packages = forAllSystems (system: let pkgs = mkPkgs system; in {
-        bbrew = pkgs.bbrew;
-      });
+      packages = forAllSystems (
+        system:
+        let
+          pkgs = mkPkgs system;
+        in
+        {
+          bbrew = pkgs.bbrew;
+        }
+      );
 
       # devShell is cleaner for “update scripts + maintenance tooling” (and makes CI/local runs more consistent).
       # can be ran with `nix develop -c ./scripts/update-bbrew.sh`
-      devShells = forAllSystems (system: let pkgs = mkPkgs system; in {
-        default = pkgs.mkShell {
-          packages = with pkgs; [ curl jq nix-prefetch-github git ];
-        };
-      });
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = mkPkgs system;
+        in
+        {
+          default = pkgs.mkShell {
+            packages = with pkgs; [
+              curl
+              jq
+              nix-prefetch-github
+              git
+            ];
+          };
+        }
+      );
 
       # Host-specific Home Manager outputs (pure; no --impure)
       homeConfigurations = {
