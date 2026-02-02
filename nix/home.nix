@@ -318,8 +318,10 @@
       (lib.mkOrder 500 ''
         # ---- Output-producing stuff MUST be above instant prompt ----
 
-        # Keep fast prompt, suppress warning
-        typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+        # Optional: only show in Ghostty (avoid ssh, tmux, etc.)
+        if [[ -o interactive ]] && [[ "${TERM_PROGRAM-}" == "ghostty" ]]; then
+          command -v fastfetch >/dev/null && fastfetch --pipe false
+        fi
 
         # Powerlevel10k instant prompt (must be near the top)
         if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
@@ -373,14 +375,6 @@
         source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
         # [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
         [[ -r "${"ZDOTDIR:-$HOME"}/.p10k.zsh" ]] && source "${"ZDOTDIR:-$HOME"}/.p10k.zsh"
-
-        # ---- Run fastfetch once, after prompt is ready ----
-        autoload -Uz add-zsh-hook
-        _run_fastfetch_once() {
-          add-zsh-hook -d precmd _run_fastfetch_once
-          command -v fastfetch >/dev/null && command fastfetch --pipe false
-        }
-        add-zsh-hook precmd _run_fastfetch_once
       '')
     ];
 
