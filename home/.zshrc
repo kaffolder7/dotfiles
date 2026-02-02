@@ -1,8 +1,5 @@
 # ---- Output-producing stuff MUST be above instant prompt ----
 
-# Keep fast prompt, suppress warning
-typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
-
 # Optional: only show in Ghostty (avoid ssh, tmux, etc.)
 if [[ -o interactive ]] && [[ "${TERM_PROGRAM-}" == "ghostty" ]]; then
   command -v fastfetch >/dev/null && fastfetch --pipe false
