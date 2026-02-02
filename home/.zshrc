@@ -1,5 +1,8 @@
 # ---- Output-producing stuff MUST be above instant prompt ----
 
+# Keep fast prompt, suppress warning
+typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
+
 # Powerlevel10k instant prompt (must be near the top)
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
