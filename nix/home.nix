@@ -319,7 +319,7 @@
         # ---- Output-producing stuff MUST be above instant prompt ----
 
         # Optional: only show in Ghostty (avoid ssh, tmux, etc.)
-        if [[ -o interactive ]] && [[ "${TERM_PROGRAM-}" == "ghostty" ]]; then
+        if [[ -o interactive ]] && [[ "''${TERM_PROGRAM-}" == "ghostty" ]]; then
           command -v fastfetch >/dev/null && fastfetch --pipe false
         fi
 
