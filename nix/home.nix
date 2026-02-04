@@ -276,10 +276,10 @@
   # ---------------------------------------------------------------------------
   # nodejs_24 - Event-driven I/O framework for the V8 JavaScript engine
   # ---------------------------------------------------------------------------
-  programs.npm = {
-    enable = true;
-    package = "nodejs_24";
-  };
+  # programs.npm = {
+  #   enable = true;
+  #   package = "nodejs_24";
+  # };
 
   # ---------------------------------------------------------------------------
   # OpenCode - AI coding agent built for the terminal
@@ -581,7 +581,8 @@
     # nanorc         # Improved Nano Syntax Highlighting Files
     # nodenv         # Manage multiple NodeJS versions
     # nodeenv        # Node.js virtual environment builder
-    # nodejs_24      # Node.js runtime
+    # nodejs         # Node.js runtime
+    # nodejs_24      # Node.js v24 runtime (latest)
     # ollama         # Local LLM server
     # opencode       # AI coding agent
     # openllm        # Run any open-source LLMs, such as Llama 3.1, Gemma, as OpenAI compatible API endpoint in the cloud

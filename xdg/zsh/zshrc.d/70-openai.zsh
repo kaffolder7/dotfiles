@@ -7,6 +7,9 @@
 #   ~/.config/secrets/openai_api_key_codex      (preferred)
 # ------------------------------------------------------------------------------
 
+# Skip if running under Home Manager (optional)
+# [[ "${DOTFILES_ROUTE-}" == "hm" ]] && return
+
 # Generic helper: read a secret from ~/.config/secrets/<file_name>
 # and export it to an environment variable.
 #
