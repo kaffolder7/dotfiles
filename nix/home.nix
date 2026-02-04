@@ -204,17 +204,19 @@
   # ---------------------------------------------------------------------------
   programs.git = {
     enable = true;
-    userName = "Kyle Affolder"; # Can be overridden in host-specific modules
-    userEmail = "kyleaffolder@gmail.com";
     lfs.enable = true; # Git extension for versioning large files
 
     # Default config (can be overridden in ~/.gitconfig.local)
-    extraConfig = {
+    settings = {
       init.defaultBranch = "main";
       core.editor = "nvim";
       # core.editor = "nano";
       push.autoSetupRemote = true;
       pull.rebase = false;
+
+      # User settings
+      user.name = "Kyle Affolder"; # Can be overridden in host-specific modules
+      user.email = "kyleaffolder@gmail.com";
 
       # Better diffs
       diff.algorithm = "histogram";
@@ -272,14 +274,6 @@
     vimAlias = true;
     vimdiffAlias = true;
   };
-
-  # ---------------------------------------------------------------------------
-  # nodejs_24 - Event-driven I/O framework for the V8 JavaScript engine
-  # ---------------------------------------------------------------------------
-  # programs.npm = {
-  #   enable = true;
-  #   package = "nodejs_24";
-  # };
 
   # ---------------------------------------------------------------------------
   # OpenCode - AI coding agent built for the terminal
@@ -605,13 +599,6 @@
   # Services with Dedicated Home Manager Modules
   # ===========================================================================
   # These provide shell integration, configuration options, and type safety.
-
-  # ---------------------------------------------------------------------------
-  # Colima - Container runtimes with minimal setup
-  # ---------------------------------------------------------------------------
-  services.colima = {
-    enable = true;
-  };
 
   # ---------------------------------------------------------------------------
   # Ollama - Get up and running with large language models locally
