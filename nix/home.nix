@@ -1,17 +1,29 @@
+# =============================================================================
+# Home Manager Configuration
+# =============================================================================
+#
 # Run (if `home-manager` is on `PATH`):
-#  - `home-manager switch --flake .#macmini`, or...
-#  - `home-manager switch --flake .#mbp`
+#   home-manager switch --flake .#macmini
+#   home-manager switch --flake .#mbp
+#
+# Or via nix run:
+#   nix run github:nix-community/home-manager -- switch --flake .#macmini
+#
 {
   pkgs,
   lib,
+  config,
   username,
   ghosttyOneDark,
+  hostName,
   ...
 }:
 
 {
-  # Home Manager needs a bit of information about you and the paths it should
-  # manage.
+  # ===========================================================================
+  # Core Configuration
+  # ===========================================================================
+
   home.username = username;
   home.homeDirectory = if pkgs.stdenv.isDarwin then "/Users/${username}" else "/home/${username}";
 
@@ -22,373 +34,18 @@
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
+  # https://home-manager-options.extranix.com/?query=stateVersion
   home.stateVersion = "25.11"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
-  home.packages = [
-    # atuin
-    # Replacement for a shell history which records additional commands context with optional encrypted synchronization between machines
-    # pkgs.atuin
-
-    # atuin-desktop
-    # Local-first, executable runbook editor
-    # pkgs.atuin-desktop
-
-    # axel
-    # Console downloading program with some features for parallel connections for faster downloading
-    # pkgs.axel
-
-    # Backblaze B2
-    # Command-line tool for accessing the Backblaze B2 storage service
-    pkgs.backblaze-b2
-
-    # Bat is a better `cat`.
-    # Get syntax highlighting, line numbers, and Git integration.
-    pkgs.bat
-
-    # bbrew
-    # The modern Terminal UI for managing Homebrew packages and casks on macOS and Linux.
-    # (pkgs.callPackage ./pkgs/bbrew.nix { })
-    pkgs.bbrew
-
-    # broot
-    # Interactive tree view, a fuzzy search, a balanced BFS descent and customizable commands
-    # pkgs.broot
-
-    # claude-code
-    # Agentic coding tool that lives in your terminal, understands your codebase, and helps you code faster
-    pkgs.claude-code
-
-    # claude-monitor
-    # Real-time Claude Code usage monitor
-    # pkgs.claude-monitor
-
-    # (OpenAI) Codex CLI
-    # Lightweight coding agent that runs in your terminal
-    pkgs.codex
-
-    # colima
-    # Container runtimes with minimal setup
-    # pkgs.colima
-
-    # curl
-    # Command line tool for transferring files with URL syntax
-    pkgs.curl
-
-    # ddev
-    # Docker-based local PHP+Node.js web development environments
-    pkgs.ddev
-
-    # direnv
-    # Shell extension that manages your environment
-    pkgs.direnv
-
-    # docker
-    # Open source project to pack, ship and run any application as a lightweight container
-    pkgs.docker
-
-    # doppler
-    # Official CLI for interacting with your Doppler Enclave secrets and configuration
-    # pkgs.doppler
-
-    # Eza is a better `ls`.
-    # Get colors, icons, tree views, Git status.
-    pkgs.eza
-
-    # FastFetch
-    # Fetches system information and displays it in a visually appealing way.
-    pkgs.fastfetch
-
-    # fd
-    # Simple, fast and user-friendly alternative to find
-    pkgs.fd
-
-    # ffmpeg
-    # Complete, cross-platform solution to record, convert and stream audio and video
-    # pkgs.ffmpeg
-
-    # fzf
-    # Command-line fuzzy finder written in Go
-    # pkgs.fzf
-
-    # gh
-    # GitHub CLI tool
-    pkgs.gh
-
-    # git
-    # Distributed version control system
-    pkgs.git
-
-    # git-lfs
-    # Git extension for versioning large files
-    pkgs.git-lfs
-
-    # gnupg
-    # Modern release of the GNU Privacy Guard, a GPL OpenPGP implementation
-    # pkgs.gnupg
-
-    # helix
-    # Post-modern modal text editor
-    # pkgs.helix
-
-    # Provides `telnet`
-    # pkgs.inetutils
-
-    # jq
-    # Lightweight and flexible command-line JSON processor
-    pkgs.jq
-
-    # LLM
-    # Access large language models from the command-line
-    # pkgs.llm
-    # pkgs.llm.withPlugins [ ... ]
-    # (pkgs.llm.withPlugins [ /* plugin derivations here */ ])
-
-    # mkcert
-    # Simple tool for making locally-trusted development certificates
-    pkgs.mkcert
-
-    # nano
-    # Small, user-friendly console text editor
-    pkgs.nano
-
-    # nanorc
-    # Improved Nano Syntax Highlighting Files
-    # pkgs.nanorc
-
-    # Neovim
-    # Vim-fork focused on extensibility and usability
-    pkgs.neovim
-
-    # nil
-    # Yet another language server for Nix (necessary for Zed editor?)
-    pkgs.nil
-
-    # nixd
-    # Feature-rich Nix language server interoperating with C++ nix (necessary for Zed editor?)
-    pkgs.nixd
-
-    # nix-prefetch-github
-    # Prefetch sources from github
-    pkgs.nix-prefetch-github
-
-    # nodejs_24
-    # Event-driven I/O framework for the V8 JavaScript engine
-    # pkgs.nodejs_24
-
-    # nodenv
-    # Manage multiple NodeJS versions
-    # pkgs.nodenv
-
-    # nodeenv
-    # Node.js virtual environment builder
-    # pkgs.nodeenv
-
-    # nss
-    # Set of libraries for development of security-enabled client and server applications (necessary for `mkcert`)
-    pkgs.nss
-
-    # ollama
-    # Get up and running with large language models locally
-    # pkgs.ollama
-
-    # opencode
-    # AI coding agent built for the terminal
-    # pkgs.opencode
-
-    # openllm
-    # Run any open-source LLMs, such as Llama 3.1, Gemma, as OpenAI compatible API endpoint in the cloud
-    # pkgs.openllm
-
-    # orbstack
-    # Fast, light, and easy way to run Docker containers and Linux machines
-    # pkgs.orbstack
-
-    # pandoc
-    # Conversion between documentation formats
-    # pkgs.pandoc
-
-    # pass
-    # Stores, retrieves, generates, and synchronizes passwords securely
-    # pkgs.pass
-
-    # pyenv
-    # Simple Python version management
-    # pkgs.pyenv
-
-    # python314
-    # High-level dynamically-typed programming language
-    # pkgs.python314
-
-    # repomix
-    # Tool to pack repository contents to single file for AI consumption
-    pkgs.repomix
-
-    # ripgrep
-    # Utility that combines the usability of The Silver Searcher with the raw speed of grep
-    pkgs.ripgrep
-
-    # speedtest-cli
-    # Command line interface for testing internet bandwidth using speedtest.net
-    # pkgs.speedtest-cli
-
-    # stow
-    # Tool for managing the installation of multiple software packages in the same run-time directory tree
-    # pkgs.stow
-
-    # syncthing
-    # Open Source Continuous File Synchronization
-    # pkgs.syncthing
-
-    # syncthing-macos
-    # Official frugal and native macOS Syncthing application bundle
-    # pkgs.syncthing-macos
-
-    # tmux
-    # Terminal multiplexer
-    # pkgs.tmux
-
-    # uv
-    # Extremely fast Python package installer and resolver, written in Rust
-    # pkgs.uv
-
-    # High-throughput and memory-efficient inference and serving engine for LLMs
-    # pkgs.vllm
-
-    # VS Code extensions
-    # pkgs.vscode-extensions.alefragnani.bookmarks
-    # pkgs.vscode-extensions.anthropic.claude-code
-    # pkgs.vscode-extensions.bbenoist.nix
-    # pkgs.vscode-extensions.dbaeumer.vscode-eslint
-    # pkgs.vscode-extensions.editorconfig.editorconfig
-    # pkgs.vscode-extensions.esbenp.prettier-vscode
-    # pkgs.vscode-extensions.github.vscode-github-actions
-    # pkgs.vscode-extensions.jgclark.vscode-todo-highlight
-    # pkgs.vscode-extensions.mechatroner.rainbow-csv
-    # pkgs.vscode-extensions.mikestead.dotenv
-    # pkgs.vscode-extensions.ms-python.debugpy
-    # pkgs.vscode-extensions.ms-python.python
-    # pkgs.vscode-extensions.ms-python.vscode-pylance
-    # pkgs.vscode-extensions.ms-vscode-remote.vscode-remote-extensionpack
-    # pkgs.vscode-extensions.teabyii.ayu
-
-    # wget
-    # Tool for retrieving files using HTTP, HTTPS, and FTP
-    # pkgs.wget
-
-    # yt-dlp
-    # Feature-rich command-line audio/video downloader
-    # pkgs.yt-dlp
-
-    # zed-editor
-    # High-performance, multiplayer code editor from the creators of Atom and Tree-sitter
-    # pkgs.zed-editor
-
-    # Zoxide
-    # Fast cd command that learns your habits
-    pkgs.zoxide
-
-    # zsh-powerlevel10k
-    # Fast reimplementation of Powerlevel9k ZSH theme
-    pkgs.zsh-powerlevel10k
-  ];
-
-  ############################################
-  # Zsh
-  ############################################
-  programs.zsh = {
-    enable = true;
-
-    enableCompletion = true;
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    autocd = true;
-
-    # Keep this minimal for speed
-    history = {
-      size = 10000;
-      save = 10000;
-      ignoreDups = true;
-      extended = true;
-    };
-
-    initContent = lib.mkMerge [
-      # 500: very early (instant prompt must be above any output)
-      (lib.mkOrder 500 ''
-        # ---- Output-producing stuff MUST be above instant prompt ----
-
-        # Optional: only show in Ghostty (avoid ssh, tmux, etc.)
-        if [[ -o interactive ]] && [[ "''${TERM_PROGRAM-}" == "ghostty" ]]; then
-          command -v fastfetch >/dev/null && fastfetch --pipe false
-        fi
-
-        # Powerlevel10k instant prompt (must be near the top)
-        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
-          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
-        fi
-
-        # Interactive-only from here down
-        [[ -o interactive ]] || return
-
-        export XDG_CACHE_HOME="''${XDG_CACHE_HOME:-$HOME/.cache}"
-        export XDG_CONFIG_HOME="''${XDG_CONFIG_HOME:-$HOME/.config}"
-      '')
-
-      # 550: before completion init (HM will run compinit; you can set styles here)
-      (lib.mkOrder 550 ''
-        # ---- Performance knobs ----
-        mkdir -p "$XDG_CACHE_HOME/zsh" "$XDG_CACHE_HOME/zsh/zcompcache"
-        export ZSH_COMPDUMP="$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION"
-
-        # Completion caching helps a lot (set styles before compinit)
-        zstyle ':completion:*' use-cache on
-        zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
-        zstyle ':completion:*' rehash true  # Reduce completion chattiness/overhead a bit
-
-        # Helps with menu selection / nicer completion lists
-        zmodload zsh/complist 2>/dev/null || true
-      '')
-
-      # 950: add a “mode” flag in HM and gate Brew modules
-      (lib.mkOrder 950 ''
-        export DOTFILES_ROUTE="hm"
-      '')
-
-      # 1000: general init — source your modular files (this is the missing piece)
-      (lib.mkOrder 1000 ''
-        local ZSHRC_DIR="$XDG_CONFIG_HOME/zsh/zshrc.d"
-        if [[ -d "$ZSHRC_DIR" ]]; then
-          for f in "$ZSHRC_DIR"/*.zsh(N); do
-            source "$f"
-          done
-        fi
-        unset f
-      '')
-
-      # 1500: last — hooks, one-time fastfetch, etc.
-      (lib.mkOrder 1500 ''
-        # Disable the p10k wizard entirely – even with the file managed (`../xdg/zsh/.p10k.zsh`), this prevents surprises on new machines
-        typeset -g POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
-
-        # ---- Prompt (P10k) ----
-        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
-        # [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-        [[ -r "${"ZDOTDIR:-$HOME"}/.p10k.zsh" ]] && source "${"ZDOTDIR:-$HOME"}/.p10k.zsh"
-      '')
-    ];
-
-    shellAliases = {
-      # cat = "bat";
-      g = "git";
-      gs = "git status";
-      l = "eza -lah --git-repos --header --icons";
-      ll = "eza -lao --git-repos --header --icons";
-      ls = "eza -lao --git-repos --header --icons";
-      vim = "nvim";
-      z = "zoxide";
-    };
-  };
+  # Let Home Manager install and manage itself
+  programs.home-manager.enable = true;
+
+  # Enable XDG base directories (provide p10k instant prompt cache location)
+  xdg.enable = true;
+
+  # ===========================================================================
+  # Environment Variables
+  # ===========================================================================
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
@@ -401,44 +58,589 @@
   home.sessionVariables = {
     # COLORTERM = "truecolor";
     EDITOR = "nvim";
-    # INSTALL_OLLAMA_MODELS = 1;
+    # Uncomment to enable Ollama model installation during setup
+    # INSTALL_OLLAMA_MODELS = "1";
+    # OLLAMA_MODELS = "gemma3 llama3.1:8b qwen2.5-coder:7b";
+    #
+    # Available models:
     # OLLAMA_MODELS = "deepseek-r1:14b devstral-2 devstral-small-2 gpt-oss llama3.1:8b qwen3-coder:30b qwen2.5-coder:7b nishtahir/zeta lennyerik/zeta";
     # -- Best for refactors + codegen: qwen2.5-coder:latest/qwen2.5-coder:7b
     # -- Fast “autocomplete-like” coding helper: starcoder2:3b (or :7b)
     # -- General chat / planning / explaining code: llama3.1:latest/llama3.1:8b
   };
 
-  # Aliases
+  # ===========================================================================
+  # Shell Aliases (global, available in all shells)
+  # ===========================================================================
+
   home.shellAliases = {
     b2 = "backblaze-b2";
     # code = "code-insiders";
     code = "zed";
   };
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+  # ===========================================================================
+  # Programs with Dedicated Home Manager Modules
+  # ===========================================================================
+  # These provide shell integration, configuration options, and type safety.
+  # Prefer these over raw home.packages when available.
+  #
+  # All available programs/configs can be found here: https://nix-community.github.io/home-manager/options.xhtml
 
-  # Provide p10k instant prompt cache location
-  xdg.enable = true;
+  # ---------------------------------------------------------------------------
+  # Atuin - Magical shell history
+  # ---------------------------------------------------------------------------
+  # programs.atuin = {
+  #   enable = true;
+  #   # enableZshIntegration = true;
+  # };
 
-  # Manage Ghostty config
+  # ---------------------------------------------------------------------------
+  # Bat - A better `cat` with syntax highlighting
+  # ---------------------------------------------------------------------------
+  programs.bat = {
+    enable = true;
+    config = {
+      theme = "OneHalfDark";
+      pager = "less -FR";
+      style = "numbers,changes,header";
+    };
+  };
+
+  # ---------------------------------------------------------------------------
+  # broot - A new way to see and navigate directory trees
+  # ---------------------------------------------------------------------------
+  # programs.broot = {
+  #   enable = true;
+  #   enableZshIntegration = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # Claude Code - An agentic coding tool
+  # ---------------------------------------------------------------------------
+  programs.claude-code = {
+    enable = true;
+  };
+
+  # ---------------------------------------------------------------------------
+  # Codex - Lightweight coding agent
+  # ---------------------------------------------------------------------------
+  programs.codex = {
+    enable = true;
+  };
+
+  # ---------------------------------------------------------------------------
+  # Direnv - Automatic environment switching
+  # ---------------------------------------------------------------------------
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration = true;
+    nix-direnv.enable = true; # Much faster for Nix projects!
+    config = {
+      global = {
+        warn_timeout = "30s";
+        hide_env_diff = true;
+      };
+    };
+  };
+
+  # ---------------------------------------------------------------------------
+  # Docker - Pack, ship and run any application as a lightweight container
+  # ---------------------------------------------------------------------------
+  programs.docker-cli = {
+    enable = true;
+  };
+
+  # ---------------------------------------------------------------------------
+  # Eza - A modern replacement for `ls`
+  # ---------------------------------------------------------------------------
+  programs.eza = {
+    enable = true;
+    enableZshIntegration = true;
+    icons = "auto";
+    git = true;
+    extraOptions = [
+      "--group-directories-first"
+      "--header"
+    ];
+  };
+
+  # ---------------------------------------------------------------------------
+  # fastfetch - Fetches system information and displays it in a visually appealing way.
+  # ---------------------------------------------------------------------------
+  programs.fastfetch = {
+    enable = true;
+  };
+
+  # ---------------------------------------------------------------------------
+  # fd - A fast alternative to `find`
+  # ---------------------------------------------------------------------------
+  programs.fd = {
+    enable = true;
+    hidden = true;
+    ignores = [
+      ".git/"
+      "node_modules/"
+      ".direnv/"
+    ];
+  };
+
+  # ---------------------------------------------------------------------------
+  # fzf - Fuzzy finder
+  # ---------------------------------------------------------------------------
+  programs.fzf = {
+    enable = true;
+    enableZshIntegration = true;
+    defaultCommand = "fd --type f --hidden --follow --exclude .git";
+    defaultOptions = [
+      "--height 40%"
+      "--layout=reverse"
+      "--border"
+    ];
+  };
+
+  # ---------------------------------------------------------------------------
+  # Git - Version control
+  # ---------------------------------------------------------------------------
+  programs.git = {
+    enable = true;
+    userName = "Kyle Affolder"; # Can be overridden in host-specific modules
+    userEmail = "kyleaffolder@gmail.com";
+    lfs.enable = true; # Git extension for versioning large files
+
+    # Default config (can be overridden in ~/.gitconfig.local)
+    extraConfig = {
+      init.defaultBranch = "main";
+      core.editor = "nvim";
+      # core.editor = "nano";
+      push.autoSetupRemote = true;
+      pull.rebase = false;
+
+      # Better diffs
+      diff.algorithm = "histogram";
+      diff.colorMoved = "default";
+
+      # Safer operations
+      merge.conflictStyle = "zdiff3";
+      rebase.autoStash = true;
+    };
+
+    # Include local config for user-specific settings (name, email, signing)
+    includes = [
+      { path = "~/.gitconfig.local"; }
+    ];
+  };
+
+  # ---------------------------------------------------------------------------
+  # GitHub CLI
+  # ---------------------------------------------------------------------------
+  programs.gh = {
+    enable = true;
+    gitCredentialHelper.enable = true;
+    settings = {
+      git_protocol = "https";
+      prompt = "enabled";
+    };
+  };
+
+  # ---------------------------------------------------------------------------
+  # gnupg - Modern release of the GNU Privacy Guard, a GPL OpenPGP implementation
+  # ---------------------------------------------------------------------------
+  # programs.gpg = {
+  #   enable = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # helix - Post-modern modal text editor
+  # ---------------------------------------------------------------------------
+  # programs.helix = {
+  #   enable = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # jq - JSON processor
+  # ---------------------------------------------------------------------------
+  programs.jq.enable = true;
+
+  # ---------------------------------------------------------------------------
+  # Neovim - Text editor
+  # ---------------------------------------------------------------------------
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+  };
+
+  # ---------------------------------------------------------------------------
+  # nodejs_24 - Event-driven I/O framework for the V8 JavaScript engine
+  # ---------------------------------------------------------------------------
+  programs.npm = {
+    enable = true;
+    package = "nodejs_24";
+  };
+
+  # ---------------------------------------------------------------------------
+  # OpenCode - AI coding agent built for the terminal
+  # ---------------------------------------------------------------------------
+  # programs.opencode = {
+  #   enable = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # Pandoc - Conversion between documentation formats
+  # ---------------------------------------------------------------------------
+  # programs.pandoc = {
+  #   enable = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # Pyenv - Simple Python version management
+  # ---------------------------------------------------------------------------
+  # programs.pyenv = {
+  #   enable = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # Ripgrep - Fast grep alternative
+  # ---------------------------------------------------------------------------
+  programs.ripgrep = {
+    enable = true;
+    arguments = [
+      "--smart-case"
+      "--hidden"
+      "--glob=!.git/*"
+    ];
+  };
+
+  # ---------------------------------------------------------------------------
+  # Tmux - Terminal multiplexer
+  # ---------------------------------------------------------------------------
+  # programs.tmux = {
+  #   enable = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # uv - Extremely fast Python package installer and resolver, written in Rust
+  # ---------------------------------------------------------------------------
+  # programs.uv = {
+  #   enable = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # Zed - High-performance, multiplayer code editor from the creators of Atom and Tree-sitter
+  # ---------------------------------------------------------------------------
+  programs.zed-editor = {
+    enable = true;
+    extraPackages = [
+      pkgs.nil # Yet another language server for Nix (necessary for Zed editor?)
+      pkgs.nixd # Feature-rich Nix language server interoperating with C++ nix (necessary for Zed editor?)
+    ];
+  };
+
+  # ---------------------------------------------------------------------------
+  # yt-dlp - Feature-rich command-line audio/video downloader
+  # ---------------------------------------------------------------------------
+  # programs.yt-dlp = {
+  #   enable = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # Zoxide - Smarter `cd` command
+  # ---------------------------------------------------------------------------
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+    options = [ "--cmd cd" ]; # Replace cd with zoxide
+  };
+
+  # ===========================================================================
+  # Zsh Configuration
+  # ===========================================================================
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    autocd = true;
+
+    # History configuration (XDG-compliant)
+    history = {
+      size = 10000;
+      save = 10000;
+      path = "${config.xdg.stateHome}/zsh/history";
+      ignoreDups = true;
+      ignoreSpace = true;
+      extended = true;
+      share = true;
+    };
+
+    # Session variables specific to Zsh
+    sessionVariables = {
+      # Ensure XDG dirs are set early
+      XDG_CACHE_HOME = "${config.xdg.cacheHome}";
+      XDG_CONFIG_HOME = "${config.xdg.configHome}";
+      XDG_STATE_HOME = "${config.xdg.stateHome}";
+
+      # Completion dump location
+      ZSH_COMPDUMP = "${config.xdg.cacheHome}/zsh/zcompdump-$ZSH_VERSION";
+
+      # Indicate we're using Home Manager route
+      DOTFILES_ROUTE = "hm";
+    };
+
+    # Shell aliases (Zsh-specific, supplements home.shellAliases)
+    shellAliases = {
+      g = "git";
+      gs = "git status";
+      gd = "git diff";
+      ga = "git add";
+      gc = "git commit";
+      gp = "git push";
+      gl = "git pull";
+      gco = "git checkout";
+      gb = "git branch";
+      glog = "git log --oneline --graph --decorate";
+
+      # Eza aliases (supplements programs.eza integration)
+      l = "eza -lah";
+      ll = "eza -lao";
+      la = "eza -la";
+      lt = "eza --tree --level=2";
+
+      # Quick navigation
+      ".." = "cd ..";
+      "..." = "cd ../..";
+      "...." = "cd ../../..";
+
+      # Safety aliases
+      rm = "rm -i";
+      cp = "cp -i";
+      mv = "mv -i";
+
+      # Misc
+      reload = "exec zsh";
+      path = "echo $PATH | tr ':' '\\n'";
+    };
+
+    # Zsh initialization content using mkMerge for ordering
+    initContent = lib.mkMerge [
+      # 500: Very early - output-producing stuff MUST be before instant prompt
+      (lib.mkOrder 500 ''
+        # ---- Output-producing stuff MUST be above instant prompt ----
+
+        # Only show fastfetch in Ghostty (avoid ssh, tmux, etc.)
+        if [[ -o interactive ]] && [[ "''${TERM_PROGRAM-}" == "ghostty" ]]; then
+          command -v fastfetch >/dev/null && fastfetch --pipe false
+        fi
+
+        # Powerlevel10k instant prompt (must be near the top)
+        if [[ -r "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh" ]]; then
+          source "''${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-''${(%):-%n}.zsh"
+        fi
+
+        # Interactive-only from here down
+        [[ -o interactive ]] || return
+      '')
+
+      # 550: Before completion init - set up completion styles
+      (lib.mkOrder 550 ''
+        # ---- Performance knobs ----
+        mkdir -p "''${XDG_CACHE_HOME}/zsh" "''${XDG_CACHE_HOME}/zsh/zcompcache"
+
+        # Completion caching (set styles before compinit)
+        zstyle ':completion:*' use-cache on
+        zstyle ':completion:*' cache-path "''${XDG_CACHE_HOME}/zsh/zcompcache"
+        zstyle ':completion:*' rehash true
+
+        # Better completion UI
+        zstyle ':completion:*' menu select
+        zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' # Case-insensitive
+        zstyle ':completion:*' list-colors ''${(s.:.)LS_COLORS}
+
+        # Load complist for menu selection
+        zmodload zsh/complist 2>/dev/null || true
+      '')
+
+      # 1000: General init - source modular config files
+      (lib.mkOrder 1000 ''
+        # ---- Source modular zsh config ----
+        local ZSHRC_DIR="''${XDG_CONFIG_HOME}/zsh/zshrc.d"
+        if [[ -d "$ZSHRC_DIR" ]]; then
+          for f in "$ZSHRC_DIR"/*.zsh(N); do
+            source "$f"
+          done
+        fi
+        unset f
+      '')
+
+      # 1500: Late init - prompt and final setup
+      (lib.mkOrder 1500 ''
+        # ---- Prompt (Powerlevel10k) ----
+
+        # Disable the p10k wizard - we have a managed config
+        typeset -g POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+
+        # Load Powerlevel10k theme
+        source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme
+
+        # Load p10k config
+        [[ -r "''${ZDOTDIR:-$HOME}/.p10k.zsh" ]] && source "''${ZDOTDIR:-$HOME}/.p10k.zsh"
+
+        # ---- Final touches ----
+
+        # Unique arrays (no duplicates in PATH, etc.)
+        typeset -U path cdpath fpath manpath
+      '')
+    ];
+  };
+
+  # ===========================================================================
+  # Packages (things without dedicated HM modules)
+  # ===========================================================================
+  # The home.packages option allows you to install Nix packages into your
+  # environment.
+
+  home.packages = with pkgs; [
+    # -------------------------------------------------------------------------
+    # Cloud & Backup
+    # -------------------------------------------------------------------------
+    backblaze-b2 # B2 Cloud Storage CLI
+
+    # -------------------------------------------------------------------------
+    # Development Tools
+    # -------------------------------------------------------------------------
+    bbrew # TUI for managing Homebrew packages
+    claude-code # Anthropic's coding assistant
+    codex # OpenAI's coding agent
+    curl # HTTP client
+    ddev # Docker-based PHP/Node.js development
+    docker # Container runtime
+    git-lfs # Git Large File Storage (also enabled via programs.git.lfs)
+    mkcert # Local HTTPS certificates
+    nss # Required for mkcert
+
+    # -------------------------------------------------------------------------
+    # Optional VS Code extensions (uncomment if using VS Code as your IDE)
+    # -------------------------------------------------------------------------
+    # vscode-extensions.alefragnani.bookmarks
+    # vscode-extensions.anthropic.claude-code
+    # vscode-extensions.bbenoist.nix
+    # vscode-extensions.dbaeumer.vscode-eslint
+    # vscode-extensions.editorconfig.editorconfig
+    # vscode-extensions.esbenp.prettier-vscode
+    # vscode-extensions.github.vscode-github-actions
+    # vscode-extensions.jgclark.vscode-todo-highlight
+    # vscode-extensions.mechatroner.rainbow-csv
+    # vscode-extensions.mikestead.dotenv
+    # vscode-extensions.ms-python.debugpy
+    # vscode-extensions.ms-python.python
+    # vscode-extensions.ms-python.vscode-pylance
+    # vscode-extensions.ms-vscode-remote.vscode-remote-extensionpack
+    # vscode-extensions.teabyii.ayu
+
+    # -------------------------------------------------------------------------
+    # Nix Tooling
+    # -------------------------------------------------------------------------
+    nil # Nix language server
+    nixd # Feature-rich Nix language server
+    nix-prefetch-github # Prefetch GitHub sources
+
+    # -------------------------------------------------------------------------
+    # Shell & Terminal
+    # -------------------------------------------------------------------------
+    fastfetch # System info display
+    nano # Simple text editor
+    zsh-powerlevel10k # Prompt theme (fast reimplementation of Powerlevel9k ZSH theme)
+
+    # -------------------------------------------------------------------------
+    # File & Text Processing
+    # -------------------------------------------------------------------------
+    repomix # Pack repo for AI consumption
+    yt-dlp # Video downloader
+
+    # -------------------------------------------------------------------------
+    # Optional packages (uncomment as needed)
+    # -------------------------------------------------------------------------
+    # atuin          # Shell history with sync
+    # atuin-desktop  # Local-first, executable runbook editor
+    # axel           # Download accelerator
+    # broot          # Tree view navigator
+    # claude-monitor # Real-time Claude Code usage monitor
+    # colima         # Container runtimes
+    # doppler        # Secrets management
+    # ffmpeg         # Media processing
+    # gnupg          # GPG encryption
+    # helix          # Modal text editor
+    # inetutils      # Provides `telnet`
+    # llm            # LLM CLI tool
+    # # pkgs.llm.withPlugins [ ... ]
+    # # (pkgs.llm.withPlugins [ /* plugin derivations here */ ])
+    # nanorc         # Improved Nano Syntax Highlighting Files
+    # nodenv         # Manage multiple NodeJS versions
+    # nodeenv        # Node.js virtual environment builder
+    # nodejs_24      # Node.js runtime
+    # ollama         # Local LLM server
+    # opencode       # AI coding agent
+    # openllm        # Run any open-source LLMs, such as Llama 3.1, Gemma, as OpenAI compatible API endpoint in the cloud
+    # orbstack       # Fast, light, and easy way to run Docker containers and Linux machines
+    # pandoc         # Document converter
+    # pass           # Password manager
+    # pyenv          # Python version manager
+    # python314      # Python runtime
+    # speedtest-cli  # Internet speed test
+    # stow           # Symlink manager
+    # syncthing      # File sync
+    # syncthing-macos # Official frugal and native macOS Syncthing application bundle
+    # tmux           # Terminal multiplexer
+    # uv             # Fast Python package manager
+    # vllm           # High-throughput and memory-efficient inference and serving engine for LLMs
+    # wget           # File downloader
+  ];
+
+  # ===========================================================================
+  # Services with Dedicated Home Manager Modules
+  # ===========================================================================
+  # These provide shell integration, configuration options, and type safety.
+
+  # ---------------------------------------------------------------------------
+  # Colima - Container runtimes with minimal setup
+  # ---------------------------------------------------------------------------
+  services.colima = {
+    enable = true;
+  };
+
+  # ---------------------------------------------------------------------------
+  # Ollama - Get up and running with large language models locally
+  # ---------------------------------------------------------------------------
+  # services.ollama = {
+  #   enable = true;
+  # };
+
+  # ---------------------------------------------------------------------------
+  # Syncthing - Open Source Continuous File Synchronization
+  # ---------------------------------------------------------------------------
+  # services.syncthing = {
+  #   enable = true;
+  # };
+
+  # ===========================================================================
+  # XDG Config Files
+  # ===========================================================================
+
+  # ---------------------------------------------------------------------------
+  # Ghostty Terminal
+  # ---------------------------------------------------------------------------
   xdg.configFile."ghostty/config".source = ../xdg/ghostty/config;
+  # Optional: manage Ghostty config too (only do this if you want HM owning the whole file)
+  # xdg.configFile."ghostty/config".text = ''
+  #   theme = "One Dark"
+  # '';
 
-  # Manage nano config (prefer XDG path on macOS/Linux)
-  xdg.configFile."nano/nanorc".text = ''
-    ## Load all syntax definitions that come with nano in nixpkgs
-    include ${pkgs.nano}/share/nano/*.nanorc
-
-    ## Nice defaults
-    set linenumbers
-    set mouse
-    set tabsize 2
-    set tabstospaces
-    set softwrap
-    set indicator
-    # set constantshow
-  '';
-
+  # Install One Dark theme for Ghostty
+  xdg.configFile."ghostty/themes/One Dark".source = "${ghosttyOneDark}/One Dark";
   # xdg.configFile."ghostty/themes/One Dark".text = ''
   #   # One Dark theme for Ghostty
   #   palette = 0=#1e2127
@@ -461,17 +663,33 @@
   #   foreground = #abb2bf
   # '';
 
-  # Ghostty: install One Dark theme into the custom themes dir
-  xdg.configFile."ghostty/themes/One Dark".source = "${ghosttyOneDark}/One Dark";
+  # ---------------------------------------------------------------------------
+  # Nano Editor
+  # ---------------------------------------------------------------------------
+  xdg.configFile."nano/nanorc".text = ''
+    ## Load syntax definitions from nixpkgs
+    include ${pkgs.nano}/share/nano/*.nanorc
 
-  # Optional: manage Ghostty config too (only do this if you want HM owning the whole file)
-  # xdg.configFile."ghostty/config".text = ''
-  #   theme = "One Dark"
-  # '';
+    ## Editor settings
+    set linenumbers
+    set mouse
+    set tabsize 2
+    set tabstospaces
+    set softwrap
+    set indicator
+    set autoindent
+    set smarthome
+  '';
 
-  # Make p10k fully declarative under Home-Manager
+  # ---------------------------------------------------------------------------
+  # Powerlevel10k Config
+  # ---------------------------------------------------------------------------
   xdg.configFile."zsh/.p10k.zsh".source = ../xdg/zsh/.p10k.zsh;
 
+  # ---------------------------------------------------------------------------
+  # Zsh Modular Config (for OpenAI helpers, local overrides, etc.)
+  # ---------------------------------------------------------------------------
+  # Note: Only include files that aren't fully handled by HM's programs.zsh
   # xdg.configFile."zsh/zshrc.d/70-openai.zsh".source = ../xdg/zsh/zshrc.d/70-openai.zsh;
   xdg.configFile."zsh/zshrc.d/90-local.zsh".source = ../xdg/zsh/zshrc.d/90-local.zsh;
 }
