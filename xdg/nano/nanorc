@@ -6,3 +6,7 @@ set tabstospaces
 set softwrap
 set indicator
 # set constantshow
+
+# Syntax highlighting - try both Homebrew paths (Apple Silicon and Intel)
+include "/opt/homebrew/share/nano/*.nanorc"
+include "/usr/local/share/nano/*.nanorc"

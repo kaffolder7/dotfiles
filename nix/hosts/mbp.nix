@@ -33,7 +33,7 @@
     # Machine identifier
     DOTFILES_HOST = "mbp";
 
-    # Maybe different editor on laptop?
+    # Maybe different editor on laptop? Overrides the default
     # EDITOR = "zed";
   };
 

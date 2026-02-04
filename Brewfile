@@ -4,12 +4,12 @@
 #
 # Install missing formulae/casks, skip anything already installed, leave extra packages alone (by default)
 # Run `brew bundle` on target machine
-# 
+#
 # Run `brew bundle --cleanup` if you want to uninstall anything not listed in the Brewfile—great for fresh setups, risky for daily use.
-# 
+#
 # To update Brewfile (manually) after installs:
 # `brew bundle dump --force && git commit -am "Update Brewfile" && git push`
-# 
+#
 # To update Brewfile (dynamically):
 # Use cron or launchd to:
 # -	Pull repo
@@ -29,17 +29,20 @@ brew "b2-tools"
 brew "bat"
 
 # The modern Terminal UI for managing Homebrew packages and casks on macOS and Linux.
-# brew "Valkyrie00/homebrew-bbrew/bbrew"
+brew "Valkyrie00/homebrew-bbrew/bbrew"
 
 # New way to see and navigate directory trees
 # brew "broot"
+
+# Terminal-based AI coding assistant
+brew "claude-code"
 
 # OpenAI's coding agent that runs in your terminal
 brew "codex"
 
 # Container runtimes on MacOS (and Linux) with minimal setup
 # brew "colima"
-# 
+#
 # To run/create a virtual machine (for development), run:
 # ```
 # colima start --cpu 4 --memory 6 --disk 100 --vm-type=vz --mount-type=virtiofs --dns=1.1.1.1
@@ -56,6 +59,9 @@ brew "container-compose"
 
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
+
+# Docker-based local PHP+Node.js web development environments
+brew "ddev/ddev/ddev"
 
 # Load/unload environment variables based on $PWD
 brew "direnv"
@@ -103,14 +109,14 @@ brew "git-lfs"
 # brew "inetutils"
 
 # Lightweight and flexible command-line JSON processor
-# brew "jq"
+brew "jq"
 
 # Terminal UI for Apple Containers
 brew "lazycontainer"
 
 # Linux virtual machines
 # brew "lima"
-# 
+#
 # To run/create a virtual machine (for development), run:
 # ```
 # limactl create --name=default --vm-type=vz --mount-type=virtiofs --mount-writable --memory=6 --cpus=4 --disk=100 template://docker
@@ -119,7 +125,10 @@ brew "lazycontainer"
 # ```
 
 # Access large language models from the command-line
-brew "llm"
+# brew "llm"
+
+# Minimal CLI coding agent
+# brew "mistral-vibe"
 
 # Simple tool to make locally trusted development certificates
 brew "mkcert"
@@ -142,6 +151,16 @@ brew "neovim"
 
 # Node.js virtual environment builder
 # brew "nodeenv"
+
+# Libraries for security-enabled client and server applications (necessary for `mkcert`)
+brew "nss"
+
+# Create, run, and share large language models (LLMs)
+# brew "ollama"
+
+# AI coding agent, built for the terminal
+# brew "opencode"  # maintained by Homebrew team, updated less-frequently
+# brew "anomalyco/tap/opencode"
 
 # Swiss-army knife of markup format conversion
 # brew "pandoc"
@@ -170,6 +189,9 @@ brew "sevenzip"
 
 # Organize software neatly under a single directory tree (e.g. /usr/local)
 # brew "stow"
+
+# Open source continuous file synchronization application
+# brew "syncthing"
 
 # Terminal multiplexer
 # brew "tmux"
@@ -229,6 +251,9 @@ cask "font-meslo-lg-nerd-font"
 # Send any size file between devices
 # cask "blip"
 
+# AI chat client
+# cask "boltai"
+
 # Utility to disconnect all drives connected to a Caldigit dock
 # cask "caldigit-docking-utility"
 
@@ -243,6 +268,12 @@ cask "font-meslo-lg-nerd-font"
 
 # OpenAI's official browser with ChatGPT built in
 # cask "chatgpt-atlas"
+
+# Anthropic's official Claude AI desktop app
+# cask "claude"
+
+# Terminal-based AI coding assistant
+# cask "claude-code"
 
 # Tool to remove unnecessary files and folders from disk
 # cask "cleanmymac"
@@ -316,6 +347,9 @@ cask "font-meslo-lg-nerd-font"
 # Handy utility to manage and customize the notch area
 # cask "notchnook"
 
+# Get up and running with large language models locally
+# cask "ollama-app"
+
 # Replacement for Docker Desktop
 cask "orbstack"
 
@@ -337,8 +371,14 @@ cask "orbstack"
 # System monitor for the menu bar
 # cask "stats"
 
+# Keeps session + weekly limits (and credits) in the menu bar, so you know when you're safe to ship.
+# cask "steipete/tap/codexbar"
+
 # Window manager
 # cask "swift-shift"
+
+# Real time file synchronisation software
+# cask "syncthing-app"
 
 # Easiest, most secure way to use WireGuard and 2FA
 # cask "tailscale"
@@ -382,11 +422,15 @@ cask "orbstack"
 # visual-studio-code@insiders
 # cask "vlc"
 
+# Multiplayer code editor
+cask "zed"
+
 # Themes/Extensions for VS Code
 # vscode "aaron-bond.better-comments"
 # vscode "akamud.vscode-theme-onedark"
 # vscode "akamud.vscode-theme-onelight"
 vscode "alefragnani.bookmarks"
+# vscode "anthropic.claude-code"
 # vscode "astro-build.astro-vscode"
 # vscode "azemoh.one-monokai"
 vscode "bbenoist.nix"
@@ -431,6 +475,7 @@ vscode "ronnidc.nunjucks"
 # vscode "stylelint.vscode-stylelint"
 # vscode "svelte.svelte-vscode"
 # vscode "tamasfe.even-better-toml"
+vscode "teabyii.ayu"
 # vscode "tombonnike.vscode-status-bar-format-toggle"
 # vscode "tyriar.lorem-ipsum"
 # vscode "vue.volar"

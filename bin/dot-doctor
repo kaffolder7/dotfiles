@@ -8,6 +8,23 @@ info() { printf "ℹ %s\n" "$1"; }
 echo "Dotfiles doctor"
 echo "----------------"
 
+# Add Homebrew health check
+if command -v brew >/dev/null; then
+  ok "Homebrew available"
+  # Check if Brewfile is in sync
+  if brew bundle check --file="$DOTFILES_DIR/Brewfile" >/dev/null 2>&1; then
+    ok "Brewfile in sync"
+  else
+    warn "Brewfile has uninstalled packages (run: brew bundle)"
+  fi
+fi
+
+# Add Nix check
+if command -v nix >/dev/null; then
+  ok "Nix available"
+  nix --version | head -1 | xargs -I{} info "Version: {}"
+fi
+
 # Route
 if [ "$DOTFILES_ROUTE" = "hm" ]; then
   ok "DOTFILES_ROUTE=hm"
@@ -26,6 +43,13 @@ fi
 [ -d "$XDG_CONFIG_HOME" ] && ok "XDG_CONFIG_HOME exists"
 [ -d "$XDG_CACHE_HOME/zsh" ] && ok "zsh cache dir exists" || warn "zsh cache dir missing"
 [ -w "$XDG_STATE_HOME" ] && ok "XDG_STATE_HOME writable" || warn "XDG_STATE_HOME not writable"
+
+# Check for stale symlinks
+for f in ~/.zshrc ~/.gitconfig ~/.config/ghostty/config; do
+  if [[ -L "$f" && ! -e "$f" ]]; then
+    warn "Broken symlink: $f"
+  fi
+done
 
 # Secrets
 SECRETS="$XDG_CONFIG_HOME/secrets"

@@ -81,6 +81,15 @@ For users already using Nix + Home Manager.
 - Dotfiles are still shared, but loaded via Home Manager
 - `DOTFILES_ROUTE=hm` is set automatically
 
+**Setup:**
+1. Edit `flake.nix` and set `username` to your macOS username (run `whoami` if unsure)
+2. Run the initial switch:
+```bash
+nix run github:nix-community/home-manager -- switch --flake .#macmini
+# or for MacBook Pro:
+nix run github:nix-community/home-manager -- switch --flake .#mbp
+```
+
 Both routes share the same Zsh modules and XDG layout.
 
 ---
@@ -106,8 +115,8 @@ Features:
 - [`fastfetch`](https://github.com/fastfetch-cli/fastfetch) runs once per session (after prompt)
 
 ### Git
-- `~/.gitconfig` → `home/.gitconfig`
-- Personal settings live in `~/.gitconfig.local` (not committed)
+- `~/.gitconfig` → `home/.gitconfig` (used for the Homebrew route, otherwise configuration is managed by Home Manager)
+- Personal settings _(e.g. `user.name`, `user.email`, etc.)_ live in `~/.gitconfig.local` (not committed)
 
 Create it with:
 ```
@@ -121,7 +130,8 @@ cp home/.gitconfig.local.example ~/.gitconfig.local
 
 Includes:
 - [JetBrains Mono Nerd Font](https://www.jetbrains.com/lp/mono/)
-- [Ayu](https://github.com/ayu-theme/ayu-vim) theme
+<!--- [Ayu](https://github.com/ayu-theme/ayu-vim) theme-->
+- [One Dark](https://github.com/avesst/ghostty-onedark) theme
 - Transparent background with blur
 - Sensible padding and defaults
 
@@ -198,7 +208,17 @@ dotfiles/
 │   ├── .zshrc                      # Minimal Zsh entrypoint (loads modular config)
 │   └── .zshrc.local.example        # Local-only Zsh overrides (ignored by git)
 ├── nix/
-│   └── home.nix                    # Home Manager configuration (optional / advanced)
+│   ├── hosts/
+│   │   ├── macmini.nix             # Mac Mini host-specific config
+│   │   └── mbp.nix                 # MacBook Pro host-specific config
+│   ├── overlays/
+│   │   └── default.nix             # Nix package overlays
+│   ├── pkgs/
+│   │   └── bbrew.nix               # Custom bbrew package definition
+│   └── home.nix                    # Main Home Manager configuration
+├── scripts/
+│   ├── ollama-models.sh            # Pull default Ollama models (gemma3, etc.)
+│   └── update-bbrew.sh             # Fetch latest bbrew version + hashes
 ├── secrets/
 │   ├── openai_api_key.example        # (Optional) single shared OpenAI key
 │   ├── openai_api_key_codex.example  # Example Codex-specific OpenAI key
@@ -209,6 +229,7 @@ dotfiles/
 │   ├── nano/
 │   │   └── nanorc             # Nano editor config (XDG-compliant)
 │   └── zsh/
+│       ├── .p10k.zsh               # Powerlevel10k prompt configuration
 │       └── zshrc.d/
 │           ├── 00-env.zsh          # Core environment setup (XDG, PATH, cache dirs)
 │           ├── 10-homebrew.zsh     # Homebrew shell environment (brew shellenv)
@@ -220,9 +241,16 @@ dotfiles/
 │           ├── 70-openai.zsh       # OpenAI / LLM / Codex helpers + file-based secrets
 │           ├── 80-hooks.zsh        # Hooks (e.g. fastfetch once per session)
 │           └── 90-local.zsh        # Local Zsh overrides (~/.zshrc.local)
+├── .github/
+│   └── workflows/
+│       ├── ci.yml                  # PR/push checks (nix flake check)
+│       ├── update-bbrew.yml        # Weekly auto-update for bbrew package
+│       └── update-locks.yml        # Monthly auto-update for flake.lock
+├── .editorconfig             # Editor settings (indent, charset, line endings)
 ├── .gitignore
 ├── flake.lock                # Nix flake lockfile (pins dependencies)
 ├── flake.nix                 # Nix flake entrypoint for Home Manager
+├── Makefile                  # Common tasks (install, update, doctor, switch-*)
 └── README.md
 ```
 

@@ -161,7 +161,7 @@ ensure_secret_reminder() {
   local name="$1"                 # e.g. openai_api_key
   local example_rel="${2:-}"      # e.g. secrets/openai_api_key.example
   local label="${3:-$name}"       # e.g. "OpenAI API key"
-  
+
   local secrets_dir="$HOME/.config/secrets"
   local key_file="$secrets_dir/$name"
 
@@ -418,7 +418,7 @@ link() {
     if [[ "$FORCE" -eq 1 ]]; then
       rm -rf "$dst"
     else
-      local backup="${dst}.bak.$(date %Y%m%d%H%M%S)"
+      local backup="${dst}.bak.$(date +%Y%m%d%H%M%S)"
       mv "$dst" "$backup"
       log "backed up: $dst -> $backup"
     fi
@@ -428,11 +428,26 @@ link() {
   log "linked: $dst -> $src"
 }
 
+# Link only if source exists
+# link_if_exists() {
+#   local src="$1"
+#   local dst="$2"
+#   if [[ -e "$src" ]]; then
+#     link "$src" "$dst"
+#   else
+#     log "skipped (not in repo): $src"
+#   fi
+# }
+
 symlink_dotfiles() {
   # Zsh modules live under XDG config (matches zsh/.zshrc)
   link "$DOTFILES_DIR/xdg/zsh/zshrc.d" "$HOME/.config/zsh/zshrc.d"
   link "$DOTFILES_DIR/home/.zshrc" "$HOME/.zshrc"
-  link "$DOTFILES_DIR/home/.gitconfig" "$HOME/.gitconfig"
+
+  # Only link .gitconfig if it exists in repo
+  [[ -f "$DOTFILES_DIR/home/.gitconfig" ]] && link "$DOTFILES_DIR/home/.gitconfig" "$HOME/.gitconfig"
+  # link_if_exists "$DOTFILES_DIR/home/.gitconfig" "$HOME/.gitconfig"
+
   link "$DOTFILES_DIR/xdg/ghostty/config" "$HOME/.config/ghostty/config"
   [[ "${DOTFILES_ROUTE-}" != "hm" ]] && link "$DOTFILES_DIR/xdg/nano/nanorc" "$HOME/.config/nano/nanorc"
 
@@ -444,12 +459,40 @@ symlink_dotfiles() {
 }
 
 # ----------------------------
+# Ollama
+# ----------------------------
+ensure_ollama_installed() {
+  if command_exists ollama; then
+    log "Ollama already installed."
+    return 0
+  fi
+
+  # Homebrew route: install directly (or via Brewfile—see notes below)
+  if command_exists brew; then
+    log "Installing Ollama via Homebrew..."
+    brew install ollama  # brew formula install command (https://formulae.brew.sh/formula/ollama)
+    return 0
+  fi
+
+  # Nix route: install should come from your Home Manager config
+  if command_exists nix; then
+    warn "Ollama not found on PATH."
+    warn "If you're using --method nix, enable pkgs.ollama in nix/home.nix, then rerun install."
+    return 1
+  fi
+
+  warn "Neither brew nor nix found; cannot install Ollama automatically."
+  return 1
+}
+
+# ----------------------------
 # Setup paths (brew vs nix)
 # ----------------------------
 setup_via_homebrew() {
   log "Setup method: Homebrew"
   if [[ "$RUN_BREW" -eq 1 ]]; then
     run_brew_bundle
+    ensure_ollama_installed
   else
     log "Skipping Brewfile (run with --brew to install packages)."
   fi
@@ -495,6 +538,7 @@ setup_via_nix_home_manager() {
   )
 
   log "Home Manager activation complete."
+  ensure_ollama_installed
 }
 
 # ----------------------------
@@ -543,6 +587,13 @@ main() {
   else
     err "Unsupported OS: $(uname -s)"
     exit 1
+  fi
+
+  # Optionally, install any defined Ollama models
+  #   init. via `INSTALL_OLLAMA_MODELS=1 OLLAMA_MODELS="qwen3-coder llama3.2" ./install.sh`
+  if [[ "${INSTALL_OLLAMA_MODELS:-}" == "1" ]]; then
+    # OLLAMA_MODELS="deepseek-r1:14b devstral-2 devstral-small-2 gpt-oss llama3.1:8b qwen3-coder:30b qwen2.5-coder:7b nishtahir/zeta lennyerik/zeta"
+    OLLAMA_MODELS="${OLLAMA_MODELS:-gemma3}" ./scripts/ollama-models.sh
   fi
 
   log "All done."

@@ -57,7 +57,8 @@
   #  – `/etc/profiles/per-user/<username>/etc/profile.d/hm-session-vars.sh`
   home.sessionVariables = {
     # COLORTERM = "truecolor";
-    EDITOR = "nvim";
+    # EDITOR = "nvim";
+    EDITOR = lib.mkDefault "nvim";
     # Uncomment to enable Ollama model installation during setup
     # INSTALL_OLLAMA_MODELS = "1";
     # OLLAMA_MODELS = "gemma3 llama3.1:8b qwen2.5-coder:7b";
@@ -135,7 +136,7 @@
   programs.direnv = {
     enable = true;
     enableZshIntegration = true;
-    nix-direnv.enable = true; # Much faster for Nix projects!
+    nix-direnv.enable = true; # Faster nix-shell/devShell caching
     config = {
       global = {
         warn_timeout = "30s";
@@ -160,6 +161,7 @@
     icons = "auto";
     git = true;
     extraOptions = [
+      "--git-repos"
       "--group-directories-first"
       "--header"
     ];
@@ -215,8 +217,8 @@
       pull.rebase = false;
 
       # User settings
-      user.name = "Kyle Affolder"; # Can be overridden in host-specific modules
-      user.email = "kyleaffolder@gmail.com";
+      # user.name = "Kyle Affolder"; # Can be overridden in host-specific modules
+      # user.email = "kyleaffolder@gmail.com";
 
       # Better diffs
       diff.algorithm = "histogram";
@@ -399,10 +401,12 @@
       glog = "git log --oneline --graph --decorate";
 
       # Eza aliases (supplements programs.eza integration)
-      l = "eza -lah";
-      ll = "eza -lao";
-      la = "eza -la";
-      lt = "eza --tree --level=2";
+      # Note: programs.eza.extraOptions only apply to bare `eza` calls,
+      # so we include the flags explicitly here for consistency
+      l = "eza -lah --icons --git --git-repos --header";
+      ll = "eza -lao --icons --git --git-repos --header";
+      la = "eza -la --icons --git --git-repos --header";
+      lt = "eza --tree --level=2 --icons";
 
       # Quick navigation
       ".." = "cd ..";

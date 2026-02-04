@@ -30,6 +30,12 @@
     let
       lib = nixpkgs.lib;
 
+      # =========================================================================
+      # CUSTOMIZE: Set your macOS username here
+      # Run `whoami` in terminal if unsure
+      # =========================================================================
+      username = "kyleaffolder";
+
       # Use the host system automatically (e.g. aarch64-darwin, x86_64-darwin, x86_64-linux, aarch64-linux)
       supportedSystems = [ "aarch64-darwin" ];
 
@@ -111,14 +117,16 @@
       homeConfigurations = {
         macmini = mkHome {
           system = "aarch64-darwin";
-          username = "kyleaffolder";
+          # username = "kyleaffolder";
+          inherit username; # Uses the variable defined above
           hostName = "macmini";
           hostModules = [ ./nix/hosts/macmini.nix ];
         };
 
         mbp = mkHome {
           system = "aarch64-darwin";
-          username = "kyleaffolder";
+          # username = "kyleaffolder";
+          inherit username; # Uses the variable defined above
           hostName = "mbp";
           hostModules = [ ./nix/hosts/mbp.nix ];
         };
