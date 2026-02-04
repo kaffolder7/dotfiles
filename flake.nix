@@ -12,7 +12,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Ghossty "One Dark" theme repo
+    # Ghostty "One Dark" theme repo
     ghosttyOneDark = {
       url = "github:avesst/ghostty-onedark";
       flake = false;

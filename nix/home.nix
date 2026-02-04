@@ -166,7 +166,7 @@
   };
 
   # ---------------------------------------------------------------------------
-  # fastfetch - Fetches system information and displays it in a visually appealing way.
+  # fastfetch - System info display
   # ---------------------------------------------------------------------------
   programs.fastfetch = {
     enable = true;
@@ -511,8 +511,6 @@
     codex # OpenAI's coding agent
     curl # HTTP client
     ddev # Docker-based PHP/Node.js development
-    docker # Container runtime
-    git-lfs # Git Large File Storage (also enabled via programs.git.lfs)
     mkcert # Local HTTPS certificates
     nss # Required for mkcert
 
@@ -545,7 +543,6 @@
     # -------------------------------------------------------------------------
     # Shell & Terminal
     # -------------------------------------------------------------------------
-    fastfetch # System info display
     nano # Simple text editor
     zsh-powerlevel10k # Prompt theme (fast reimplementation of Powerlevel9k ZSH theme)
 
@@ -619,6 +616,19 @@
   # ===========================================================================
 
   # ---------------------------------------------------------------------------
+  # Dotfiles CLI tools
+  # ---------------------------------------------------------------------------
+  home.file.".local/bin/dot" = {
+    source = ../bin/dot;
+    executable = true;
+  };
+
+  home.file.".local/bin/dot-doctor" = {
+    source = ../bin/dot-doctor;
+    executable = true;
+  };
+
+  # ---------------------------------------------------------------------------
   # Ghostty Terminal
   # ---------------------------------------------------------------------------
   xdg.configFile."ghostty/config".source = ../xdg/ghostty/config;
@@ -679,5 +689,11 @@
   # ---------------------------------------------------------------------------
   # Note: Only include files that aren't fully handled by HM's programs.zsh
   # xdg.configFile."zsh/zshrc.d/70-openai.zsh".source = ../xdg/zsh/zshrc.d/70-openai.zsh;
-  xdg.configFile."zsh/zshrc.d/90-local.zsh".source = ../xdg/zsh/zshrc.d/90-local.zsh;
+  # xdg.configFile."zsh/zshrc.d/90-local.zsh".source = ../xdg/zsh/zshrc.d/90-local.zsh;
+
+  # Symlink the entire zshrc.d directory
+  xdg.configFile."zsh/zshrc.d" = {
+    source = ../xdg/zsh/zshrc.d;
+    recursive = true;
+  };
 }
