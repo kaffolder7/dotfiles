@@ -5,9 +5,9 @@
 # Host-specific settings for the MacBook Pro (mobile/laptop)
 #
 {
-  pkgs,
-  lib,
-  config,
+  # pkgs,
+  # lib,
+  # config,
   ...
 }:
 
@@ -17,10 +17,10 @@
   # ===========================================================================
   # Battery-conscious, mobile-focused
 
-  home.packages = with pkgs; [
-    # Mobile-friendly tools
-    # tailscale      # VPN for remote access to home network
-  ];
+  # home.packages = with pkgs; [
+  #   # Mobile-friendly tools
+  #   # tailscale      # VPN for remote access to home network
+  # ];
 
   # ===========================================================================
   # Environment Variables

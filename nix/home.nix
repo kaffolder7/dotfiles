@@ -15,7 +15,7 @@
   config,
   username,
   ghosttyOneDark,
-  hostName,
+  # hostName,
   ...
 }:
 
