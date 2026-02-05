@@ -193,6 +193,9 @@ brew "sevenzip"
 # Open source continuous file synchronization application
 # brew "syncthing"
 
+# App runtime and UX toolkit for pixel-based apps
+brew "tidbyt/tidbyt/pixlet"
+
 # Terminal multiplexer
 # brew "tmux"
 
