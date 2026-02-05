@@ -163,6 +163,7 @@ brew bundle dump --force
 Secrets are stored as files (not env vars) under: `~/.config/secrets/`.
 
 Examples:
+- `openai_api_key`
 - `openai_api_key_llm`
 - `openai_api_key_codex`
 
