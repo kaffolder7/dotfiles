@@ -284,6 +284,9 @@ cask "font-meslo-lg-nerd-font"
 # Screen capturing tool
 # cask "cleanshot"
 
+# OpenAI's Codex desktop app for managing coding agents
+cask "codex-app"
+
 # Application window manager focusing on simplicity
 # cask "divvy"
 
