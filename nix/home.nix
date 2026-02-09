@@ -68,6 +68,9 @@
     # -- Best for refactors + codegen: qwen2.5-coder:latest/qwen2.5-coder:7b
     # -- Fast “autocomplete-like” coding helper: starcoder2:3b (or :7b)
     # -- General chat / planning / explaining code: llama3.1:latest/llama3.1:8b
+
+    # Configure SSH clients to use the 1Password SSH agent for all hosts.
+    SSH_AUTH_SOCK = "~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock";
   };
 
   # ===========================================================================
