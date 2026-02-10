@@ -79,7 +79,8 @@ theme = "One Dark"
 # ------------------------------------------------------
 # font-family = MesloLGS Nerd Font
 # font-family = JetBrainsMono Nerd Font
-font-family = JetBrainsMono NFM Regular
+font-family = JetBrainsMono NFM Regular # if you want ligatures
+# font-family = JetBrainsMonoNL NFM Regular # if you don't want ligatures (e.g. 'what you typed' is 'what you get')
 # font-family = FiraCode Nerd Font
 font-size = 14
 
