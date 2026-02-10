@@ -314,6 +314,34 @@
   };
 
   # ---------------------------------------------------------------------------
+  # SSH - Secure Shell
+  # ---------------------------------------------------------------------------
+  programs.ssh = {
+    enable = true;
+
+    # Stop Home Manager from adding the legacy default Host * values
+    enableDefaultConfig = false;
+
+    includes = lib.optionals pkgs.stdenv.isDarwin [
+      # Added by OrbStack: 'orb' SSH host for Linux machines
+      # This only works if it's at the top of ssh_config (before any Host blocks).
+      "~/.orbstack/ssh/config"
+
+      # Added by Colima: 'colima' SSH host for Linux machines
+      # This only works if it's at the top of ssh_config (before any Host blocks).
+      "~/.colima/ssh_config"
+
+      # Local ad-hoc SSH config entries that HM doesn’t manage
+      "~/.ssh/config.local"
+    ];
+
+    matchBlocks."*" = {
+      # Make only SSH use 1Password SSH agent
+      identityAgent = "~/.1password/agent.sock"; # use this symlinked path on macOS (Linux uses this path directly)
+    };
+  };
+
+  # ---------------------------------------------------------------------------
   # Tmux - Terminal multiplexer
   # ---------------------------------------------------------------------------
   # programs.tmux = {
@@ -621,6 +649,13 @@
   # ===========================================================================
   # XDG Config Files
   # ===========================================================================
+
+  # ---------------------------------------------------------------------------
+  # 1Password SSH agent symlink (macOS)
+  # ---------------------------------------------------------------------------
+  home.file.".1password/agent.sock" = lib.mkIf pkgs.stdenv.isDarwin {
+    source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+  };
 
   # ---------------------------------------------------------------------------
   # Dotfiles CLI tools
