@@ -320,6 +320,9 @@
     enableDefaultConfig = false;
 
     includes = lib.optionals pkgs.stdenv.isDarwin [
+      # Allow 1Password to automatically match bookmarked SSH hosts (prevents the six-key server limit)
+      "~/.ssh/1Password/config"
+
       # Added by OrbStack: 'orb' SSH host for Linux machines
       # This only works if it's at the top of ssh_config (before any Host blocks).
       "~/.orbstack/ssh/config"
