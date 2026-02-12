@@ -194,7 +194,7 @@ brew "sevenzip"
 # brew "syncthing"
 
 # App runtime and UX toolkit for pixel-based apps
-brew "tidbyt/tidbyt/pixlet"
+brew "pixlet"
 
 # Terminal multiplexer
 # brew "tmux"
