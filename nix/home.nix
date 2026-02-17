@@ -351,9 +351,9 @@
   # ---------------------------------------------------------------------------
   # uv - Extremely fast Python package installer and resolver, written in Rust
   # ---------------------------------------------------------------------------
-  # programs.uv = {
-  #   enable = true;
-  # };
+  programs.uv = {
+    enable = true;
+  };
 
   # ---------------------------------------------------------------------------
   # Zed - High-performance, multiplayer code editor from the creators of Atom and Tree-sitter

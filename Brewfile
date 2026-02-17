@@ -200,7 +200,7 @@ brew "pixlet"
 # brew "tmux"
 
 # Extremely fast Python package installer and resolver, written in Rust
-# brew "uv"
+brew "uv"
 
 # Internet file retriever
 # brew "wget"
