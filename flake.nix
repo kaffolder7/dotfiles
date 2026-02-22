@@ -11,6 +11,7 @@
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    llm-agents.url = "github:numtide/llm-agents.nix";
 
     # Ghostty "One Dark" theme repo
     ghosttyOneDark = {
@@ -24,6 +25,7 @@
       self,
       nixpkgs,
       home-manager,
+      llm-agents,
       ghosttyOneDark,
       ...
     }:
@@ -45,7 +47,10 @@
         system:
         import nixpkgs {
           inherit system;
-          overlays = [ self.overlays.default ];
+          overlays = [
+            llm-agents.overlays.default
+            self.overlays.default
+          ];
 
           config = {
             allowUnfreePredicate =

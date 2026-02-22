@@ -546,6 +546,7 @@
     codex # OpenAI's coding agent
     curl # HTTP client
     ddev # Docker-based PHP/Node.js development
+    llm-agents.happy-coder # Happy Coder CLI
     mkcert # Local HTTPS certificates
     nss # Required for mkcert
 
