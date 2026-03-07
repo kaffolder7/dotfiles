@@ -539,6 +539,11 @@
     backblaze-b2 # B2 Cloud Storage CLI
 
     # -------------------------------------------------------------------------
+    # Runtimes
+    # -------------------------------------------------------------------------
+    nodejs_24 # Node.js v24 runtime (latest)
+
+    # -------------------------------------------------------------------------
     # Development Tools
     # -------------------------------------------------------------------------
     bbrew # TUI for managing Homebrew packages
@@ -609,7 +614,6 @@
     # nodenv         # Manage multiple NodeJS versions
     # nodeenv        # Node.js virtual environment builder
     # nodejs         # Node.js runtime
-    # nodejs_24      # Node.js v24 runtime (latest)
     # ollama         # Local LLM server
     # opencode       # AI coding agent
     # openllm        # Run any open-source LLMs, such as Llama 3.1, Gemma, as OpenAI compatible API endpoint in the cloud
