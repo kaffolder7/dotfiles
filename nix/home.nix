@@ -542,6 +542,7 @@
     # Runtimes
     # -------------------------------------------------------------------------
     nodejs_24 # Node.js v24 runtime (latest)
+    python314 # Python runtime
 
     # -------------------------------------------------------------------------
     # Development Tools
@@ -621,7 +622,6 @@
     # pandoc         # Document converter
     # pass           # Password manager
     # pyenv          # Python version manager
-    # python314      # Python runtime
     # speedtest-cli  # Internet speed test
     # stow           # Symlink manager
     # syncthing      # File sync
