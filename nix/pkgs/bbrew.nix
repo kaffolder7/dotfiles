@@ -13,7 +13,7 @@ buildGoModule rec {
     repo = "bold-brew";
     # rev   = "v2.2.1";
     rev = "v${version}";
-    hash = "sha256-wcyaUu1OMh5O0haZd7QAAoDydnkzGPIUCohz6zcLT+M=";
+    hash  = "sha256-wcyaUu1OMh5O0haZd7QAAoDydnkzGPIUCohz6zcLT+M=";
   };
 
   # The Go main package lives here:
