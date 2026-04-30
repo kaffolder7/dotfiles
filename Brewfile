@@ -162,6 +162,9 @@ brew "nss"
 # brew "opencode"  # maintained by Homebrew team, updated less-frequently
 # brew "anomalyco/tap/opencode"
 
+# Development kit for the Java programming language
+brew "openjdk@21"
+
 # Swiss-army knife of markup format conversion
 # brew "pandoc"
 
@@ -262,6 +265,9 @@ cask "font-meslo-lg-nerd-font"
 
 # Hard disk backup and cloning utility
 # cask "carbon-copy-cloner"
+
+# Garmin Connect IQ SDK Manager
+cask "connectiq-sdk-manager"
 
 # Desktop app for GPT-4 / GPT-3.5 (OpenAI API)
 # cask "chatbox"

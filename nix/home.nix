@@ -19,6 +19,9 @@
   ...
 }:
 
+let
+  javaPackage = pkgs.javaPackages.compiler.openjdk21;
+in
 {
   # ===========================================================================
   # Core Configuration
@@ -59,6 +62,7 @@
     # COLORTERM = "truecolor";
     # EDITOR = "nvim";
     EDITOR = lib.mkDefault "nvim";
+    JAVA_HOME = "${javaPackage}/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home";
     # Uncomment to enable Ollama model installation during setup
     # INSTALL_OLLAMA_MODELS = "1";
     # OLLAMA_MODELS = "gemma3 llama3.1:8b qwen2.5-coder:7b";
@@ -523,6 +527,14 @@
         # Unique arrays (no duplicates in PATH, etc.)
         typeset -U path cdpath fpath manpath
       '')
+
+      ''
+        # Garmin Connect IQ SDK Manager
+        if [ -d "$HOME/Library/Application Support/Garmin/ConnectIQ/Sdks" ]; then
+          export CONNECTIQ_HOME="$(find "$HOME/Library/Application Support/Garmin/ConnectIQ/Sdks" -maxdepth 1 -type d -name 'connectiq-sdk-*' | sort -V | tail -n 1)"
+          export PATH="$CONNECTIQ_HOME/bin:$PATH"
+        fi
+      ''
     ];
   };
 
@@ -541,6 +553,7 @@
     # -------------------------------------------------------------------------
     # Runtimes
     # -------------------------------------------------------------------------
+    javaPackage # Open-source Java Development Kit v21 LTS runtime
     nodejs_24 # Node.js v24 runtime (latest)
     python314 # Python runtime
 
@@ -660,6 +673,13 @@
   # ---------------------------------------------------------------------------
   home.file.".1password/agent.sock" = lib.mkIf pkgs.stdenv.isDarwin {
     source = config.lib.file.mkOutOfStoreSymlink "${config.home.homeDirectory}/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+  };
+
+  # ---------------------------------------------------------------------------
+  # Java runtime registration (macOS current-user JavaVirtualMachines)
+  # ---------------------------------------------------------------------------
+  home.file."Library/Java/JavaVirtualMachines/openjdk-21.jdk" = lib.mkIf pkgs.stdenv.isDarwin {
+    source = "${javaPackage}/Library/Java/JavaVirtualMachines/zulu-21.jdk";
   };
 
   # ---------------------------------------------------------------------------
