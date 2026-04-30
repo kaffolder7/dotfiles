@@ -220,8 +220,8 @@ register_homebrew_openjdk_macos() {
   is_macos || return 0
   command_exists brew || return 0
 
-  local formula="openjdk@21"
-  local jdk_name="openjdk-21.jdk"
+  local formula="openjdk"
+  local jdk_name="openjdk-25.jdk"
   local prefix src dest_dir dest
 
   if ! brew list --formula "$formula" >/dev/null 2>&1; then
@@ -246,23 +246,23 @@ register_homebrew_openjdk_macos() {
   fi
 
   if [[ "$ASSUME_YES" -ne 1 ]]; then
-    if ! confirm "Register Homebrew OpenJDK 21 with macOS Java shim? (requires sudo)" "Y"; then
+    if ! confirm "Register Homebrew OpenJDK 25 with macOS Java shim? (requires sudo)" "Y"; then
       warn "Skipped macOS Java registration."
       warn "Manual command: sudo ln -sfn \"$src\" \"$dest\""
       return 0
     fi
   fi
 
-  log "Registering Homebrew OpenJDK 21 with macOS Java shim..."
+  log "Registering Homebrew OpenJDK 25 with macOS Java shim..."
   if sudo mkdir -p "$dest_dir" && sudo ln -sfn "$src" "$dest"; then
     log "linked: $dest -> $src"
-    if /usr/libexec/java_home -v 21 >/dev/null 2>&1; then
-      log "macOS Java shim sees JDK 21."
+    if /usr/libexec/java_home -F -v 25 >/dev/null 2>&1; then
+      log "macOS Java shim sees JDK 25."
     else
-      warn "Linked JDK 21, but /usr/libexec/java_home -v 21 did not report it yet."
+      warn "Linked JDK 25, but /usr/libexec/java_home -F -v 25 did not report it yet."
     fi
   else
-    warn "Could not register Homebrew OpenJDK 21 with macOS Java shim."
+    warn "Could not register Homebrew OpenJDK 25 with macOS Java shim."
     warn "Manual command: sudo ln -sfn \"$src\" \"$dest\""
   fi
 }

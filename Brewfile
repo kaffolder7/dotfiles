@@ -163,7 +163,7 @@ brew "nss"
 # brew "anomalyco/tap/opencode"
 
 # Development kit for the Java programming language
-brew "openjdk@21"
+brew "openjdk"
 
 # Swiss-army knife of markup format conversion
 # brew "pandoc"

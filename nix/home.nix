@@ -20,7 +20,7 @@
 }:
 
 let
-  javaPackage = pkgs.javaPackages.compiler.openjdk21;
+  javaPackage = pkgs.javaPackages.compiler.openjdk25;
 in
 {
   # ===========================================================================
@@ -62,7 +62,7 @@ in
     # COLORTERM = "truecolor";
     # EDITOR = "nvim";
     EDITOR = lib.mkDefault "nvim";
-    JAVA_HOME = "${javaPackage}/Library/Java/JavaVirtualMachines/zulu-21.jdk/Contents/Home";
+    JAVA_HOME = "${javaPackage}/Library/Java/JavaVirtualMachines/zulu-25.jdk/Contents/Home";
     # Uncomment to enable Ollama model installation during setup
     # INSTALL_OLLAMA_MODELS = "1";
     # OLLAMA_MODELS = "gemma3 llama3.1:8b qwen2.5-coder:7b";
@@ -553,7 +553,7 @@ in
     # -------------------------------------------------------------------------
     # Runtimes
     # -------------------------------------------------------------------------
-    javaPackage # Open-source Java Development Kit v21 LTS runtime
+    javaPackage # Open-source Java Development Kit v25 LTS runtime
     nodejs_24 # Node.js v24 runtime (latest)
     python314 # Python runtime
 
@@ -678,8 +678,8 @@ in
   # ---------------------------------------------------------------------------
   # Java runtime registration (macOS current-user JavaVirtualMachines)
   # ---------------------------------------------------------------------------
-  home.file."Library/Java/JavaVirtualMachines/openjdk-21.jdk" = lib.mkIf pkgs.stdenv.isDarwin {
-    source = "${javaPackage}/Library/Java/JavaVirtualMachines/zulu-21.jdk";
+  home.file."Library/Java/JavaVirtualMachines/openjdk-25.jdk" = lib.mkIf pkgs.stdenv.isDarwin {
+    source = "${javaPackage}/Library/Java/JavaVirtualMachines/zulu-25.jdk";
   };
 
   # ---------------------------------------------------------------------------
