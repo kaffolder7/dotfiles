@@ -397,6 +397,7 @@ cask "orbstack"
 
 # Easiest, most secure way to use WireGuard and 2FA
 # cask "tailscale"
+# cask tailscale-app
 
 # Messaging app with a focus on speed and security
 # cask "telegram"
