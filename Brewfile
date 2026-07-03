@@ -181,6 +181,9 @@ brew "openjdk"
 # brew "python"
 # brew "python@3.14"
 
+# Develop and deploy code with zero configuration
+brew "railway"
+
 # Pack repository contents into a single AI-friendly file
 brew "repomix"
 
