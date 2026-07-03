@@ -35,7 +35,7 @@ brew "Valkyrie00/homebrew-bbrew/bbrew"
 # brew "broot"
 
 # Terminal-based AI coding assistant
-brew "claude-code"
+# brew "claude-code"
 
 # OpenAI's coding agent that runs in your terminal
 brew "codex"

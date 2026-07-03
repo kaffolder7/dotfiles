@@ -123,9 +123,9 @@ in
   # ---------------------------------------------------------------------------
   # Claude Code - An agentic coding tool
   # ---------------------------------------------------------------------------
-  programs.claude-code = {
-    enable = true;
-  };
+  # programs.claude-code = {
+  #   enable = true;
+  # };
 
   # ---------------------------------------------------------------------------
   # Codex - Lightweight coding agent
@@ -561,7 +561,7 @@ in
     # Development Tools
     # -------------------------------------------------------------------------
     bbrew # TUI for managing Homebrew packages
-    claude-code # Anthropic's coding assistant
+    # claude-code # Anthropic's coding assistant
     codex # OpenAI's coding agent
     curl # HTTP client
     ddev # Docker-based PHP/Node.js development
@@ -639,6 +639,7 @@ in
     # stow           # Symlink manager
     # syncthing      # File sync
     # syncthing-macos # Official frugal and native macOS Syncthing application bundle
+    # tailscale      # Node agent for Tailscale, a mesh VPN built on WireGuard
     # tmux           # Terminal multiplexer
     # uv             # Fast Python package manager
     # vllm           # High-throughput and memory-efficient inference and serving engine for LLMs
