@@ -105,6 +105,9 @@ brew "git-lfs"
 # Post-modern modal text editor
 # brew "helix"
 
+# Tools and libraries to manipulate images in select formats
+brew "imagemagick"
+
 # GNU utilities for networking
 # brew "inetutils"
 
