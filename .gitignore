@@ -2,7 +2,7 @@
 .DS_Store
 __pycache__/
 *.pyc
-*.backup
+*.backup*
 *.bak.*
 result
 /result
