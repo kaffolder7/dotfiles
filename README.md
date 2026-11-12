@@ -11,6 +11,7 @@ versions, and uv manages Python.
 - [1Password SSH and CLI](docs/1password.md)
 - [Node, Python, Java, and Happy](docs/runtimes.md)
 - [What replaced each Nix setting](docs/parity.md)
+- [Roll out to the Mac mini](docs/macmini.md)
 
 ## Set up a Mac
 

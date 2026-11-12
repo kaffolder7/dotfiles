@@ -42,3 +42,7 @@ export RIPGREP_CONFIG_PATH="$XDG_CONFIG_HOME/ripgrep/ripgreprc"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 export DOCKER_CONFIG="${DOCKER_CONFIG:-$HOME/.docker}"
+# Recent DDEV versions use a dedicated variable for the existing XDG directory.
+if [[ -z "${DDEV_XDG_CONFIG_HOME:-}" && -f "$XDG_CONFIG_HOME/ddev/global_config.yaml" ]]; then
+  export DDEV_XDG_CONFIG_HOME="$XDG_CONFIG_HOME"
+fi

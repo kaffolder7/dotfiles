@@ -75,8 +75,23 @@ Verify the phone connection and your usual agent workflow before removing Nix.
 The installer does not restart sessions automatically. Never delete `~/.happy`
 as a pairing troubleshooting step.
 
+If this Mac has not been paired, run `happy auth login` interactively and follow
+the phone flow. Avoid sharing the output of `happy auth status`; upstream includes
+a token preview when authenticated.
+
 To upgrade, review upstream, change the shared mise version, and run
 `mise install` from home. Test before committing the bump.
 
 Happy Desktop is not installed. The original CLI receives critical fixes;
 new features go to Desktop. See [upstream guidance](https://happy.engineering/guides/terminal/).
+
+## Docker and DDEV
+
+Docker keeps its existing context and credentials. On the MacBook, the active
+context is OrbStack. The installer does not start, replace, or recreate containers.
+
+When an existing `$XDG_CONFIG_HOME/ddev/global_config.yaml` is present, the shell
+sets `DDEV_XDG_CONFIG_HOME` so current DDEV keeps using that configuration and
+project registry. An explicit local value takes precedence. New machines without
+that directory use DDEV's normal `~/.ddev` location.
+See [DDEV's global configuration directory](https://docs.ddev.com/en/stable/users/usage/architecture/).

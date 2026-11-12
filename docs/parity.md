@@ -63,6 +63,7 @@ Manually installed Ollama, Syncthing, Claude, Java 21, and other tools remain.
 | Nano syntax/settings | Generated local include plus shared settings |
 | dot and dot-doctor | Repository-resolving commands |
 | Docker JSON and application data | Existing mutable data preserved |
+| DDEV's existing XDG configuration | Selected with `DDEV_XDG_CONFIG_HOME` when present |
 | Home Manager fonts marker and .keep files | Backed up and retired if still linked into Nix |
 
 One Dark's palette comes from [avesst/ghostty-onedark](https://github.com/avesst/ghostty-onedark),

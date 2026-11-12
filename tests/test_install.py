@@ -162,6 +162,9 @@ class MigrationTests(unittest.TestCase):
 
     def test_noninteractive_zsh_uses_custom_xdg_and_detaches_nix(self):
         self.activate()
+        ddev = self.home / "config custom/ddev/global_config.yaml"
+        ddev.parent.mkdir()
+        ddev.write_text("project_tld: ddev.site\n")
         env = {
             "HOME": str(self.home), "ZDOTDIR": str(self.home),
             "PATH": "/nix/store/old/bin:/usr/bin:/bin",
@@ -172,13 +175,14 @@ class MigrationTests(unittest.TestCase):
             "XDG_BIN_HOME": str(self.home / "bin custom"),
         }
         result = subprocess.run(
-            ["/bin/zsh", "-d", "-c", 'print -r -- "$DOTFILES_HOST|$XDG_STATE_HOME|$PATH|${SSL_CERT_FILE:-}"'],
+            ["/bin/zsh", "-d", "-c", 'print -r -- "$DOTFILES_HOST|$XDG_STATE_HOME|$PATH|${SSL_CERT_FILE:-}|ddev=$DDEV_XDG_CONFIG_HOME"'],
             env=env, capture_output=True, text=True, check=True)
         self.assertEqual(result.stderr, "")
         self.assertIn("mbp|", result.stdout)
         self.assertIn(str(self.home / "state custom"), result.stdout)
         self.assertIn(str(self.home / "bin custom"), result.stdout)
         self.assertNotIn("/nix/", result.stdout)
+        self.assertIn("ddev=" + str(self.home / "config custom"), result.stdout)
 
     def test_existing_docker_and_codex_data_untouched(self):
         for name in (".docker/config.json", ".codex/config.toml", ".happy/settings.json"):
