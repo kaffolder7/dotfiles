@@ -1,0 +1,3 @@
+--theme=OneHalfDark
+--pager='less -FR'
+--style=numbers,changes,header

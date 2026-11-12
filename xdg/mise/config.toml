@@ -1,0 +1,9 @@
+[tools]
+node = "24"
+# Happy's postinstall unpacks its macOS tools. Other scripts stay disabled.
+"npm:happy" = { version = "1.2.6", allow_builds = ["happy"] }
+
+[settings]
+idiomatic_version_file_enable_tools = ["node", "npm", "pnpm", "yarn"]
+# uv owns Python, including projects with an asdf .tool-versions file.
+disable_tools = ["python"]

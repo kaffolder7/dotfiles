@@ -1,4 +1,3 @@
-[[ "${DOTFILES_ROUTE-}" == "hm" ]] && return
-
-# Example: Auto-activate direnv
-# command -v direnv >/dev/null && eval "$(direnv hook zsh)"
+(( $+commands[fzf] )) && source <(command fzf --zsh)
+(( $+commands[zoxide] )) && eval "$(command zoxide init zsh --cmd cd)"
+(( $+commands[direnv] )) && eval "$(command direnv hook zsh)"

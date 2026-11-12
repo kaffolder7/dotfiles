@@ -1,4 +1,22 @@
-#!/usr/bin/env sh
-cmd="${1:?Usage: dot <command>}"
-shift
-exec "$(dirname "$0")/dot-$cmd" "$@"
+#!/bin/bash
+set -euo pipefail
+SOURCE="${BASH_SOURCE[0]}"
+while [[ -L "$SOURCE" ]]; do
+  DIR="$(cd "$(dirname "$SOURCE")" && pwd)"
+  SOURCE="$(readlink "$SOURCE")"
+  [[ "$SOURCE" = /* ]] || SOURCE="$DIR/$SOURCE"
+done
+ROOT="$(cd "$(dirname "$SOURCE")/.." && pwd)"
+cmd="${1:-help}"
+[[ $# -eq 0 ]] || shift
+case "$cmd" in
+  install) exec "$ROOT/install.sh" "$@" ;;
+  update) exec "$ROOT/scripts/update.sh" "$@" ;;
+  doctor|audit)
+    for candidate in "$HOME/.local/bin/python3" /opt/homebrew/bin/python3 /usr/local/bin/python3 /usr/bin/python3; do
+      [[ -x "$candidate" ]] && exec "$candidate" "$ROOT/scripts/$cmd.py" "$@"
+    done
+    echo 'Python 3 is required.' >&2; exit 1 ;;
+  help|--help|-h) echo 'Usage: dot <install|update|doctor|audit> [options]' ;;
+  *) echo "Unknown dot command: $cmd" >&2; exit 2 ;;
+esac

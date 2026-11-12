@@ -1,9 +1,9 @@
-[[ "${DOTFILES_ROUTE-}" == "hm" ]] && return
-[[ -n "${HOMEBREW_PREFIX-}" ]] || return
-
-[[ -r "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme" ]] &&
+typeset -g POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true
+if [[ -r "${HOMEBREW_PREFIX:-}/share/powerlevel10k/powerlevel10k.zsh-theme" ]]; then
   source "$HOMEBREW_PREFIX/share/powerlevel10k/powerlevel10k.zsh-theme"
-
-# Load p10k config if present
-# [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-[[ -r "${ZDOTDIR:-$HOME}/.p10k.zsh" ]] && source "${ZDOTDIR:-$HOME}/.p10k.zsh"
+  if [[ -r "$HOME/.p10k.zsh" ]]; then
+    source "$HOME/.p10k.zsh"
+  else
+    source "$XDG_CONFIG_HOME/zsh/.p10k.zsh"
+  fi
+fi

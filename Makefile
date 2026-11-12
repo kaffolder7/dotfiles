@@ -1,28 +1,16 @@
-.PHONY: install update doctor switch
+.PHONY: install update doctor audit test
 
 install:
-	./install.sh --brew
+	./install.sh --brew $(if $(HOST),--host $(HOST))
 
 update:
-	brew bundle --file=Brewfile
-	brew upgrade
+	./bin/dot update
 
 doctor:
-	./bin/dot-doctor
+	./bin/dot doctor
 
-# Nix/HM route
-switch-macmini:
-	home-manager switch --flake .#macmini
+audit:
+	./bin/dot audit
 
-switch-mbp:
-	home-manager switch --flake .#mbp
-```
-
----
-
-### 14. **Ghostty Config: Use Conditional Includes**
-
-Your Ghostty config has `config-file = ?config.local` which is good, but consider also checking for host-specific configs:
-```
-config-file = ?config.local
-config-file = ?config.$(hostname -s)
+test:
+	./scripts/test.sh

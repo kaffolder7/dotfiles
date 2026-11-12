@@ -35,7 +35,6 @@ typeset -g POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(
   command_execution_time  # How long the last command took
   background_jobs     # Number of background jobs
   # direnv            # direnv status (if using direnv)
-  # nix_shell         # Nix shell indicator
   # time              # Current time
 )
 
@@ -124,12 +123,6 @@ typeset -g POWERLEVEL9K_PROMPT_CHAR_ERROR_{VIINS,VICMD,VIVIS,VIOWR}_FOREGROUND=1
 # -----------------------------------------------------------------------------
 # Show a simplified prompt for previous commands
 # typeset -g POWERLEVEL9K_TRANSIENT_PROMPT=same-dir
-
-# -----------------------------------------------------------------------------
-# Nix Shell Segment (optional)
-# -----------------------------------------------------------------------------
-# Uncomment if you use nix-shell or nix develop frequently
-# typeset -g POWERLEVEL9K_NIX_SHELL_FOREGROUND=74
 
 # -----------------------------------------------------------------------------
 # Direnv Segment (optional)

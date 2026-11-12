@@ -1,14 +1,18 @@
-# Ignore nix convenience symlinks
-/result
-result
-
+# Machine-local files and generated output
 .DS_Store
-*backup*
+__pycache__/
+*.pyc
+*.backup
+*.bak.*
+result
+/result
 *repomix*
 
-# Secrets
+# Credentials and local overrides
 secrets/*
+!secrets/*.example
 *.key
-!secrets/openai_api_key.example
-!secrets/openai_api_key_codex.example
-!secrets/openai_api_key_llm.example
+*.local
+.env
+.env.*
+!.env.example

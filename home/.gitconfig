@@ -1,14 +1,28 @@
 [init]
     defaultBranch = main
-
 [core]
     editor = nvim
-
-# [pull]
-    # rebase = false|true (your preference)
-
 [push]
     autoSetupRemote = true
-
+[pull]
+    rebase = false
+[diff]
+    algorithm = histogram
+    colorMoved = default
+[merge]
+    conflictStyle = zdiff3
+[rebase]
+    autoStash = true
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[credential "https://github.com"]
+    helper =
+    helper = !gh auth git-credential
+[credential "https://gist.github.com"]
+    helper =
+    helper = !gh auth git-credential
 [include]
     path = ~/.gitconfig.local
