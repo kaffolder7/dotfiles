@@ -113,8 +113,9 @@ Do not replace an ordinary JDK directory with that command. Preserve Java 21.
 This step is intentionally separate from dotfiles installation. Run it only
 after the checks above pass on the machine being migrated.
 
-This MacBook was installed with Determinate Nix Installer 3.15.1 and has
-`/nix/nix-installer` and `/nix/receipt.json`. Its supported removal command is:
+The MacBook used Determinate Nix Installer 3.15.1. Before removal it had
+`/nix/nix-installer` and `/nix/receipt.json`. The supported removal command for
+that installation was:
 
 ```sh
 sudo /nix/nix-installer uninstall
@@ -135,7 +136,8 @@ After the uninstaller succeeds, inspect remaining user-level Nix paths:
 ```sh
 ls -ld ~/.nix-profile ~/.nix-defexpr ~/.nix-channels \
   ~/.config/nix ~/.config/home-manager ~/.cache/nix \
-  ~/.local/share/nix ~/.local/share/home-manager ~/.local/state/nix
+  ~/.local/share/nix ~/.local/share/home-manager ~/.local/state/nix \
+  ~/.local/state/home-manager ~/.local/state/systems.determinate.detsys-ids-client
 ```
 
 Retire only confirmed Nix-specific leftovers after preserving anything wanted.
@@ -146,6 +148,32 @@ Check that Nix launch daemons and the Nix Store APFS volume are gone. The
 uninstaller owns its system changes, including shell hooks and mount setup.
 Do not delete `/etc/fstab`, `/etc/synthetic.conf`, or system shell files wholesale.
 If it reports incomplete removal, resolve that specific error first.
+
+The MacBook's uninstaller left an inactive launchd registration even after
+deleting its plist. Check it with:
+
+```sh
+launchctl print system/systems.determinate.nix-installer.nix-hook
+```
+
+If it still exists after a successful uninstall, unload that registration with
+`sudo launchctl bootout system/systems.determinate.nix-installer.nix-hook`.
+A service-not-found response means it is already gone.
+
+Also inspect `/etc/nix`. On the MacBook, only `macos-keychain.crt` remained.
+After preserving that file and confirming nothing still uses it, remove that
+specific file and use `rmdir` for the now-empty directory. Do not delete an
+uninspected configuration directory recursively.
+
+An empty `/nix` directory can remain until reboot even after the APFS volume is
+gone. It is a synthetic mount point created by macOS. Once its entry is gone from
+`/etc/synthetic.conf` and `/etc/synthetic.d`, reboot removes it. See
+`man 5 synthetic.conf`; synthetic entries cannot be deleted while running.
+
+The MacBook's user configuration and profile metadata were archived privately
+under `~/.local/state/dotfiles/retired-nix-20261112-161430/`. Its disposable Nix
+cache and obsolete Home Manager Zed copy were removed. The Homebrew Zed app and
+existing migration backups remain. Post-removal checks passed before reboot.
 
 Reboot, then run:
 
