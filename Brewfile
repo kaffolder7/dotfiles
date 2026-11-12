@@ -37,6 +37,12 @@ brew "Valkyrie00/homebrew-bbrew/bbrew"
 # Terminal-based AI coding assistant
 # brew "claude-code"
 
+# Statistics utility to count lines of code
+brew "cloc"
+
+# See where your AI coding tokens go - by task, tool, model, and project
+brew "codeburn"
+
 # OpenAI's coding agent that runs in your terminal
 brew "codex"
 
@@ -56,6 +62,9 @@ brew "container"
 
 # Manage Apple Container with Docker Compose files
 brew "container-compose"
+
+# Tool for interacting with remote images and registries
+brew "crane"
 
 # Get a file from an HTTP, HTTPS or FTP server
 brew "curl"
@@ -174,6 +183,9 @@ brew "openjdk"
 # Password manager
 # brew "pass"
 
+# App runtime and UX toolkit for pixel-based apps
+brew "pixlet"
+
 # Python version management
 # brew "pyenv"
 
@@ -202,8 +214,8 @@ brew "sevenzip"
 # Open source continuous file synchronization application
 # brew "syncthing"
 
-# App runtime and UX toolkit for pixel-based apps
-brew "pixlet"
+# Program that allows you to count code, quickly
+brew "tokei"
 
 # Terminal multiplexer
 # brew "tmux"
