@@ -3,10 +3,11 @@
 The MacBook migration has been exercised locally. The Mac mini has not been
 accessed, so inventory its live configuration before replacing anything.
 
-## 1. Publish the MacBook commits
+## 1. Confirm GitHub is current
 
-The migration commits and archive tag were created locally. From the MacBook,
-review `git status` and the commits, then publish them when ready:
+The migration commits and archive tag are published on GitHub. If you make
+further changes on the MacBook, review `git status` and the commits, then publish
+them before updating the Mac mini:
 
 ```sh
 cd ~/Projects/Personal/dotfiles
